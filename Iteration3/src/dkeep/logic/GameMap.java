@@ -11,4 +11,8 @@ public class GameMap {
 		return map;
 	}
 	
+	public void setMap(char [][] map){
+		this.map=map;
+	}
+	
 }
