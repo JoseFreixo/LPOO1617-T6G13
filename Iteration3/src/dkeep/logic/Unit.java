@@ -1,14 +1,14 @@
 package dkeep.logic;
 
 public abstract class Unit {
-CellPosition posicao;
-		
+	CellPosition posicao;
+	
 	public Unit(int y, int x){
 		posicao = new CellPosition(y, x);
 	}
 	
 	public void setPosition(int y, int x){
-		posicao = new CellPosition(y, x);
+		posicao.setCellPosition(y, x);
 	}
 	
 	public CellPosition getPosition(){
