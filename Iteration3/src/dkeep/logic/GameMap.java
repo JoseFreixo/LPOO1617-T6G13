@@ -7,4 +7,8 @@ public class GameMap {
 		this.map = map;
 	}
 	
+	public char[][] getMap(){
+		return map;
+	}
+	
 }

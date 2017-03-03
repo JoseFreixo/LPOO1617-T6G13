@@ -40,4 +40,6 @@ public class TestDungeonGameLogic {
 		assertTrue(game.isGameOver());
 		assertEquals(Game.DEFEAT, game.EndStatus());
 	}
+	
+	
 }
