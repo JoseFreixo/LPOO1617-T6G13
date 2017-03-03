@@ -10,6 +10,6 @@ public class Game {
 	
 	public Game(GameMap map){
 		this.map = map;
-		
+			
 	}
 }

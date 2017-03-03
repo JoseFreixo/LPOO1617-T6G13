@@ -12,7 +12,7 @@ public class GameMap {
 	}
 	
 	public void setMap(char [][] map){
-		this.map=map;
+		this.map = map;
 	}
 	
 }
