@@ -16,8 +16,11 @@ public class Game {
 			for (int j=0; j<map.getMap()[i].length;j++){
 				switch(map.getMap()[i][j]){
 				case 'H': heroi= new Hero(i,j);
+				break;
 				case 'G': guarda = new Guard(i,j);
+				break;
 				case 'O': ogres.add(new Ogre(i,j));
+				break;
 				}
 			}
 		}
@@ -52,7 +55,7 @@ public class Game {
 	}
 
 	public void moveHero(char c) {
-		Character.toUpperCase(c);
+		c = Character.toUpperCase(c);
 		if (c == 'W' && map.validPosition(getHeroPosition().getY() - 1, getHeroPosition().getX()))
 			heroi.setPosition(getHeroPosition().getY() - 1, getHeroPosition().getX());
 		else if (c == 'S' && map.validPosition(getHeroPosition().getY() + 1, getHeroPosition().getX()))
