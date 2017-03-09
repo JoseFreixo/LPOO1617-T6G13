@@ -21,4 +21,9 @@ public class GameMap {
 		return false;
 	}
 	
+	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char Representation){
+		map[position_to_set.getY()][position_to_set.getX()]=Representation;
+		map[position_to_erase.getY()][position_to_erase.getX()]=' ';
+	}
+	
 }
