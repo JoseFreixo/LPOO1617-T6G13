@@ -1,19 +1,24 @@
 package dkeep.logic;
 
 public class CellPosition {
-	int [] position;
+	int x;
+	int y;
 	
 	public CellPosition(int y, int x){
-		position[0] = y;
-		position[1] = x;
+		this.y = y;
+		this.x = x;
 	}
 	
 	public void setCellPosition(int y, int x){
-		position[0] = y;
-		position[1] = x;
+		this.y = y;
+		this.x = x;
 	}
 	
-	public int [] getCellPosition(){
-		return position;
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
 	}
 }

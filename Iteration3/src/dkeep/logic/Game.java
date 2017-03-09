@@ -27,6 +27,20 @@ public class Game {
 		return heroi.getPosition();
 	}
 	
+	public CellPosition getGuardPosition(){
+		return guarda.getPosition();
+	}
+	
+	public CellPosition getOgrePosition(int i){
+		int j = 0;
+		for (Ogre temp: ogres){
+			if (i == j)
+				return temp.getPosition();
+			j++;
+		}
+		return null;
+	}
+	
 	public boolean isGameOver(){
 		boolean lost=false;
 		
@@ -35,5 +49,17 @@ public class Game {
 	
 	public boolean isValid(CellPosition posheroi, CellPosition posGuard){
 		return true;
+	}
+
+	public void moveHero(char c) {
+		Character.toUpperCase(c);
+		if (c == 'W' && map.validPosition(getHeroPosition().getY() - 1, getHeroPosition().getX()))
+			heroi.setPosition(getHeroPosition().getY() - 1, getHeroPosition().getX());
+		else if (c == 'S' && map.validPosition(getHeroPosition().getY() + 1, getHeroPosition().getX()))
+			heroi.setPosition(getHeroPosition().getY() + 1, getHeroPosition().getX());
+		else if (c == 'A' && map.validPosition(getHeroPosition().getY(), getHeroPosition().getX() - 1))
+			heroi.setPosition(getHeroPosition().getY(), getHeroPosition().getX() - 1);
+		else if (c == 'D' && map.validPosition(getHeroPosition().getY(), getHeroPosition().getX() + 1))
+			heroi.setPosition(getHeroPosition().getY(), getHeroPosition().getX() + 1);
 	}
 }
