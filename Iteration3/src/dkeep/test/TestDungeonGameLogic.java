@@ -102,7 +102,6 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals('H', game.getHeroRepresentation());
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
-
 	}
 	
 }
