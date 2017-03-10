@@ -13,6 +13,12 @@ public class TestDungeonGameLogic {
 					{'I',' ',' ',' ','X'},
 					{'I','k',' ',' ','X'},
 					{'X','X','X','X','X'}};
+	
+	char[][] map_for_task2 = {{'X','X','X','X','X'},
+							  {'X','H',' ','O','X'},
+							  {'I',' ',' ',' ','X'},
+							  {'I','k',' ',' ','X'},
+							  {'X','X','X','X','X'}};
 	@Test
 	public void testMoveHeroIntoToFreeCell(){
 		GameMap gameMap = new GameMap(map);
@@ -40,4 +46,14 @@ public class TestDungeonGameLogic {
 		assertTrue(game.isGameOver());
 		assertEquals(Game.DEFEAT, game.EndStatus());
 	}
+	
+	//TASK 2
+//	public void testMoveHeroIntoToFreeCell2(){
+//		GameMap gameMap = new GameMap(map);
+//		Game game = new Game(gameMap);
+//		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+//		game.moveHero('s'); // move hero down.
+//		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+//	}
+	
 }

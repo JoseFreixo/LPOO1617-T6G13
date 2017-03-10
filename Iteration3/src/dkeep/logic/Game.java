@@ -3,7 +3,7 @@ package dkeep.logic;
 import java.util.ArrayList;
 
 public class Game {
-	public static final boolean DEFEAT = false;
+	public static final boolean DEFEAT = true;
 	Boolean Status;
 	GameMap map;
 	Hero heroi;
@@ -35,42 +35,40 @@ public class Game {
 	public CellPosition getGuardPosition(){
 		return guarda.getPosition();
 	}
-	
-	public CellPosition getOgrePosition(int i){
-		int j = 0;
-		for (Ogre temp: ogres){
-			if (i == j)
-				return temp.getPosition();
-			j++;
-		}
-		return null;
-	}
+
 	
 	public boolean isGameOver(){
 		
-		if(getGuardPosition().getX()==getHeroPosition().getX()-1&& getGuardPosition().getY()==getHeroPosition().getY()){
-			Status=false;
+		if(HeroCaught(getGuardPosition(),getHeroPosition())&&guarda!=null){
+			Status = true;
 			return true;
 		}
-		if(getGuardPosition().getX()==getHeroPosition().getX()+1&& getGuardPosition().getY()==getHeroPosition().getY()){
-			Status=false;
+		
+		for (int i=0; i<ogres.size();i++){
+			if(HeroCaught(ogres.get(i).getPosition(),getHeroPosition())){
+				Status = true;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+public boolean HeroCaught(CellPosition Guard_or_OgrePos, CellPosition HeroPos){
+		
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()-1&& Guard_or_OgrePos.getY()==HeroPos.getY()){
 			return true;
 		}
-		if(getGuardPosition().getX()==getHeroPosition().getX()&& getGuardPosition().getY()==getHeroPosition().getY()+1){
-			Status=false;
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()+1&& Guard_or_OgrePos.getY()==HeroPos.getY()){	
 			return true;
 		}
-		if(getGuardPosition().getX()==getHeroPosition().getX()&& getGuardPosition().getY()==getHeroPosition().getY()-1){
-			Status=false;
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()+1){
+			return true;
+		}
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()-1){
 			return true;
 		}		
 		return false;
 	}
-	
-	//isto serve para?
-//	public boolean isValid(CellPosition posheroi, CellPosition posGuard){ 
-//		return true;
-//	}
 
 	public void moveHero(char c) { 
 		c = Character.toUpperCase(c);
