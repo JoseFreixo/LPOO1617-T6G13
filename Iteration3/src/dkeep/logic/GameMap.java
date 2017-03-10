@@ -22,17 +22,12 @@ public class GameMap {
 	}
 	
 	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char representation){
-		map[position_to_set.getY()][position_to_set.getX()] = representation;
 		map[position_to_erase.getY()][position_to_erase.getX()] = ' ';
+		map[position_to_set.getY()][position_to_set.getX()] = representation;
 	}
 
 	public void openDoors() {
-		for (int i = 0; i < map.length; i++)
-			for (int j = 0; j < map[i].length; j++){
-				if (i == 0 || i == map.length - 1){
-					if ()
-				}
-			}
+
 	}
 	
 }
