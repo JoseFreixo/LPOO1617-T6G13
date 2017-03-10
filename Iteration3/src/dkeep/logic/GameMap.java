@@ -26,8 +26,37 @@ public class GameMap {
 		map[position_to_set.getY()][position_to_set.getX()] = representation;
 	}
 
-	public void openDoors(boolean isKey) {
-
+	public void openDoors(boolean isKey, CellPosition heroiPos) {
+		if (isKey){
+			int x = heroiPos.getX();
+			int y = heroiPos.getY();
+			if (map[y-1][x] == 'I'){
+				map[y-1][x] = 'S';
+				openDoors(isKey, new CellPosition(y - 1, x));
+			}
+			else if (map[y+1][x] == 'I'){
+				map[y+1][x] = 'S';
+				openDoors(isKey, new CellPosition(y + 1, x));
+			}
+			else if (map[y][x-1] == 'I'){
+				map[y][x-1] = 'S';
+				openDoors(isKey, new CellPosition(y, x - 1));
+			}
+			else if (map[y][x+1] == 'I'){
+				map[y][x+1] = 'S';
+				openDoors(isKey, new CellPosition(y, x + 1));
+			}
+		}
+		else{
+			for (int i = 0; i < map.length; i++){
+				for (int j = 0; j < map[i].length; j++){
+					if (i == 0 || i == map.length - 1 || j == 0 || j == map[i].length - 1){
+						if (map[i][j] == 'I')
+							map[i][j] = 'S';
+					}
+				}
+			}
+		}
 	}
 	
 }
