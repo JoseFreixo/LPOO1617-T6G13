@@ -87,8 +87,8 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
-		game.moveHero('s');
 		assertEquals('H', game.getHeroRepresentation());
+		game.moveHero('s');
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		assertEquals('K', game.getHeroRepresentation());
 	}
@@ -102,6 +102,7 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals('H', game.getHeroRepresentation());
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+
 	}
 	
 }
