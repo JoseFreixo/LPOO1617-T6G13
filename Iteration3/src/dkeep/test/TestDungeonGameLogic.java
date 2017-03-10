@@ -48,12 +48,14 @@ public class TestDungeonGameLogic {
 	}
 	
 	//TASK 2
-//	public void testMoveHeroIntoToFreeCell2(){
-//		GameMap gameMap = new GameMap(map);
-//		Game game = new Game(gameMap);
-//		assertEquals(new CellPosition(1,1), game.getHeroPosition());
-//		game.moveHero('s'); // move hero down.
-//		assertEquals(new CellPosition(2,1), game.getHeroPosition());
-//	}
+	@Test
+	public void testHeroIsCapturedByOgre(){
+		GameMap gameMap = new GameMap(map_for_task2);
+		Game game = new Game(gameMap);
+		assertFalse(game.isGameOver());
+		game.moveHero('d'); // move hero to the right.
+		assertTrue(game.isGameOver());
+		assertEquals(Game.DEFEAT, game.EndStatus());
+	}
 	
 }

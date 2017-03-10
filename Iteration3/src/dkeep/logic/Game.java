@@ -39,7 +39,7 @@ public class Game {
 	
 	public boolean isGameOver(){
 		
-		if(HeroCaught(getGuardPosition(),getHeroPosition())&&guarda!=null){
+		if(guarda!=null&&HeroCaught(getGuardPosition(),getHeroPosition())){
 			Status = true;
 			return true;
 		}
