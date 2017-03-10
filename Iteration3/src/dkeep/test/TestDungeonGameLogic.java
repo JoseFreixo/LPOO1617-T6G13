@@ -47,6 +47,31 @@ public class TestDungeonGameLogic {
 		assertEquals(Game.DEFEAT, game.EndStatus());
 	}
 	
+	@Test
+	public void testHeroTriesToLeaveDoorsClosed(){
+		GameMap gameMap = new GameMap(map);
+		Game game = new Game(gameMap);
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		game.moveHero('a');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+	}
+	
+	@Test
+	public void testHeroIntoLeverAndDoorsOpen(){
+		GameMap gameMap = new GameMap(map);
+		Game game = new Game(gameMap);
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(3,1), game.getHeroPosition());
+		game.moveHero('a');
+		assertEquals(new CellPosition(3,1), game.getHeroPosition());
+		assertEquals(true, game.areDoorsOpen());
+	}
+	
 	//TASK 2
 	@Test
 	public void testHeroIsCapturedByOgre(){
