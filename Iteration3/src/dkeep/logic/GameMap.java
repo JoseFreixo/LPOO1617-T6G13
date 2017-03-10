@@ -16,14 +16,23 @@ public class GameMap {
 	}
 	
 	public boolean validPosition(int y, int x){
-		if (map[y][x] == ' ' || map[y][x] == 'k' || map[y][x] == 'S')
-			return true;
-		return false;
+		if (map[y][x] == 'X' || map[y][x] == 'I')
+			return false;
+		return true;
 	}
 	
-	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char Representation){
-		map[position_to_set.getY()][position_to_set.getX()]=Representation;
-		map[position_to_erase.getY()][position_to_erase.getX()]=' ';
+	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char representation){
+		map[position_to_set.getY()][position_to_set.getX()] = representation;
+		map[position_to_erase.getY()][position_to_erase.getX()] = ' ';
+	}
+
+	public void openDoors() {
+		for (int i = 0; i < map.length; i++)
+			for (int j = 0; j < map[i].length; j++){
+				if (i == 0 || i == map.length - 1){
+					if ()
+				}
+			}
 	}
 	
 }
