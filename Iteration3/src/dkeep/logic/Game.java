@@ -106,6 +106,7 @@ public void moveHero(char c) {
 	else if (!isKey && new CellPosition(y, x).equals(lever.getPosition())){
 		map.openDoors(isKey, heroi.getPosition());
 		printKey = true;
+		openDoors = true;
 	}
 	
 	if (map.validPosition(y, x)){
@@ -117,8 +118,10 @@ public void moveHero(char c) {
 		}
 	}
 	
-	if (isKey && map.getMap()[y][x] == 'I' && heroi.getRepresentation() == 'K')
+	if (isKey && map.getMap()[y][x] == 'I' && heroi.getRepresentation() == 'K'){
 		map.openDoors(isKey, heroi.getPosition());
+		openDoors = true;
+	}
 }
 
 	public boolean EndStatus() {
