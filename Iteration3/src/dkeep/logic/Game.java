@@ -51,6 +51,9 @@ public class Game {
 		return guarda.getPosition();
 	}
 
+	public char getHeroRepresentation(){
+		return heroi.getRepresentation();
+	}
 	
 	public boolean isGameOver(){
 		

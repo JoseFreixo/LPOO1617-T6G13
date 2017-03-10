@@ -80,5 +80,28 @@ public class TestDungeonGameLogic {
 		assertTrue(game.isGameOver());
 		assertEquals(Game.DEFEAT, game.EndStatus());
 	}
+	@Test
+	public void testHeroIntoKey(){
+		GameMap gameMap = new GameMap(map_for_task2);
+		Game game = new Game(gameMap);
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals('H', game.getHeroRepresentation());
+		assertEquals(new CellPosition(3,1), game.getHeroPosition());
+		assertEquals('K', game.getHeroRepresentation());
+	}
+	@Test
+	public void testHeroWithoutAKeyOpenDoors(){
+		GameMap gameMap = new GameMap(map);
+		Game game = new Game(gameMap);
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		game.moveHero('a');
+		assertEquals('H', game.getHeroRepresentation());
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+	}
 	
 }
