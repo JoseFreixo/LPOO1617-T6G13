@@ -67,8 +67,6 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
-		game.moveHero('a');
-		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		assertEquals(true, game.areDoorsOpen());
 	}
 	

@@ -26,7 +26,7 @@ public class GameMap {
 		map[position_to_set.getY()][position_to_set.getX()] = representation;
 	}
 
-	public void openDoors() {
+	public void openDoors(boolean isKey) {
 
 	}
 	
