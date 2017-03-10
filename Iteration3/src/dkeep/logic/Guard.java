@@ -11,8 +11,8 @@ public class Guard extends Unit {
 			'D', 'D', 'D', 'D', 'D', 'D', 'D', 
 			'W', 'W', 'W', 'W', 'W'};
 	
-	public Guard(int y, int x) {
-		super(y, x);
+	public Guard(int y, int x, char rep) {
+		super(y, x, rep);
 		Random rand = new Random();
 		type = rand.nextInt(3);
 	}
