@@ -55,6 +55,12 @@ public class Game {
 		return heroi.getRepresentation();
 	}
 	
+	public char getMapChar(CellPosition Pos){
+		return map.getCharOnPos(Pos);
+	}
+	
+	
+	
 	public boolean isGameOver(){
 		
 		if(guarda!=null&&HeroCaught(getGuardPosition(),getHeroPosition())){

@@ -11,6 +11,10 @@ public class GameMap {
 		return map;
 	}
 	
+	public char getCharOnPos(CellPosition Pos){
+		return map[Pos.getY()][Pos.getX()];
+	}
+	
 	public void setMap(char [][] map){
 		this.map = map;
 	}
