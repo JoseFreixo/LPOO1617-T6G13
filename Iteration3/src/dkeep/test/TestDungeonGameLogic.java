@@ -5,18 +5,10 @@ import org.junit.Test;
 
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
+import dkeep.logic.KeepMap;
 import dkeep.logic.CellPosition;
 	
 public class TestDungeonGameLogic {
-	char[][] keep = {{'X','X','X','X','X','X','X','X','X'},
-					 {'X',' ',' ',' ','O',' ',' ','k','X'},
-					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-					 {'X','H',' ',' ',' ',' ',' ',' ','X'},
-					 {'X','X','X','X','X','X','X','X','X'}};
 	
 	char[][] map = {{'X','X','X','X','X'},
 					{'X','H',' ','G','X'},
@@ -90,7 +82,7 @@ public class TestDungeonGameLogic {
 		game.moveHero('s');
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		game.moveHero('a');
-		//assertEquals(map_for_task2,)
+		assertEquals(new KeepMap(), game.getMap());
 	}
 	
 	//TASK 2

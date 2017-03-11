@@ -1,12 +1,14 @@
 package dkeep.logic;
 
+import java.util.Arrays;
+
 public class GameMap {
 	char[][] map;
 	
 	public GameMap(char[][] map){
 		this.map = map;
 	}
-	
+
 	public char[][] getMap(){
 		return map;
 	}
@@ -62,5 +64,22 @@ public class GameMap {
 			}
 		}
 	}
+
+	public GameMap getNextLevel(){
+		return new KeepMap();
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GameMap other = (GameMap) obj;
+		if (!Arrays.deepEquals(map, other.map))
+			return false;
+		return true;
+	}
 }

@@ -13,11 +13,10 @@ public class Game {
 	Guard guarda;
 	Lever lever;
 	ArrayList<Ogre> ogres = new ArrayList<Ogre>();
-	ArrayList<CellPosition> portas = new ArrayList<CellPosition>();
 	
 	public Game(GameMap map){
 		this.map = map;
-		Status=null;
+		Status = null;
 		openDoors = false;
 		for (int i=0;i<map.getMap().length;i++){
 			for (int j=0; j<map.getMap()[i].length;j++){
@@ -33,10 +32,6 @@ public class Game {
 					isKey = true;
 				break;
 				case 'k': lever = new Lever(i, j, 'k');
-				break;
-				case 'I': 
-					if (i == 0 || i == map.getMap().length - 1 || j == 0 || j == map.getMap()[i].length)
-						portas.add(new CellPosition(i, j));
 				break;
 				}
 			}
@@ -119,6 +114,38 @@ public void moveHero(char c) {
 	}
 	
 	if (map.validPosition(y, x)){
+		
+		if (map.getMap()[y][x] == 'S'){
+			map = map.getNextLevel();
+			if (map == null){
+				Status = false;
+				return;
+			}
+			printKey = false;
+			Status = null;
+			openDoors = false;
+			ogres = new ArrayList<Ogre>();
+			for (int i = 0; i < map.getMap().length; i++){
+				for (int j = 0; j < map.getMap()[i].length; j++){
+					switch (map.getMap()[i][j]){
+					case 'H': heroi = new Hero(i, j, 'H');
+					break;
+					case 'G': 
+						guarda = new Guard(i, j, 'G');
+						isKey = false;
+					break;
+					case 'O': 
+						ogres.add(new Ogre(i, j, 'O'));
+						isKey = true;
+					break;
+					case 'k': lever = new Lever(i, j, 'k');
+					break;
+					}
+				}
+			}
+			return;
+		}
+		
 		map.setUnitPosMap(new CellPosition(y, x), getHeroPosition(), heroi.getRepresentation());
 		heroi.setPosition(y, x);
 		if (printKey){
@@ -139,5 +166,9 @@ public void moveHero(char c) {
 	
 	public boolean areDoorsOpen(){
 		return openDoors;
+	}
+	
+	public GameMap getMap(){
+		return map;
 	}
 }
