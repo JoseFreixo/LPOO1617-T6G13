@@ -34,19 +34,19 @@ public class GameMap {
 		if (isKey){
 			int x = heroiPos.getX();
 			int y = heroiPos.getY();
-			if (map[y-1][x] == 'I'){
+			if (y != 0 && map[y-1][x] == 'I'){
 				map[y-1][x] = 'S';
 				openDoors(isKey, new CellPosition(y - 1, x));
 			}
-			else if (map[y+1][x] == 'I'){
+			else if (y != map.length - 1 && map[y+1][x] == 'I'){
 				map[y+1][x] = 'S';
 				openDoors(isKey, new CellPosition(y + 1, x));
 			}
-			else if (map[y][x-1] == 'I'){
+			else if (x != 0 && map[y][x-1] == 'I'){
 				map[y][x-1] = 'S';
 				openDoors(isKey, new CellPosition(y, x - 1));
 			}
-			else if (map[y][x+1] == 'I'){
+		else if (x != map[y].length - 1 && map[y][x+1] == 'I'){
 				map[y][x+1] = 'S';
 				openDoors(isKey, new CellPosition(y, x + 1));
 			}
