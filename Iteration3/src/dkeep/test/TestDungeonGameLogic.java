@@ -8,6 +8,16 @@ import dkeep.logic.GameMap;
 import dkeep.logic.CellPosition;
 	
 public class TestDungeonGameLogic {
+	char[][] keep = {{'X','X','X','X','X','X','X','X','X'},
+					 {'X',' ',' ',' ','O',' ',' ','k','X'},
+					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
+					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
+					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
+					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
+					 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
+					 {'X','H',' ',' ',' ',' ',' ',' ','X'},
+					 {'X','X','X','X','X','X','X','X','X'}};
+	
 	char[][] map = {{'X','X','X','X','X'},
 					{'X','H',' ','G','X'},
 					{'I',' ',' ',' ','X'},
@@ -70,6 +80,19 @@ public class TestDungeonGameLogic {
 		assertEquals(true, game.areDoorsOpen());
 	}
 	
+	@Test
+	public void testLeaveDungeon(){
+		GameMap gameMap = new GameMap(map);
+		Game game = new Game(gameMap);
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(3,1), game.getHeroPosition());
+		game.moveHero('a');
+		//assertEquals(map_for_task2,)
+	}
+	
 	//TASK 2
 	@Test
 	public void testHeroIsCapturedByOgre(){
@@ -94,7 +117,7 @@ public class TestDungeonGameLogic {
 	}
 	@Test
 	public void testHeroWithoutAKeyOpenDoors(){
-		GameMap gameMap = new GameMap(map);
+		GameMap gameMap = new GameMap(map_for_task2);
 		Game game = new Game(gameMap);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
@@ -102,6 +125,24 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals('H', game.getHeroRepresentation());
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+	}
+	
+	@Test
+	public void TesteHeroIntoDoorsWithKey(){
+		GameMap gameMap = new GameMap(map_for_task2);
+		Game game = new Game(gameMap);
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('s');
+		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		assertEquals('H', game.getHeroRepresentation());
+		game.moveHero('s');
+		assertEquals(new CellPosition(3,1), game.getHeroPosition());
+		assertEquals('K', game.getHeroRepresentation());
+		assertEquals(false, game.areDoorsOpen());
+		assertEquals('I', game.getMapChar(new CellPosition(3,0)));
+		game.moveHero('a');
+		assertEquals('S', game.getMapChar(new CellPosition(3,0)));
+		assertEquals(true, game.areDoorsOpen());
 	}
 	
 }
