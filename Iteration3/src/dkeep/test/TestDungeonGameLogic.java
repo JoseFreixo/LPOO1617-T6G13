@@ -120,7 +120,7 @@ public class TestDungeonGameLogic {
 	}
 	
 	@Test
-	public void TesteHeroIntoDoorsWithKey(){
+	public void testeHeroIntoDoorsWithKey(){
 		GameMap gameMap = new GameMap(map_for_task2);
 		Game game = new Game(gameMap);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
@@ -136,5 +136,4 @@ public class TestDungeonGameLogic {
 		assertEquals('S', game.getMapChar(new CellPosition(3,0)));
 		assertEquals(true, game.areDoorsOpen());
 	}
-	
 }
