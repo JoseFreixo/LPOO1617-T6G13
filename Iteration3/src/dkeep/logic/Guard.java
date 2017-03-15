@@ -17,5 +17,7 @@ public class Guard extends Unit {
 		type = rand.nextInt(3);
 	}
 	
-	
+	public char [] getMovement(){
+		return movement;
+	}
 }
