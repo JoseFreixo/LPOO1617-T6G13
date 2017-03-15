@@ -1,6 +1,7 @@
 package dkeep.logic;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 	public static final boolean DEFEAT = true;
@@ -18,6 +19,7 @@ public class Game {
 		this.map = map;
 		Status = null;
 		openDoors = false;
+		int x = 0, y = 0;
 		for (int i=0;i<map.getMap().length;i++){
 			for (int j=0; j<map.getMap()[i].length;j++){
 				switch(map.getMap()[i][j]){
@@ -27,13 +29,21 @@ public class Game {
 					guarda = new Guard(i, j, 'G');
 					isKey = false;
 				break;
-				case 'O': 
-					ogres.add(new Ogre(i, j, 'O'));
+				case 'O':
+					x = j;
+					y = i;
 					isKey = true;
 				break;
 				case 'k': lever = new Lever(i, j, 'k');
 				break;
 				}
+			}
+		}
+		if(isKey){
+			Random rand = new Random();
+			int n = rand.nextInt(3);
+			for (int i = 0; i <= n; i++){
+				ogres.add(new Ogre(y, x, 'O'));
 			}
 		}
 	}

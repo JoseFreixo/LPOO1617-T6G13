@@ -66,7 +66,7 @@ public class GameMap {
 	}
 
 	public GameMap getNextLevel(){
-		return new KeepMap();
+			return new KeepMap();
 	}
 	
 	@Override

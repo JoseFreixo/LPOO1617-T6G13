@@ -135,5 +135,43 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals('S', game.getMapChar(new CellPosition(3,0)));
 		assertEquals(true, game.areDoorsOpen());
+		assertEquals(new CellPosition(3,1), game.getHeroPosition());
+	}
+	
+	@Test
+	public void testHeroWinGame(){
+		GameMap gameMap = new KeepMap();
+		Game game = new Game(gameMap);
+		game.moveHero('d');
+		game.moveHero('d');
+		game.moveHero('d');
+		game.moveHero('d');
+		game.moveHero('d');
+		game.moveHero('d');
+		game.moveHero('w');
+		game.moveHero('w');
+		game.moveHero('w');
+		game.moveHero('w');
+		game.moveHero('w');
+		assertEquals('I', game.getMapChar(new CellPosition(1,0)));
+		game.moveHero('w');
+		assertEquals('I', game.getMapChar(new CellPosition(1,0)));
+		assertEquals('K', game.getHeroRepresentation());
+		game.moveHero('s');
+		game.moveHero('s');
+		game.moveHero('a');
+		game.moveHero('a');
+		game.moveHero('a');
+		game.moveHero('a');
+		game.moveHero('a');
+		game.moveHero('a');
+		game.moveHero('w');
+		game.moveHero('w');
+		assertEquals('I', game.getMapChar(new CellPosition(1,0)));
+		game.moveHero('a');
+		assertEquals('S', game.getMapChar(new CellPosition(1,0)));
+		assertEquals(new CellPosition(1,1), game.getHeroPosition());
+		game.moveHero('a');
+		assertEquals(false, game.EndStatus());
 	}
 }
