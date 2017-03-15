@@ -2,6 +2,7 @@ package dkeep.logic;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 	public static final boolean DEFEAT = true;
@@ -97,6 +98,35 @@ public class Game {
 			return true;
 		}		
 		return false;
+	}
+	
+	public void moveOgre(Ogre ogre) { 
+		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
+		int y = ogre.getPosition().getY();
+		int x = ogre.getPosition().getX();
+		
+		if (moviment  == 0)
+			y -= 1;
+		else if (moviment == 1)
+			y += 1;
+		else if (moviment == 2)
+			x -= 1;
+		else if (moviment == 3)
+			x += 1;
+		
+		if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
+			ogre.setRepresentation('$');
+			ogre.setOgreOnKey(true);
+		}	
+		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
+			map.setUnitPosMap(new CellPosition(y, x), ogre.getPosition(), ogre.getRepresentation());
+			ogre.setPosition(y, x);
+			
+			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
+				ogre.setOgreOnKey(false);
+				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+			}
+		}
 	}
 
 	public void moveHero(char c) { 
