@@ -6,6 +6,7 @@ import org.junit.Test;
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
 import dkeep.logic.KeepMap;
+import dkeep.logic.Ogre;
 import dkeep.logic.CellPosition;
 	
 public class TestDungeonGameLogic {
@@ -174,4 +175,18 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals(false, game.EndStatus());
 	}
+	
+		@Test
+		public void testOgreMoviment(){
+			GameMap gameMap = new GameMap(map_for_task2);
+			Game game = new Game(gameMap);
+			Ogre ogre=game.getOgres().get(0);
+			game.moveOgre(ogre);
+			if(!ogre.getPosition().equals(new CellPosition(1,2))&&!ogre.getPosition().equals(new CellPosition(2,3))&&!ogre.getPosition().equals(new CellPosition(1,3))){
+				fail("Ogre didn't move correctly");
+			}
+		}
+		
+		
 }
+

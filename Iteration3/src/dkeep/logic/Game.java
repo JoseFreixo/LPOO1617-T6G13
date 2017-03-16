@@ -65,6 +65,9 @@ public class Game {
 		return map.getCharOnPos(Pos);
 	}
 	
+	public ArrayList<Ogre> getOgres() {
+		return ogres;
+	}
 	
 	
 	public boolean isGameOver(){
@@ -76,6 +79,10 @@ public class Game {
 		
 		for (int i=0; i<ogres.size();i++){
 			if(HeroCaught(ogres.get(i).getPosition(),getHeroPosition())){
+				Status = true;
+				return true;
+			}
+			if(HeroCaught(ogres.get(i).getClub().getPosition(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -100,6 +107,51 @@ public class Game {
 		return false;
 	}
 	
+	public void MoveAllTheOgres(){
+		
+		for (Ogre ogre: ogres){
+			moveOgre(ogre);
+			OgreSwingClub(ogre);
+		}
+		
+	}
+	
+	public void OgreSwingClub(Ogre ogre){
+		int pos= ThreadLocalRandom.current().nextInt(0, 4);
+		int y = ogre.getPosition().getY();
+		int x = ogre.getPosition().getX();
+		
+		if (pos  == 0)
+			y -= 1;
+		else if (pos == 1)
+			y += 1;
+		else if (pos == 2)
+			x -= 1;
+		else if (pos == 3)
+			x += 1;
+		
+		if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
+			Club newClub= new Club(y,x,'$');	
+			map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
+			ogre.setClub(newClub);
+			ogre.setSwingedOnKey(true);
+		}
+		
+		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
+			Club newClub= new Club(y,x,'*');
+			map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());;
+			ogre.setClub(newClub);
+			
+			if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
+				ogre.setSwingedOnKey(false);
+				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+			}
+		}
+		
+	}
+	
+	
+
 	public void moveOgre(Ogre ogre) { 
 		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
 		int y = ogre.getPosition().getY();
