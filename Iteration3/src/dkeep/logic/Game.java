@@ -117,6 +117,8 @@ public class Game {
 	}
 	
 	public void OgreSwingClub(Ogre ogre){
+		boolean swinged=false;
+		while(!swinged){
 		int pos= ThreadLocalRandom.current().nextInt(0, 4);
 		int y = ogre.getPosition().getY();
 		int x = ogre.getPosition().getX();
@@ -135,19 +137,19 @@ public class Game {
 			map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
 			ogre.setClub(newClub);
 			ogre.setSwingedOnKey(true);
-		}
-		
-		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
+			swinged=true;
+		}		
+		else if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
 			Club newClub= new Club(y,x,'*');
 			map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());;
 			ogre.setClub(newClub);
-			
+			swinged=true;
 			if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
 				ogre.setSwingedOnKey(false);
 				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
 			}
 		}
-		
+		}
 	}
 	
 	
