@@ -82,7 +82,7 @@ public class Game {
 				Status = true;
 				return true;
 			}
-			if(HeroCaught(ogres.get(i).getClub().getPosition(),getHeroPosition())){
+			else if(ogres.get(i).getClub()!=null&&HeroCaught(ogres.get(i).getClub().getPosition(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -119,36 +119,47 @@ public class Game {
 	public void OgreSwingClub(Ogre ogre){
 		boolean swinged=false;
 		while(!swinged){
-		int pos= ThreadLocalRandom.current().nextInt(0, 4);
-		int y = ogre.getPosition().getY();
-		int x = ogre.getPosition().getX();
-		
-		if (pos  == 0)
-			y -= 1;
-		else if (pos == 1)
-			y += 1;
-		else if (pos == 2)
-			x -= 1;
-		else if (pos == 3)
-			x += 1;
-		
-		if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
-			Club newClub= new Club(y,x,'$');	
-			map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
-			ogre.setClub(newClub);
-			ogre.setSwingedOnKey(true);
-			swinged=true;
-		}		
-		else if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
-			Club newClub= new Club(y,x,'*');
-			map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());;
-			ogre.setClub(newClub);
-			swinged=true;
-			if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
-				ogre.setSwingedOnKey(false);
-				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+			int pos= ThreadLocalRandom.current().nextInt(0, 4);
+			int y = ogre.getPosition().getY();
+			int x = ogre.getPosition().getX();
+
+			if (pos  == 0)
+				y -= 1;
+			else if (pos == 1)
+				y += 1;
+			else if (pos == 2)
+				x -= 1;
+			else if (pos == 3)
+				x += 1;
+
+
+			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
+				Club newClub= new Club(y,x,'$');
+
+				if(ogre.getClub()!=null)
+					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
+				else
+					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
+
+				ogre.setClub(newClub);
+				ogre.setSwingedOnKey(true);
+				swinged=true;
+			}		
+			else if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
+				Club newClub= new Club(y,x,'*');
+
+				if(ogre.getClub()!=null)
+					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
+					else
+					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
+
+				ogre.setClub(newClub);
+				swinged=true;
+				if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
+					ogre.setSwingedOnKey(false);
+					map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+				}
 			}
-		}
 		}
 	}
 	
