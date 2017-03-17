@@ -10,6 +10,10 @@ public class Play {
 	}
 	
 	public boolean playGame(){
+		char c;
+		while(true){
+			game
+		}
 		
 	}
 }

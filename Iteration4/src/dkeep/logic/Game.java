@@ -295,4 +295,10 @@ public class Game {
 	public GameMap getMap(){
 		return map;
 	}
+	
+	public void printMap(){
+		for (int i = 0; i < map.getMap().length; i++){
+			
+		}
+	}
 }
