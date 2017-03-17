@@ -111,12 +111,12 @@ public class Game {
 		
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
-			OgreSwingClub(ogre);
+			ogreSwingClub(ogre);
 		}
 		
 	}
 	
-	public void OgreSwingClub(Ogre ogre){
+	public void ogreSwingClub(Ogre ogre){
 		boolean swinged=false;
 		while(!swinged){
 			int pos= ThreadLocalRandom.current().nextInt(0, 4);
