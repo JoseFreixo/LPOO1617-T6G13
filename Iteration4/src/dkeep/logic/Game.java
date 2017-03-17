@@ -336,7 +336,7 @@ public class Game {
 		guarda.setPosition(y, x);
 	}
 
-	public boolean EndStatus() {
+	public Boolean EndStatus() {
 		return Status;
 	}
 	

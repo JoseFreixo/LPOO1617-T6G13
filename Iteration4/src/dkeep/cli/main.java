@@ -1,32 +1,16 @@
 package dkeep.cli;
 
-import dkeep.logic.Game;
-import dkeep.logic.GameMap;
+import java.util.ArrayList;
+
+import dkeep.logic.*;
 
 public class main {
 
 	public static void main(String[] args) {
-		char [][][] maps = {{{'X','X','X','X','X','X','X','X','X','X'},
-							 {'X','H',' ',' ','I',' ','X',' ','G','X'},
-							 {'X','X','X',' ','X','X','X',' ',' ','X'},
-							 {'X',' ','I',' ','I',' ','X',' ',' ','X'},
-							 {'X','X','X',' ','X','X','X',' ',' ','X'},
-							 {'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'I',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'X','X','X',' ','X','X','X','X',' ','X'},
-							 {'X',' ','I',' ','I',' ','X','k',' ','X'},
-							 {'X','X','X','X','X','X','X','X','X','X'}},
-							
-							{{'X','X','X','X','X','X','X','X','X'},
-							 {'I',' ',' ',' ','O',' ',' ','k','X'},
-							 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
-							 {'X','H',' ',' ',' ',' ',' ',' ','X'},
-							 {'X','X','X','X','X','X','X','X','X'}}};
-		Play play = new Play();
+		ArrayList<GameMap> maps = new ArrayList<GameMap>();
+		maps.add(new DungeonMap());
+		maps.add(new KeepMap());
+		Play play = new Play(maps);
 		play.playGame();
 	}
 }

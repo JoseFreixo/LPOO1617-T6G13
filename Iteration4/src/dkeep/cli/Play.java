@@ -29,21 +29,21 @@ public class Play {
 			c = Character.toUpperCase(c);
 			game.moveHero(c);
 			
-			if (game.EndStatus() == false){
+			if (game.EndStatus() != null && game.EndStatus() == false){
 				i++;
 				game = new Game(maps.get(i));
 				gameIsOver = true;
 				continue;
 			}
 			
-			if (game.EndStatus() == true){
+			if (game.EndStatus() != null && game.EndStatus() == true){
 				gameIsOver = true;
 			}
 			
 			game.MoveAllTheOgres();
 			game.moveGuard(nextGuardMove);
 			
-			if (game.EndStatus() == true){
+			if (game.EndStatus() != null && game.EndStatus() == true){
 				gameIsOver = true;
 			}
 		}

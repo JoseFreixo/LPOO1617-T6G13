@@ -2,7 +2,7 @@ package dkeep.logic;
 
 public class KeepMap extends GameMap{
 	
-	static char[][] map = {{'X','X','X','X','X','X','X','X','X'},
+	private static char[][] map = {{'X','X','X','X','X','X','X','X','X'},
 	 		{'I',' ',' ',' ','O',' ',' ','k','X'},
 	 		{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 	 		{'X',' ',' ',' ',' ',' ',' ',' ','X'},
