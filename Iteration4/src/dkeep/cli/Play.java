@@ -17,7 +17,7 @@ public class Play {
 	}
 	
 	public void playGame(){
-		Integer nextGuardMove = 0;
+		int [] nextGuardMove = { 0 };
 		char c;
 		boolean gameIsOver = false;
 		Scanner scan;
@@ -28,24 +28,33 @@ public class Play {
 			c = scan.next().charAt(0);
 			c = Character.toUpperCase(c);
 			game.moveHero(c);
-			
 			if (game.EndStatus() != null && game.EndStatus() == false){
 				i++;
+				if (i >= maps.size()){
+					gameIsOver = true;
+					game.printMap();
+					continue;
+				}
 				game = new Game(maps.get(i));
-				gameIsOver = true;
 				continue;
 			}
 			
-			if (game.EndStatus() != null && game.EndStatus() == true){
+			if (game.isGameOver()){
+				game.printMap();
 				gameIsOver = true;
 			}
 			
 			game.MoveAllTheOgres();
 			game.moveGuard(nextGuardMove);
 			
-			if (game.EndStatus() != null && game.EndStatus() == true){
+			if (game.isGameOver()){
+				game.printMap();
 				gameIsOver = true;
 			}
 		}
+		if (i < maps.size())
+			System.out.println("You lose!");
+		else
+			System.out.println("You win!");
 	}
 }

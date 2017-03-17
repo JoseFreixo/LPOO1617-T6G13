@@ -237,7 +237,10 @@ public class Game {
 		}
 	}
 	
-	public void moveGuard(Integer i){
+	public void moveGuard(int [] i){
+		if (guarda == null)
+			return;
+		
 		if (guarda.getTimeOut() > 0){
 			guarda.setTimeOut(guarda.getTimeOut() - 1);
 			if (guarda.getTimeOut() == 0)
@@ -245,89 +248,88 @@ public class Game {
 			return;
 		}
 		
-		if (i < 0)
-			i = guarda.getMovement().length - 1;
-		else if (i > guarda.getMovement().length - 1)
-			i = 0;
+		if (i[0] < 0)
+			i[0] = guarda.getMovement().length - 1;
+		else if (i[0] > guarda.getMovement().length - 1)
+			i[0] = 0;
 		
 		int y = guarda.getPosition().getY();
 		int x = guarda.getPosition().getX();
 		if (guarda.getType() == 0){ // Rookie
-			if (guarda.getMovement()[i] == 'W')
+			if (guarda.getMovement()[i[0]] == 'W')
 				y -= 1;
-			else if (guarda.getMovement()[i] == 'S')
+			else if (guarda.getMovement()[i[0]] == 'S')
 				y += 1;
-			else if (guarda.getMovement()[i] == 'A')
+			else if (guarda.getMovement()[i[0]] == 'A')
 				x -= 1;
-			else if (guarda.getMovement()[i] == 'D')
+			else if (guarda.getMovement()[i[0]] == 'D')
 				x += 1;
-				i++;
+			i[0]++;
 		}
 		else if (guarda.getType() == 1){ // Drunken
 			Random rand = new Random();
-			int r = rand.nextInt(4);
+			int r = rand.nextInt(5);
 			if (r == 0){
 				guarda.setTimeOut(3);
 				guarda.setRepresentation('g');
-				r = rand.nextInt(1);
+				r = rand.nextInt(2);
 				if (r == 0)
 					guarda.setFront(true);
 				else
 					guarda.setFront(false);
-				return;
 			}
-			if(guarda.isFront()){
-				if (guarda.getMovement()[i] == 'W')
+			else if(guarda.isFront()){
+				if (guarda.getMovement()[i[0]] == 'W')
 					y -= 1;
-				else if (guarda.getMovement()[i] == 'S')
+				else if (guarda.getMovement()[i[0]] == 'S')
 					y += 1;
-				else if (guarda.getMovement()[i] == 'A')
+				else if (guarda.getMovement()[i[0]] == 'A')
 					x -= 1;
-				else if (guarda.getMovement()[i] == 'D')
+				else if (guarda.getMovement()[i[0]] == 'D')
 					x += 1;
-				i++;
+				i[0]++;
 			}
 			else{
-				i--;
-				if (guarda.getMovement()[i] == 'W')
+				i[0]--;
+				if (guarda.getMovement()[i[0]] == 'W')
 					y += 1;
-				else if (guarda.getMovement()[i] == 'S')
+				else if (guarda.getMovement()[i[0]] == 'S')
 					y -= 1;
-				else if (guarda.getMovement()[i] == 'A')
+				else if (guarda.getMovement()[i[0]] == 'A')
 					x += 1;
-				else if (guarda.getMovement()[i] == 'D')
+				else if (guarda.getMovement()[i[0]] == 'D')
 					x -= 1;
 			}
 			
 		}
 		else { // Suspicious
 			Random rand = new Random();
-			int r = rand.nextInt(1);
+			int r = rand.nextInt(2);
 			if (r == 0)
 				guarda.setFront(true);
 			else
 				guarda.setFront(false);
 			
 			if(guarda.isFront()){
-				if (guarda.getMovement()[i] == 'W')
+				if (guarda.getMovement()[i[0]] == 'W')
 					y -= 1;
-				else if (guarda.getMovement()[i] == 'S')
+				else if (guarda.getMovement()[i[0]] == 'S')
 					y += 1;
-				else if (guarda.getMovement()[i] == 'A')
+				else if (guarda.getMovement()[i[0]] == 'A')
 					x -= 1;
-				else if (guarda.getMovement()[i] == 'D')
+				else if (guarda.getMovement()[i[0]] == 'D')
 					x += 1;
-				i++;
+				i[0]++;
 			}
 			else{
-				i--;
-				if (guarda.getMovement()[i] == 'W')
+				i[0]--;
+				if (guarda.getMovement()[i[0]] == 'W')
 					y += 1;
-				else if (guarda.getMovement()[i] == 'S')
+				else if (guarda.getMovement()[i[0]] == 'S')
 					y -= 1;
-				else if (guarda.getMovement()[i] == 'A')
+				else if (guarda.getMovement()[i[0]] == 'A')
 					x += 1;
-				else if (guarda.getMovement()[i] == 'D')
+				else if (guarda.getMovement()[i[0]] == 'D')
 					x -= 1;
 			}
 		}
