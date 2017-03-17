@@ -291,6 +291,12 @@ public class Game {
 			}
 			else{
 				i[0]--;
+				if (guarda.getTimeOut() > 0){
+					guarda.setTimeOut(guarda.getTimeOut() - 1);
+					if (guarda.getTimeOut() == 0)
+						guarda.setRepresentation('G');
+					return;
+				}
 				if (guarda.getMovement()[i[0]] == 'W')
 					y += 1;
 				else if (guarda.getMovement()[i[0]] == 'S')
@@ -323,6 +329,12 @@ public class Game {
 			}
 			else{
 				i[0]--;
+				if (guarda.getTimeOut() > 0){
+					guarda.setTimeOut(guarda.getTimeOut() - 1);
+					if (guarda.getTimeOut() == 0)
+						guarda.setRepresentation('G');
+					return;
+				}
 				if (guarda.getMovement()[i[0]] == 'W')
 					y += 1;
 				else if (guarda.getMovement()[i[0]] == 'S')
