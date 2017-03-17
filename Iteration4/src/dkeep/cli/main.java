@@ -39,6 +39,7 @@ public class main {
 			}
 			else {
 				System.out.println("You Lose!");
+				return;
 			}
 			i++;
 		}
