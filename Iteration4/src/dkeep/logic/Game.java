@@ -298,7 +298,10 @@ public class Game {
 	
 	public void printMap(){
 		for (int i = 0; i < map.getMap().length; i++){
-			
+			for (int j = 0; j < map.getMap()[i].length; j++){
+				System.out.print(map.getMap()[i][j] + " ");
+			}
+			System.out.println();
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package dkeep.cli;
 
+import java.util.Scanner;
+
 import dkeep.logic.Game;
 
 public class Play {
@@ -11,8 +13,14 @@ public class Play {
 	
 	public boolean playGame(){
 		char c;
+		Scanner scan;
 		while(true){
-			game
+			game.printMap();
+			System.out.print("To which direction would you like to move: ");
+			scan = new Scanner(System.in);
+			c = scan.next().charAt(0);
+			c = Character.toUpperCase(c);
+			game.moveHero(c);
 		}
 		
 	}
