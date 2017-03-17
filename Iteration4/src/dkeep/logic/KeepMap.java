@@ -15,8 +15,4 @@ public class KeepMap extends GameMap{
 	public KeepMap() {
 		super(map);
 	}
-
-	public GameMap getNextLevel(){
-		return null;
-	}
 }

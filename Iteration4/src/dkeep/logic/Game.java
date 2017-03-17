@@ -72,12 +72,12 @@ public class Game {
 	
 	public boolean isGameOver(){
 		
-		if(guarda!=null&&HeroCaught(getGuardPosition(),getHeroPosition())){
+		if(guarda != null && guarda.getRepresentation() == 'G' && HeroCaught(getGuardPosition(),getHeroPosition())){
 			Status = true;
 			return true;
 		}
 		
-		for (int i=0; i<ogres.size();i++){
+		for (int i = 0; i < ogres.size(); i++){
 			if(HeroCaught(ogres.get(i).getPosition(),getHeroPosition())){
 				Status = true;
 				return true;
@@ -219,40 +219,10 @@ public class Game {
 		}
 	
 		if (map.validPosition(y, x)) {
-
-			if (map.getMap()[y][x] == 'S') {
-				map = map.getNextLevel();
-				if (map == null) {
-					Status = false;
-					return;
-				}
-				printKey = false;
-				Status = null;
-				openDoors = false;
-				ogres = new ArrayList<Ogre>();
-				for (int i = 0; i < map.getMap().length; i++) {
-					for (int j = 0; j < map.getMap()[i].length; j++) {
-						switch (map.getMap()[i][j]) {
-						case 'H':
-							heroi = new Hero(i, j, 'H');
-							break;
-						case 'G':
-							guarda = new Guard(i, j, 'G');
-							isKey = false;
-							break;
-						case 'O':
-							ogres.add(new Ogre(i, j, 'O'));
-							isKey = true;
-							break;
-						case 'k':
-							lever = new Lever(i, j, 'k');
-							break;
-						}
-					}
-				}
+			if (map.getCharOnPos(new CellPosition(y, x)) == 'S'){
+				Status = false;
 				return;
 			}
-
 			map.setUnitPosMap(new CellPosition(y, x), getHeroPosition(), heroi.getRepresentation());
 			heroi.setPosition(y, x);
 			if (printKey) {
@@ -267,18 +237,100 @@ public class Game {
 		}
 	}
 	
-	public void moveGuard(int i){
+	public void moveGuard(Integer i){
+		if (guarda.getTimeOut() > 0){
+			guarda.setTimeOut(guarda.getTimeOut() - 1);
+			if (guarda.getTimeOut() == 0)
+				guarda.setRepresentation('G');
+			return;
+		}
+		
+		if (i < 0)
+			i = guarda.getMovement().length - 1;
+		else if (i > guarda.getMovement().length - 1)
+			i = 0;
+		
 		int y = guarda.getPosition().getY();
 		int x = guarda.getPosition().getX();
-		
-		if (guarda.getMovement()[i] == 'W')
-			y -= 1;
-		else if (guarda.getMovement()[i] == 'S')
-			y += 1;
-		else if (guarda.getMovement()[i] == 'A')
-			x -= 1;
-		else if (guarda.getMovement()[i] == 'D')
-			x += 1;
+		if (guarda.getType() == 0){ // Rookie
+			if (guarda.getMovement()[i] == 'W')
+				y -= 1;
+			else if (guarda.getMovement()[i] == 'S')
+				y += 1;
+			else if (guarda.getMovement()[i] == 'A')
+				x -= 1;
+			else if (guarda.getMovement()[i] == 'D')
+				x += 1;
+				i++;
+		}
+		else if (guarda.getType() == 1){ // Drunken
+			Random rand = new Random();
+			int r = rand.nextInt(4);
+			if (r == 0){
+				guarda.setTimeOut(3);
+				guarda.setRepresentation('g');
+				r = rand.nextInt(1);
+				if (r == 0)
+					guarda.setFront(true);
+				else
+					guarda.setFront(false);
+				return;
+			}
+			if(guarda.isFront()){
+				if (guarda.getMovement()[i] == 'W')
+					y -= 1;
+				else if (guarda.getMovement()[i] == 'S')
+					y += 1;
+				else if (guarda.getMovement()[i] == 'A')
+					x -= 1;
+				else if (guarda.getMovement()[i] == 'D')
+					x += 1;
+				i++;
+			}
+			else{
+				i--;
+				if (guarda.getMovement()[i] == 'W')
+					y += 1;
+				else if (guarda.getMovement()[i] == 'S')
+					y -= 1;
+				else if (guarda.getMovement()[i] == 'A')
+					x += 1;
+				else if (guarda.getMovement()[i] == 'D')
+					x -= 1;
+			}
+			
+		}
+		else { // Suspicious
+			Random rand = new Random();
+			int r = rand.nextInt(1);
+			if (r == 0)
+				guarda.setFront(true);
+			else
+				guarda.setFront(false);
+			
+			if(guarda.isFront()){
+				if (guarda.getMovement()[i] == 'W')
+					y -= 1;
+				else if (guarda.getMovement()[i] == 'S')
+					y += 1;
+				else if (guarda.getMovement()[i] == 'A')
+					x -= 1;
+				else if (guarda.getMovement()[i] == 'D')
+					x += 1;
+				i++;
+			}
+			else{
+				i--;
+				if (guarda.getMovement()[i] == 'W')
+					y += 1;
+				else if (guarda.getMovement()[i] == 'S')
+					y -= 1;
+				else if (guarda.getMovement()[i] == 'A')
+					x += 1;
+				else if (guarda.getMovement()[i] == 'D')
+					x -= 1;
+			}
+		}
 		
 		map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
 		guarda.setPosition(y, x);

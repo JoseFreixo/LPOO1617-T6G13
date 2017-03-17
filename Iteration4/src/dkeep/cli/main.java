@@ -26,23 +26,8 @@ public class main {
 							 {'X',' ',' ',' ',' ',' ',' ',' ','X'},
 							 {'X','H',' ',' ',' ',' ',' ',' ','X'},
 							 {'X','X','X','X','X','X','X','X','X'}}};
-		int i = 0;
-		while (i < maps.length){
-			GameMap gameMap = new GameMap(maps[i]);
-			Game game = new Game(gameMap);
-			Play play = new Play(game);
-			if (play.playGame()){
-				if (i == maps.length - 1)
-					System.out.println("You Win!");
-				else
-					System.out.println("Next Level!");
-			}
-			else {
-				System.out.println("You Lose!");
-				return;
-			}
-			i++;
-		}
+		Play play = new Play();
+		play.playGame();
 	}
 }
 

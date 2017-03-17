@@ -68,10 +68,6 @@ public class GameMap {
 			}
 		}
 	}
-
-	public GameMap getNextLevel(){
-			return new KeepMap();
-	}
 	
 	@Override
 	public boolean equals(Object obj) {
