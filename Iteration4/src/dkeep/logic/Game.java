@@ -112,6 +112,11 @@ public class Game {
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
 		}
+		map.ClearAllOgresAndAttacks();
+		map.setCharOnPos(lever.getPosition(), lever.getRepresentation());
+		for (Ogre ogre: ogres){
+			map.setCharOnPos(ogre.getPosition(), ogre.getRepresentation());
+		}
 //		for (Ogre ogre: ogres){
 //			ogreSwingClub(ogre);
 //		}
@@ -131,21 +136,17 @@ public class Game {
 			x += 1;
 		
 		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){
-			
 			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
 				ogre.setOgreOnKey(false);
 				ogre.setRepresentation('O');
-				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
 			}
 			
 			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
 				ogre.setRepresentation('$');
 				ogre.setOgreOnKey(true);
 			}
-
-			map.setUnitPosMap(new CellPosition(y, x), ogre.getPosition(), ogre.getRepresentation());
+			
 			ogre.setPosition(y, x);
-
 		}
 		
 	}
