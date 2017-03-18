@@ -42,7 +42,7 @@ public class Game {
 		}
 		if(isKey){
 			//Random rand = new Random();
-			int n = 1;//rand.nextInt(3);
+			int n = 4;//rand.nextInt(3);
 			for (int i = 0; i < n; i++){
 				ogres.add(new Ogre(y, x, 'O'));
 			}
@@ -111,61 +111,12 @@ public class Game {
 		
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
-			ogreSwingClub(ogre);
 		}
-		
+//		for (Ogre ogre: ogres){
+//			ogreSwingClub(ogre);
+//		}
 	}
-	
-	public void ogreSwingClub(Ogre ogre){
-		boolean swinged=false;
-		while(!swinged){
-			int pos= ThreadLocalRandom.current().nextInt(0, 4);
-			int y = ogre.getPosition().getY();
-			int x = ogre.getPosition().getX();
-
-			if (pos  == 0)
-				y -= 1;
-			else if (pos == 1)
-				y += 1;
-			else if (pos == 2)
-				x -= 1;
-			else if (pos == 3)
-				x += 1;
-
-
-			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
-				Club newClub= new Club(y,x,'$');
-
-				if(ogre.getClub()!=null)
-					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
-				else
-					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
-
-				ogre.setClub(newClub);
-				ogre.setSwingedOnKey(true);
-				swinged=true;
-			}		
-			else if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
-				Club newClub= new Club(y,x,'*');
-
-				if(ogre.getClub()!=null)
-					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
-					else
-					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
-
-				ogre.setClub(newClub);
-				swinged=true;
-				if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
-					ogre.setSwingedOnKey(false);
-					map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
-				}
-			}
-		}
-	}
-	
-	
-
-	public void moveOgre(Ogre ogre) { 
+	public void moveOgre(Ogre ogre) {
 		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
 		int y = ogre.getPosition().getY();
 		int x = ogre.getPosition().getX();
@@ -179,24 +130,108 @@ public class Game {
 		else if (moviment == 3)
 			x += 1;
 		
-		if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
-			ogre.setRepresentation('$');
-			ogre.setOgreOnKey(true);
-		}	
-		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
-			map.setUnitPosMap(new CellPosition(y, x), ogre.getPosition(), ogre.getRepresentation());
-			ogre.setPosition(y, x);
+		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){
 			
 			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
 				ogre.setOgreOnKey(false);
+				ogre.setRepresentation('O');
 				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
 			}
-			if(ogre.getClub().getPosition().equals(new CellPosition(y,x))){
-				Club club=null;
-				ogre.setClub(club);
+			
+			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
+				ogre.setRepresentation('$');
+				ogre.setOgreOnKey(true);
 			}
+
+			map.setUnitPosMap(new CellPosition(y, x), ogre.getPosition(), ogre.getRepresentation());
+			ogre.setPosition(y, x);
+
 		}
+		
 	}
+	
+//	public void ogreSwingClub(Ogre ogre){
+//		boolean swinged=false;
+//		while(!swinged){
+//			int pos= ThreadLocalRandom.current().nextInt(0, 4);
+//			int y = ogre.getPosition().getY();
+//			int x = ogre.getPosition().getX();
+//
+//			if (pos  == 0)
+//				y -= 1;
+//			else if (pos == 1)
+//				y += 1;
+//			else if (pos == 2)
+//				x -= 1;
+//			else if (pos == 3)
+//				x += 1;
+//
+//
+//			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'&&map.getMap()[y][x] != '$'){
+//				Club newClub= new Club(y,x,'$');
+//
+//				if(ogre.getClub()!=null)
+//					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
+//				else
+//					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
+//
+//				ogre.setClub(newClub);
+//				ogre.setSwingedOnKey(true);
+//				swinged=true;
+//			}		
+//			else if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'&&map.getMap()[y][x] != '$'&&map.getMap()[y][x] != 'O'){	
+//				Club newClub= new Club(y,x,'*');
+//
+//				if(ogre.getClub()!=null)
+//					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
+//					else
+//					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
+//
+//				ogre.setClub(newClub);
+//				swinged=true;
+//				if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
+//					ogre.setSwingedOnKey(false);
+//					map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+//				}
+//			}
+//		}
+//	}
+//	
+//	
+//
+//	public void moveOgre(Ogre ogre) { 
+//		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
+//		int y = ogre.getPosition().getY();
+//		int x = ogre.getPosition().getX();
+//		
+//		if (moviment  == 0)
+//			y -= 1;
+//		else if (moviment == 1)
+//			y += 1;
+//		else if (moviment == 2)
+//			x -= 1;
+//		else if (moviment == 3)
+//			x += 1;
+//		
+//		if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
+//			ogre.setRepresentation('$');
+//			ogre.setOgreOnKey(true);
+//		}	
+//		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
+//			map.setUnitPosMap(new CellPosition(y, x), ogre.getPosition(), ogre.getRepresentation());
+//			ogre.setPosition(y, x);
+//			
+//			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
+//				ogre.setOgreOnKey(false);
+//				ogre.setRepresentation('O');
+//				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+//			}
+//			if(ogre.getClub()!=null&&ogre.getClub().getPosition().equals(new CellPosition(y,x))){
+//				Club club=null;
+//				ogre.setClub(club);
+//			}
+//		}
+//	}
 
 	public void moveHero(char c) { 
 		c = Character.toUpperCase(c);
