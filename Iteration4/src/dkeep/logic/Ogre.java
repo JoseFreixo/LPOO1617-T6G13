@@ -3,7 +3,7 @@ package dkeep.logic;
 public class Ogre extends Unit{
 	Boolean OgreOnKey;
 	Boolean swingedOnKey;
-	Club club;
+	CellPosition attack;
 	
 	public Boolean getOgreOnKey() {
 		return OgreOnKey;
@@ -13,13 +13,6 @@ public class Ogre extends Unit{
 		OgreOnKey = ogreOnKey;
 	}
 
-	public Club getClub() {
-		return club;
-	}
-
-	public void setClub(Club club) {
-		this.club = club;
-	}
 
 	public Boolean getSwingedOnKey() {
 		return swingedOnKey;
@@ -29,10 +22,18 @@ public class Ogre extends Unit{
 		this.swingedOnKey = swingedOnKey;
 	}
 
+	public CellPosition getAttack() {
+		return attack;
+	}
+
+	public void setAttack(CellPosition attack) {
+		this.attack = attack;
+	}
+
 	public Ogre(int y, int x, char rep) {
 		super(y, x, rep);
+		attack= new CellPosition(y, x);
 		OgreOnKey=false;
-		club=null;
 		swingedOnKey=false;
 	}
 

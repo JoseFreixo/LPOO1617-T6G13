@@ -187,16 +187,16 @@ public class TestDungeonGameLogic {
 			}
 		}
 		
-//		@Test
-//		public void testOgreSwing(){
-//			GameMap gameMap = new GameMap(map_for_task2);
-//			Game game = new Game(gameMap);
-//			Ogre ogre=game.getOgres().get(0);
-//			//game.ogreSwingClub(ogre);
-//			if(!ogre.getClub().getPosition().equals(new CellPosition(1,2))&&!ogre.getClub().getPosition().equals(new CellPosition(2,3))){
-//				fail("Ogre didn't swing correctly");
-//			}
-//		}
+		@Test
+		public void testOgreSwing(){
+			GameMap gameMap = new GameMap(map_for_task2);
+			Game game = new Game(gameMap);
+			Ogre ogre=game.getOgres().get(0);
+			//game.ogreSwingClub(ogre);
+			if(!ogre.getAttack().equals(new CellPosition(1,2))&&!ogre.getAttack().equals(new CellPosition(2,3))){
+				fail("Ogre didn't swing correctly");
+			}
+		}
 		
 		
 }

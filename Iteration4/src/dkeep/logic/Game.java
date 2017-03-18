@@ -41,8 +41,8 @@ public class Game {
 			}
 		}
 		if(isKey){
-			//Random rand = new Random();
-			int n = 4;//rand.nextInt(3);
+			Random rand = new Random();
+			int n = rand.nextInt(3);
 			for (int i = 0; i < n; i++){
 				ogres.add(new Ogre(y, x, 'O'));
 			}
@@ -82,7 +82,7 @@ public class Game {
 				Status = true;
 				return true;
 			}
-			else if(ogres.get(i).getClub()!=null&&HeroCaught(ogres.get(i).getClub().getPosition(),getHeroPosition())){
+			else if(HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -109,18 +109,28 @@ public class Game {
 	
 	public void MoveAllTheOgres(){
 		
+		
+		ClearAllOgresAndAttacks();
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
 		}
-		map.ClearAllOgresAndAttacks();
+		
 		map.setCharOnPos(lever.getPosition(), lever.getRepresentation());
 		for (Ogre ogre: ogres){
 			map.setCharOnPos(ogre.getPosition(), ogre.getRepresentation());
 		}
-//		for (Ogre ogre: ogres){
-//			ogreSwingClub(ogre);
-//		}
+		for (Ogre ogre: ogres){
+		 ogreSwingClub(ogre);
+		 
+		}
 	}
+	private void ClearAllOgresAndAttacks() {
+		for (Ogre ogre: ogres){
+			map.setCharOnPos(ogre.getPosition(), ' ');
+			map.setCharOnPos(ogre.getAttack(), ' ');
+		}	
+	}
+
 	public void moveOgre(Ogre ogre) {
 		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
 		int y = ogre.getPosition().getY();
@@ -149,6 +159,37 @@ public class Game {
 			ogre.setPosition(y, x);
 		}
 		
+	}
+	
+	public void ogreSwingClub(Ogre ogre){
+		boolean swinged=false;
+		int trys=25;
+		while(!swinged&&trys!=0){
+			int pos= ThreadLocalRandom.current().nextInt(0, 4);
+			int y = ogre.getPosition().getY();
+			int x = ogre.getPosition().getX();
+
+			if (pos  == 0)
+				y -= 1;
+			else if (pos == 1)
+				y += 1;
+			else if (pos == 2)
+				x -= 1;
+			else if (pos == 3)
+				x += 1;
+			
+			if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'&&map.getMap()[y][x] != '$'&&map.getMap()[y][x] != 'O'){
+				ogre.setAttack(new CellPosition(y,x));
+				if(new CellPosition(y,x).equals(lever.getPosition()))
+					map.setCharOnPos(ogre.getAttack(), '$');
+				else
+					map.setCharOnPos(ogre.getAttack(), '*');
+				swinged=true;
+				trys--;
+			}
+			if(!swinged)
+				ogre.setAttack(ogre.getPosition());
+		}	
 	}
 	
 //	public void ogreSwingClub(Ogre ogre){
