@@ -111,8 +111,8 @@ public class Game {
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
 		}
-		
-		map.setCharOnPos(lever.getPosition(), lever.getRepresentation());
+		if (heroi.getRepresentation() == 'H')
+			map.setCharOnPos(lever.getPosition(), lever.getRepresentation());
 		for (Ogre ogre: ogres){
 			map.setCharOnPos(ogre.getPosition(), ogre.getRepresentation());
 		}
@@ -188,89 +188,6 @@ public class Game {
 				ogre.setAttack(ogre.getPosition());
 		}	
 	}
-	
-//	public void ogreSwingClub(Ogre ogre){
-//		boolean swinged=false;
-//		while(!swinged){
-//			int pos= ThreadLocalRandom.current().nextInt(0, 4);
-//			int y = ogre.getPosition().getY();
-//			int x = ogre.getPosition().getX();
-//
-//			if (pos  == 0)
-//				y -= 1;
-//			else if (pos == 1)
-//				y += 1;
-//			else if (pos == 2)
-//				x -= 1;
-//			else if (pos == 3)
-//				x += 1;
-//
-//
-//			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'&&map.getMap()[y][x] != '$'){
-//				Club newClub= new Club(y,x,'$');
-//
-//				if(ogre.getClub()!=null)
-//					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
-//				else
-//					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
-//
-//				ogre.setClub(newClub);
-//				ogre.setSwingedOnKey(true);
-//				swinged=true;
-//			}		
-//			else if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'&&map.getMap()[y][x] != '$'&&map.getMap()[y][x] != 'O'){	
-//				Club newClub= new Club(y,x,'*');
-//
-//				if(ogre.getClub()!=null)
-//					map.setUnitPosMap(newClub.getPosition(), ogre.getClub().getPosition(), newClub.getRepresentation());
-//					else
-//					map.setCharOnPos(newClub.getPosition(), newClub.getRepresentation());
-//
-//				ogre.setClub(newClub);
-//				swinged=true;
-//				if (ogre.getSwingedOnKey()&&heroi.getRepresentation()=='H'){
-//					ogre.setSwingedOnKey(false);
-//					map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
-//				}
-//			}
-//		}
-//	}
-//	
-//	
-//
-//	public void moveOgre(Ogre ogre) { 
-//		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
-//		int y = ogre.getPosition().getY();
-//		int x = ogre.getPosition().getX();
-//		
-//		if (moviment  == 0)
-//			y -= 1;
-//		else if (moviment == 1)
-//			y += 1;
-//		else if (moviment == 2)
-//			x -= 1;
-//		else if (moviment == 3)
-//			x += 1;
-//		
-//		if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
-//			ogre.setRepresentation('$');
-//			ogre.setOgreOnKey(true);
-//		}	
-//		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){	
-//			map.setUnitPosMap(new CellPosition(y, x), ogre.getPosition(), ogre.getRepresentation());
-//			ogre.setPosition(y, x);
-//			
-//			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
-//				ogre.setOgreOnKey(false);
-//				ogre.setRepresentation('O');
-//				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
-//			}
-//			if(ogre.getClub()!=null&&ogre.getClub().getPosition().equals(new CellPosition(y,x))){
-//				Club club=null;
-//				ogre.setClub(club);
-//			}
-//		}
-//	}
 
 	public void moveHero(char c) { 
 		c = Character.toUpperCase(c);
@@ -369,12 +286,10 @@ public class Game {
 			}
 			else{
 				i[0]--;
-				if (guarda.getTimeOut() > 0){
-					guarda.setTimeOut(guarda.getTimeOut() - 1);
-					if (guarda.getTimeOut() == 0)
-						guarda.setRepresentation('G');
-					return;
-				}
+				if (i[0] < 0)
+					i[0] = guarda.getMovement().length - 1;
+				else if (i[0] > guarda.getMovement().length - 1)
+					i[0] = 0;
 				if (guarda.getMovement()[i[0]] == 'W')
 					y += 1;
 				else if (guarda.getMovement()[i[0]] == 'S')
@@ -407,12 +322,10 @@ public class Game {
 			}
 			else{
 				i[0]--;
-				if (guarda.getTimeOut() > 0){
-					guarda.setTimeOut(guarda.getTimeOut() - 1);
-					if (guarda.getTimeOut() == 0)
-						guarda.setRepresentation('G');
-					return;
-				}
+				if (i[0] < 0)
+					i[0] = guarda.getMovement().length - 1;
+				else if (i[0] > guarda.getMovement().length - 1)
+					i[0] = 0;
 				if (guarda.getMovement()[i[0]] == 'W')
 					y += 1;
 				else if (guarda.getMovement()[i[0]] == 'S')
