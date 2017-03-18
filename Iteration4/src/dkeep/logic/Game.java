@@ -41,8 +41,7 @@ public class Game {
 			}
 		}
 		if(isKey){
-			Random rand = new Random();
-			int n = rand.nextInt(3);
+			int n = ThreadLocalRandom.current().nextInt(1, 6); //(entre 1 a 5 incluindo)
 			for (int i = 0; i < n; i++){
 				ogres.add(new Ogre(y, x, 'O'));
 			}
@@ -107,9 +106,7 @@ public class Game {
 		return false;
 	}
 	
-	public void MoveAllTheOgres(){
-		
-		
+	public void MoveAllTheOgres(){	
 		ClearAllOgresAndAttacks();
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
