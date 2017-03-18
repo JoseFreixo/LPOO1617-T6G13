@@ -41,9 +41,9 @@ public class Game {
 			}
 		}
 		if(isKey){
-			Random rand = new Random();
-			int n = rand.nextInt(3);
-			for (int i = 0; i <= n; i++){
+			//Random rand = new Random();
+			int n = 1;//rand.nextInt(3);
+			for (int i = 0; i < n; i++){
 				ogres.add(new Ogre(y, x, 'O'));
 			}
 		}
@@ -190,6 +190,10 @@ public class Game {
 			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
 				ogre.setOgreOnKey(false);
 				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+			}
+			if(ogre.getClub().getPosition().equals(new CellPosition(y,x))){
+				Club club=null;
+				ogre.setClub(club);
 			}
 		}
 	}
