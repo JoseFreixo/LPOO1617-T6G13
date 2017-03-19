@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import dkeep.logic.*;
 
-public class main {
+public class DungeonKeep {
 
 	public static void main(String[] args) {
 		ArrayList<GameMap> maps = new ArrayList<GameMap>();
@@ -14,4 +14,3 @@ public class main {
 		play.playGame();
 	}
 }
-
