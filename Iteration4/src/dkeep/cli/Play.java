@@ -44,6 +44,8 @@ public class Play {
 				gameIsOver = true;
 			}
 			
+			game.stunOgres();
+			
 			game.MoveAllTheOgres();
 			game.moveGuard(nextGuardMove);
 			

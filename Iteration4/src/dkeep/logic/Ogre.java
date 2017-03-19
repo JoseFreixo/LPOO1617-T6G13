@@ -1,6 +1,7 @@
 package dkeep.logic;
 
 public class Ogre extends Unit{
+	int stunTimeout;
 	Boolean OgreOnKey;
 	Boolean swingedOnKey;
 	CellPosition attack;
@@ -35,6 +36,15 @@ public class Ogre extends Unit{
 		attack= new CellPosition(y, x);
 		OgreOnKey=false;
 		swingedOnKey=false;
+		stunTimeout = 0;
+	}
+
+	public int getStunTimeout() {
+		return stunTimeout;
+	}
+
+	public void setStunTimeout(int stunTimeout) {
+		this.stunTimeout = stunTimeout;
 	}
 
 }

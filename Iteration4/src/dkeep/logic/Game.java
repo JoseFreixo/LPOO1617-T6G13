@@ -41,6 +41,7 @@ public class Game {
 			}
 		}
 		if(isKey){
+			heroi.setRepresentation('A');
 			int n = ThreadLocalRandom.current().nextInt(1, 6); //(entre 1 a 5 incluindo)
 			for (int i = 0; i < n; i++){
 				ogres.add(new Ogre(y, x, 'O'));
@@ -77,11 +78,7 @@ public class Game {
 		}
 		
 		for (int i = 0; i < ogres.size(); i++){
-			if(HeroCaught(ogres.get(i).getPosition(),getHeroPosition())){
-				Status = true;
-				return true;
-			}
-			else if(HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
+			if(HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -108,17 +105,22 @@ public class Game {
 	
 	public void MoveAllTheOgres(){	
 		ClearAllOgresAndAttacks();
+		
 		for (Ogre ogre: ogres){
 			moveOgre(ogre);
 		}
+		
 		if (heroi.getRepresentation() == 'H')
 			map.setCharOnPos(lever.getPosition(), lever.getRepresentation());
+		
+		stunOgres();
+		
 		for (Ogre ogre: ogres){
 			map.setCharOnPos(ogre.getPosition(), ogre.getRepresentation());
 		}
+		
 		for (Ogre ogre: ogres){
-		 ogreSwingClub(ogre);
-		 
+			ogreSwingClub(ogre);
 		}
 	}
 	private void ClearAllOgresAndAttacks() {
@@ -129,6 +131,9 @@ public class Game {
 	}
 
 	public void moveOgre(Ogre ogre) {
+		if (ogre.getRepresentation() == 'o'){
+			return;
+		}
 		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
 		int y = ogre.getPosition().getY();
 		int x = ogre.getPosition().getX();
@@ -159,6 +164,12 @@ public class Game {
 	}
 	
 	public void ogreSwingClub(Ogre ogre){
+		if (ogre.getRepresentation() == 'o'){
+			ogre.setStunTimeout(ogre.getStunTimeout() - 1);
+			if (ogre.getStunTimeout() <= 0)
+				ogre.setRepresentation('O');
+			return;
+		}
 		boolean swinged=false;
 		int trys=25;
 		while(!swinged&&trys!=0){
@@ -340,7 +351,21 @@ public class Game {
 		map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
 		guarda.setPosition(y, x);
 	}
-
+	
+	public void stunOgres(){
+		for (Ogre ogre: ogres){
+			if (ogre.getRepresentation() == 'O'){
+				if((ogre.getPosition().getX()==heroi.getPosition().getX()-1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
+				   (ogre.getPosition().getX()==heroi.getPosition().getX()+1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
+				   (ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()-1) ||
+				   (ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()+1)){
+					ogre.setRepresentation('o');
+					ogre.setStunTimeout(3);
+				}
+			}
+		}
+	}
+	
 	public Boolean EndStatus() {
 		return Status;
 	}
