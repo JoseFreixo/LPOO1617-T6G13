@@ -103,7 +103,7 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
-		assertEquals('H', game.getHeroRepresentation());
+		assertEquals('A', game.getHeroRepresentation());
 		game.moveHero('s');
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		assertEquals('K', game.getHeroRepresentation());
@@ -116,7 +116,7 @@ public class TestDungeonGameLogic {
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
 		game.moveHero('a');
-		assertEquals('H', game.getHeroRepresentation());
+		assertEquals('A', game.getHeroRepresentation());
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
 	}
 	
@@ -127,7 +127,7 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
-		assertEquals('H', game.getHeroRepresentation());
+		assertEquals('A', game.getHeroRepresentation());
 		game.moveHero('s');
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		assertEquals('K', game.getHeroRepresentation());
@@ -192,7 +192,7 @@ public class TestDungeonGameLogic {
 			GameMap gameMap = new GameMap(map_for_task2);
 			Game game = new Game(gameMap);
 			Ogre ogre=game.getOgres().get(0);
-			//game.ogreSwingClub(ogre);
+			game.ogreSwingClub(ogre);
 			if(!ogre.getAttack().equals(new CellPosition(1,2))&&!ogre.getAttack().equals(new CellPosition(2,3))){
 				fail("Ogre didn't swing correctly");
 			}
