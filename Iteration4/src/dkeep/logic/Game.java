@@ -110,7 +110,7 @@ public class Game {
 			moveOgre(ogre);
 		}
 		
-		if (heroi.getRepresentation() == 'H')
+		if (heroi.getRepresentation() != 'K')
 			map.setCharOnPos(lever.getPosition(), lever.getRepresentation());
 		
 		stunOgres();
@@ -148,12 +148,12 @@ public class Game {
 			x += 1;
 		
 		if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'){
-			if (ogre.getOgreOnKey()&&heroi.getRepresentation()=='H'){
+			if (ogre.getOgreOnKey()&&heroi.getRepresentation()!='K'){
 				ogre.setOgreOnKey(false);
 				ogre.setRepresentation('O');
 			}
 			
-			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()=='H'){
+			if (isKey && new CellPosition(y, x).equals(lever.getPosition())&&heroi.getRepresentation()!='K'){
 				ogre.setRepresentation('$');
 				ogre.setOgreOnKey(true);
 			}
