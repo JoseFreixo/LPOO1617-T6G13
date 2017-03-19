@@ -21,6 +21,25 @@ public class Guard extends Unit {
 		front = true;
 	}
 	
+	public Guard(int y, int x, char rep, String Personalaty) {
+		super(y, x, rep);
+		
+		switch(Personalaty){
+		case "Rookie":
+			type = 0;
+			break;
+		case "Drunken":
+			type = 0;
+			break;
+		case "Suspicious":
+			type = 0;
+			break;
+		}
+
+		timeOut = 0;
+		front = true;
+	}
+	
 	public boolean isFront() {
 		return front;
 	}

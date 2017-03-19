@@ -49,6 +49,39 @@ public class Game {
 		}
 	}
 	
+	public Game(GameMap map, String guardPersonalaty, int numberOfOgres){
+		this.map = map;
+		Status = null;
+		openDoors = false;
+		int x = 0, y = 0;
+		for (int i=0;i<map.getMap().length;i++){
+			for (int j=0; j<map.getMap()[i].length;j++){
+				switch(map.getMap()[i][j]){
+				case 'H': heroi = new Hero(i, j, 'H');
+				break;
+				case 'G': 
+					guarda = new Guard(i, j, 'G',guardPersonalaty);
+					isKey = false;
+				break;
+				case 'O':
+					x = j;
+					y = i;
+					isKey = true;
+				break;
+				case 'k': lever = new Lever(i, j, 'k');
+				break;
+				}
+			}
+		}
+		if(isKey){
+			heroi.setRepresentation('A');
+			int n = numberOfOgres;
+			for (int i = 0; i < n; i++){
+				ogres.add(new Ogre(y, x, 'O'));
+			}
+		}
+	}
+	
 	public CellPosition getHeroPosition(){
 		return heroi.getPosition();
 	}

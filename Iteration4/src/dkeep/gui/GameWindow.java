@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Window.Type;
 import java.awt.Dialog.ModalExclusionType;
+import javax.swing.DropMode;
 
 public class GameWindow {
 
@@ -62,7 +63,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
 		
 		textField = new JTextField();
-		textField.setBounds(129, 27, 86, 20);
+		textField.setBounds(129, 27, 95, 20);
 		frmDungeonKeep.getContentPane().add(textField);
 		textField.setColumns(10);
 		
@@ -73,10 +74,10 @@ public class GameWindow {
 
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Novice", "Drunken", "Suspicious"}));
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		comboBox.setToolTipText("Choose the Guard Personality");
 		comboBox.setMaximumRowCount(3);
-		comboBox.setBounds(129, 62, 86, 20);
+		comboBox.setBounds(129, 62, 95, 20);
 		frmDungeonKeep.getContentPane().add(comboBox);
 		
 		JButton btnNewGame = new JButton("New Game");
@@ -85,7 +86,7 @@ public class GameWindow {
 				
 			}
 		});
-		btnNewGame.setBounds(311, 45, 89, 23);
+		btnNewGame.setBounds(311, 45, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnNewGame);
 		
 		JButton btnExitGame = new JButton("Exit");
@@ -93,10 +94,11 @@ public class GameWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnExitGame.setBounds(311, 307, 89, 23);
+		btnExitGame.setBounds(311, 307, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnExitGame);
 		
 		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
 		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
 		textArea.setBounds(22, 95, 235, 235);
 		frmDungeonKeep.getContentPane().add(textArea);
