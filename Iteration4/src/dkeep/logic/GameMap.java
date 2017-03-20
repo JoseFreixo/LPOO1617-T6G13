@@ -6,7 +6,7 @@ public class GameMap {
 	char[][] map;
 	
 	public GameMap(char[][] map){
-		this.map = map;
+		this.map = copyMap(map);
 	}
 
 	public char[][] getMap(){
@@ -29,6 +29,16 @@ public class GameMap {
 		if (map[y][x] == 'X' || map[y][x] == 'I')
 			return false;
 		return true;
+	}
+	
+	public char [][] copyMap(char[][] mapa){
+		char[][] copy = new char[mapa.length][mapa[0].length];
+		for(int i=0;i<mapa.length;i++){
+			for(int j=0; j<mapa[0].length;j++){
+				copy[i][j]=mapa[i][j];
+			}
+		}
+		return copy;
 	}
 	
 	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char representation){

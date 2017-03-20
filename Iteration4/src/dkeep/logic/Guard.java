@@ -29,10 +29,10 @@ public class Guard extends Unit {
 			type = 0;
 			break;
 		case "Drunken":
-			type = 0;
+			type = 1;
 			break;
 		case "Suspicious":
-			type = 0;
+			type = 2;
 			break;
 		}
 

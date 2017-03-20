@@ -26,6 +26,8 @@ public class Game {
 				switch(map.getMap()[i][j]){
 				case 'H': heroi = new Hero(i, j, 'H');
 				break;
+				case 'A': heroi = new Hero(i, j, 'A');
+				break;
 				case 'G': 
 					guarda = new Guard(i, j, 'G');
 					isKey = false;
@@ -59,8 +61,10 @@ public class Game {
 				switch(map.getMap()[i][j]){
 				case 'H': heroi = new Hero(i, j, 'H');
 				break;
+				case 'A': heroi = new Hero(i, j, 'A');
+				break;
 				case 'G': 
-					guarda = new Guard(i, j, 'G',guardPersonalaty);
+					guarda = new Guard(i, j, 'G', guardPersonalaty);
 					isKey = false;
 				break;
 				case 'O':

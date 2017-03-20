@@ -74,6 +74,7 @@ public class GameWindow {
 		numberOgresField.setBounds(129, 27, 95, 20);
 		frmDungeonKeep.getContentPane().add(numberOgresField);
 		numberOgresField.setColumns(10);
+		numberOgresField.setText("3");
 		
 		JLabel lblGuardPersonality = new JLabel("Guard Personality:");
 		lblGuardPersonality.setBounds(22, 65, 97, 14);
@@ -93,22 +94,74 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(textArea);
 		
 		JLabel lblNewLabel = new JLabel("You can start a new game.");
-		lblNewLabel.setBounds(22, 341, 400, 21);
+		lblNewLabel.setBounds(22, 346, 400, 21);
 		frmDungeonKeep.getContentPane().add(lblNewLabel);
+		
+		JButton btnUp = new JButton("Up");
+		JButton btnLeft = new JButton("Left");
+		JButton btnRight = new JButton("Right");
+		JButton btnDown = new JButton("Down");
+		
+		btnUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int status = play.moveHeroWindow('W');
+				if (status == 0){
+					lblNewLabel.setText("Hero moved up.");
+				}
+				else if(status == -1){
+					lblNewLabel.setText("You lost.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				else if(status == 2){
+					lblNewLabel.setText("Next Level.");
+				}
+				else{
+					lblNewLabel.setText("You win.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				textArea.setText(play.getMapInString());
+			}
+		});
+		btnUp.setEnabled(false);
+		btnUp.setBounds(309, 151, 76, 23);
+		frmDungeonKeep.getContentPane().add(btnUp);
+		
+		
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnLeft.setEnabled(false);
+		btnLeft.setBounds(267, 185, 76, 23);
+		frmDungeonKeep.getContentPane().add(btnLeft);
+		
+		
+		btnRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRight.setEnabled(false);
+		btnRight.setBounds(353, 185, 76, 23);
+		frmDungeonKeep.getContentPane().add(btnRight);
+		
+		
+		btnDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDown.setEnabled(false);
+		btnDown.setBounds(309, 219, 76, 23);
+		frmDungeonKeep.getContentPane().add(btnDown);
 		
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<GameMap> mapas = new ArrayList<GameMap>();
-				mapas.add(new DungeonMap());
-				mapas.add(new KeepMap());
-				
 				int nOgres;
 				
 				try {
 					Scanner scan = new Scanner(numberOgresField.getText());
 					nOgres = scan.nextInt();
-					if (nOgres <= 0)
+					if (nOgres <= 0 || nOgres > 5)
 						throw new NoSuchElementException();
 				}
 				catch (NoSuchElementException Excp){
@@ -118,12 +171,13 @@ public class GameWindow {
 				
 				String guardType = ((String)guardTypeCombo.getSelectedItem());
 				
-				lblNewLabel.setText("Game is Running in the 90's");
-				play = new Play(mapas);
+				lblNewLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
+				play = new Play(nOgres, guardType);
 				textArea.setText(play.getMapInString());
+				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
-		btnNewGame.setBounds(311, 45, 95, 23);
+		btnNewGame.setBounds(300, 45, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnNewGame);
 		
 		JButton btnExitGame = new JButton("Exit");
@@ -132,32 +186,15 @@ public class GameWindow {
 				System.exit(0);
 			}
 		});
-		btnExitGame.setBounds(311, 307, 95, 23);
+		btnExitGame.setBounds(300, 307, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnExitGame);
-		
-		JButton btnUp = new JButton("Up");
-		btnUp.setEnabled(false);
-		btnUp.setBounds(326, 151, 59, 23);
-		frmDungeonKeep.getContentPane().add(btnUp);
-		
-		JButton btnLeft = new JButton("Left");
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnLeft.setEnabled(false);
-		btnLeft.setBounds(284, 185, 59, 23);
-		frmDungeonKeep.getContentPane().add(btnLeft);
-		
-		JButton btnRight = new JButton("Right");
-		btnRight.setEnabled(false);
-		btnRight.setBounds(363, 185, 59, 23);
-		frmDungeonKeep.getContentPane().add(btnRight);
-		
-		JButton btnDown = new JButton("Down");
-		btnDown.setEnabled(false);
-		btnDown.setBounds(326, 219, 59, 23);
-		frmDungeonKeep.getContentPane().add(btnDown);
-		
+
+	}
+	
+	public void enableDisableMoves(boolean isEnabled, JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
+		btnUp.setEnabled(isEnabled);
+		btnDown.setEnabled(isEnabled);
+		btnLeft.setEnabled(isEnabled);
+		btnRight.setEnabled(isEnabled);
 	}
 }

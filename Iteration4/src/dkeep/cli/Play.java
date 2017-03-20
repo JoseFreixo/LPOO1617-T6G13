@@ -9,6 +9,7 @@ public class Play {
 	private Game game;
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();
 	private int i;
+	int [] nextGuardMove = { 0 };
 	
 	public Play(ArrayList<GameMap> maps) {
 		this.maps = maps;
@@ -16,8 +17,11 @@ public class Play {
 		game = new Game(maps.get(i));
 	}
 	
-	public Play(ArrayList<GameMap> maps, int numberOgres, String guardType){
-		this.maps = maps;
+	public Play(int numberOgres, String guardType){
+		GameMap mapa = new DungeonMap();
+		maps.add(mapa);
+		mapa = new KeepMap();
+		maps.add(mapa);
 		i = 0;
 		game = new Game(maps.get(i), guardType, numberOgres);
 	}
@@ -33,8 +37,35 @@ public class Play {
 		return mapa;
 	}
 	
+	public int moveHeroWindow(char c){
+		game.moveHero(c);
+		
+		if (game.EndStatus() != null && game.EndStatus() == false){
+			i++;
+			if (i >= maps.size()){
+				return 1; // Victory
+			}
+			game = new Game(maps.get(i));
+			return 2; // Next Level
+		}
+		
+		if (game.isGameOver()){
+			return -1; // Defeat
+		}
+		
+		game.stunOgres();
+		
+		game.MoveAllTheOgres();
+		game.moveGuard(nextGuardMove);
+		
+		if (game.isGameOver()){
+			return -1; // Defeat
+		}
+		
+		return 0; // Keep Playing
+	}
+	
 	public void playGame(){
-		int [] nextGuardMove = { 0 };
 		char c;
 		boolean gameIsOver = false;
 		Scanner scan;
