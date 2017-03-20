@@ -79,7 +79,7 @@ public class Game {
 		}
 		
 		for (int i = 0; i < ogres.size(); i++){
-			if(ogres.get(i).getRepresentation()!='o'&&HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
+			if(ogres.get(i).getRepresentation()=='O'&&HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -135,9 +135,13 @@ public class Game {
 	}
 
 	public void moveOgre(Ogre ogre) {
-		if (ogre.getRepresentation() == 'o'){
+		if(ogre.getStunTimeout()>0){
+			ogre.setStunTimeout(ogre.getStunTimeout()-1);
 			return;
 		}
+		else if(ogre.getStunTimeout()==0)
+			ogre.setRepresentation('O');
+	
 		int moviment= ThreadLocalRandom.current().nextInt(0, 4);
 		int y = ogre.getPosition().getY();
 		int x = ogre.getPosition().getX();
@@ -168,12 +172,9 @@ public class Game {
 	}
 	
 	public void ogreSwingClub(Ogre ogre){
-		if (ogre.getRepresentation() == 'o'){
-			ogre.setStunTimeout(ogre.getStunTimeout() - 1);
-			if (ogre.getStunTimeout() <= 0)
-				ogre.setRepresentation('O');
-			return;
-		}
+		if(ogre.getRepresentation()=='o')
+			return; 
+		
 		boolean swinged=false;
 		int trys=25;
 		while(!swinged&&trys!=0){
