@@ -117,12 +117,12 @@ public class GameWindow {
 			}
 		});
 		btnLeft.setEnabled(false);
-		btnLeft.setBounds(289, 185, 59, 23);
+		btnLeft.setBounds(284, 185, 59, 23);
 		frmDungeonKeep.getContentPane().add(btnLeft);
 		
 		JButton btnRight = new JButton("Right");
 		btnRight.setEnabled(false);
-		btnRight.setBounds(358, 185, 59, 23);
+		btnRight.setBounds(363, 185, 59, 23);
 		frmDungeonKeep.getContentPane().add(btnRight);
 		
 		JButton btnDown = new JButton("Down");
