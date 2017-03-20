@@ -93,9 +93,9 @@ public class GameWindow {
 		textArea.setBounds(22, 95, 235, 235);
 		frmDungeonKeep.getContentPane().add(textArea);
 		
-		JLabel lblNewLabel = new JLabel("You can start a new game.");
-		lblNewLabel.setBounds(22, 346, 400, 21);
-		frmDungeonKeep.getContentPane().add(lblNewLabel);
+		JLabel StatusLabel = new JLabel("You can start a new game.");
+		StatusLabel.setBounds(22, 346, 400, 21);
+		frmDungeonKeep.getContentPane().add(StatusLabel);
 		
 		JButton btnUp = new JButton("Up");
 		JButton btnLeft = new JButton("Left");
@@ -106,17 +106,17 @@ public class GameWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				int status = play.moveHeroWindow('W');
 				if (status == 0){
-					lblNewLabel.setText("Hero moved up.");
+					StatusLabel.setText("Hero moved up.");
 				}
 				else if(status == -1){
-					lblNewLabel.setText("You lost.");
+					StatusLabel.setText("You lost.");
 					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
 				}
 				else if(status == 2){
-					lblNewLabel.setText("Next Level.");
+					StatusLabel.setText("Next Level.");
 				}
 				else{
-					lblNewLabel.setText("You win.");
+					StatusLabel.setText("You win.");
 					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
 				}
 				textArea.setText(play.getMapInString());
@@ -129,6 +129,22 @@ public class GameWindow {
 		
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int status = play.moveHeroWindow('A');
+				if (status == 0){
+					StatusLabel.setText("Hero moved up.");
+				}
+				else if(status == -1){
+					StatusLabel.setText("You lost.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				else if(status == 2){
+					StatusLabel.setText("Next Level.");
+				}
+				else{
+					StatusLabel.setText("You win.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				textArea.setText(play.getMapInString());
 			}
 		});
 		btnLeft.setEnabled(false);
@@ -138,6 +154,22 @@ public class GameWindow {
 		
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int status = play.moveHeroWindow('D');
+				if (status == 0){
+					StatusLabel.setText("Hero moved up.");
+				}
+				else if(status == -1){
+					StatusLabel.setText("You lost.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				else if(status == 2){
+					StatusLabel.setText("Next Level.");
+				}
+				else{
+					StatusLabel.setText("You win.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				textArea.setText(play.getMapInString());
 			}
 		});
 		btnRight.setEnabled(false);
@@ -147,6 +179,22 @@ public class GameWindow {
 		
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int status = play.moveHeroWindow('S');
+				if (status == 0){
+					StatusLabel.setText("Hero moved up.");
+				}
+				else if(status == -1){
+					StatusLabel.setText("You lost.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				else if(status == 2){
+					StatusLabel.setText("Next Level.");
+				}
+				else{
+					StatusLabel.setText("You win.");
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+				}
+				textArea.setText(play.getMapInString());
 			}
 		});
 		btnDown.setEnabled(false);
@@ -165,13 +213,13 @@ public class GameWindow {
 						throw new NoSuchElementException();
 				}
 				catch (NoSuchElementException Excp){
-					lblNewLabel.setText("The number of ogres must be between 1 and 5.");
+					StatusLabel.setText("The number of ogres must be between 1 and 5.");
 					return;
 				}
 				
 				String guardType = ((String)guardTypeCombo.getSelectedItem());
 				
-				lblNewLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
+				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
 				textArea.setText(play.getMapInString());
 				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight);

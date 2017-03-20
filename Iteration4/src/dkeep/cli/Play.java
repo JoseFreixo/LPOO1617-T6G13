@@ -8,12 +8,15 @@ import dkeep.logic.*;
 public class Play {
 	private Game game;
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();
-	private int i;
+	private int i, numberOgres;
+	private String guardType;
 	int [] nextGuardMove = { 0 };
 	
 	public Play(ArrayList<GameMap> maps) {
 		this.maps = maps;
 		i = 0;
+		numberOgres=0;
+		guardType="";
 		game = new Game(maps.get(i));
 	}
 	
@@ -23,7 +26,9 @@ public class Play {
 		mapa = new KeepMap();
 		maps.add(mapa);
 		i = 0;
-		game = new Game(maps.get(i), guardType, numberOgres);
+		this.guardType=guardType;
+		this.numberOgres=numberOgres;
+		game = new Game(maps.get(i), this.guardType, this.numberOgres);
 	}
 	
 	public String getMapInString(){
@@ -45,7 +50,7 @@ public class Play {
 			if (i >= maps.size()){
 				return 1; // Victory
 			}
-			game = new Game(maps.get(i));
+			game = new Game(maps.get(i),guardType,numberOgres);
 			return 2; // Next Level
 		}
 		
