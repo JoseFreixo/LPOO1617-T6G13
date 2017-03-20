@@ -104,21 +104,8 @@ public class GameWindow {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int status = play.moveHeroWindow('W');
-				if (status == 0){
-					StatusLabel.setText("Hero moved up.");
-				}
-				else if(status == -1){
-					StatusLabel.setText("You lost.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				else if(status == 2){
-					StatusLabel.setText("Next Level.");
-				}
-				else{
-					StatusLabel.setText("You win.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				textArea.setText(play.getMapInString());
+				setMapAndStatusLabel(status,"Up.", StatusLabel, textArea,
+						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnUp.setEnabled(false);
@@ -129,21 +116,8 @@ public class GameWindow {
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = play.moveHeroWindow('A');
-				if (status == 0){
-					StatusLabel.setText("Hero moved up.");
-				}
-				else if(status == -1){
-					StatusLabel.setText("You lost.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				else if(status == 2){
-					StatusLabel.setText("Next Level.");
-				}
-				else{
-					StatusLabel.setText("You win.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				textArea.setText(play.getMapInString());
+				setMapAndStatusLabel(status,"Left.", StatusLabel, textArea,
+						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnLeft.setEnabled(false);
@@ -154,21 +128,8 @@ public class GameWindow {
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = play.moveHeroWindow('D');
-				if (status == 0){
-					StatusLabel.setText("Hero moved up.");
-				}
-				else if(status == -1){
-					StatusLabel.setText("You lost.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				else if(status == 2){
-					StatusLabel.setText("Next Level.");
-				}
-				else{
-					StatusLabel.setText("You win.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				textArea.setText(play.getMapInString());
+				setMapAndStatusLabel(status,"Right.", StatusLabel, textArea,
+						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnRight.setEnabled(false);
@@ -179,21 +140,8 @@ public class GameWindow {
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = play.moveHeroWindow('S');
-				if (status == 0){
-					StatusLabel.setText("Hero moved up.");
-				}
-				else if(status == -1){
-					StatusLabel.setText("You lost.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				else if(status == 2){
-					StatusLabel.setText("Next Level.");
-				}
-				else{
-					StatusLabel.setText("You win.");
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
-				}
-				textArea.setText(play.getMapInString());
+				setMapAndStatusLabel(status,"Down.", StatusLabel, textArea,
+						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnDown.setEnabled(false);
@@ -247,5 +195,25 @@ public class GameWindow {
 		btnDown.setEnabled(isEnabled);
 		btnLeft.setEnabled(isEnabled);
 		btnRight.setEnabled(isEnabled);
+	}
+	
+	public void setMapAndStatusLabel(int status,String move, JLabel StatusLabel, JTextArea textArea,
+			JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
+		
+		if (status == 0){
+			StatusLabel.setText("Hero moved " + move);
+		}
+		else if(status == -1){
+			StatusLabel.setText("You lost.");
+			enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+		}
+		else if(status == 2){
+			StatusLabel.setText("Next Level.");
+		}
+		else{
+			StatusLabel.setText("You win.");
+			enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
+		}
+		textArea.setText(play.getMapInString());
 	}
 }
