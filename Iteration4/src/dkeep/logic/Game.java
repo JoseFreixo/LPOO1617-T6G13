@@ -16,42 +16,7 @@ public class Game {
 	Lever lever;
 	ArrayList<Ogre> ogres = new ArrayList<Ogre>();
 	
-	public Game(GameMap map){
-		this.map = map;
-		Status = null;
-		openDoors = false;
-		int x = 0, y = 0;
-		for (int i=0;i<map.getMap().length;i++){
-			for (int j=0; j<map.getMap()[i].length;j++){
-				switch(map.getMap()[i][j]){
-				case 'H': heroi = new Hero(i, j, 'H');
-				break;
-				case 'A': heroi = new Hero(i, j, 'A');
-				break;
-				case 'G': 
-					guarda = new Guard(i, j, 'G');
-					isKey = false;
-				break;
-				case 'O':
-					x = j;
-					y = i;
-					isKey = true;
-				break;
-				case 'k': lever = new Lever(i, j, 'k');
-				break;
-				}
-			}
-		}
-		if(isKey){
-			heroi.setRepresentation('A');
-			int n = ThreadLocalRandom.current().nextInt(1, 6); //(entre 1 a 5 incluindo)
-			for (int i = 0; i < n; i++){
-				ogres.add(new Ogre(y, x, 'O'));
-			}
-		}
-	}
-	
-	public Game(GameMap map, String guardPersonalaty, int numberOfOgres){
+	public Game(GameMap map, int guardPersonalaty, int numberOfOgres){
 		this.map = map;
 		Status = null;
 		openDoors = false;
@@ -114,7 +79,7 @@ public class Game {
 		}
 		
 		for (int i = 0; i < ogres.size(); i++){
-			if(HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
+			if(ogres.get(i).getRepresentation()!='o'&&HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -136,6 +101,9 @@ public class Game {
 		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()-1){
 			return true;
 		}		
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()){
+			return true;
+		}
 		return false;
 	}
 	

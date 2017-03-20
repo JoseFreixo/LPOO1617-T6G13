@@ -1,6 +1,5 @@
 package dkeep.logic;
 
-import java.util.Random;
 
 public class Guard extends Unit {
 	int type; // 0 -> Rookie | 1 -> Drunken | 2 -> Suspicious
@@ -12,30 +11,10 @@ public class Guard extends Unit {
 			'S', 
 			'D', 'D', 'D', 'D', 'D', 'D', 'D', 
 			'W', 'W', 'W', 'W', 'W'};
-	
-	public Guard(int y, int x, char rep) {
-		super(y, x, rep);
-		Random rand = new Random();
-		type = rand.nextInt(3);
-		timeOut = 0;
-		front = true;
-	}
-	
-	public Guard(int y, int x, char rep, String Personalaty) {
-		super(y, x, rep);
 		
-		switch(Personalaty){
-		case "Rookie":
-			type = 0;
-			break;
-		case "Drunken":
-			type = 1;
-			break;
-		case "Suspicious":
-			type = 2;
-			break;
-		}
-
+	public Guard(int y, int x, char rep, int personalaty) {
+		super(y, x, rep);
+		type=personalaty;
 		timeOut = 0;
 		front = true;
 	}

@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import dkeep.cli.*;
-import dkeep.logic.*;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -205,12 +204,14 @@ public class GameWindow {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres;
-				
+				Scanner scan;
 				try {
-					Scanner scan = new Scanner(numberOgresField.getText());
+					scan = new Scanner(numberOgresField.getText());
 					nOgres = scan.nextInt();
-					if (nOgres <= 0 || nOgres > 5)
+					if (nOgres <= 0 || nOgres > 5){
+						scan.close();
 						throw new NoSuchElementException();
+					}
 				}
 				catch (NoSuchElementException Excp){
 					StatusLabel.setText("The number of ogres must be between 1 and 5.");
@@ -223,6 +224,8 @@ public class GameWindow {
 				play = new Play(nOgres, guardType);
 				textArea.setText(play.getMapInString());
 				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight);
+				scan.close();
+				
 			}
 		});
 		btnNewGame.setBounds(300, 45, 95, 23);

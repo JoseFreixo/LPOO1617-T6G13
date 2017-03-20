@@ -2,31 +2,41 @@ package dkeep.cli;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 import dkeep.logic.*;
 
 public class Play {
 	private Game game;
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();
-	private int i, numberOgres;
-	private String guardType;
+	private int i, numberOgres, guardType;
 	int [] nextGuardMove = { 0 };
 	
 	public Play(ArrayList<GameMap> maps) {
 		this.maps = maps;
 		i = 0;
-		numberOgres=0;
-		guardType="";
-		game = new Game(maps.get(i));
+		numberOgres=ThreadLocalRandom.current().nextInt(1, 6); 
+		guardType=ThreadLocalRandom.current().nextInt(0, 3); 
+		game = new Game(maps.get(i),guardType,numberOgres);
 	}
 	
-	public Play(int numberOgres, String guardType){
+	public Play(int numberOgres, String guardTypeStr){
 		GameMap mapa = new DungeonMap();
 		maps.add(mapa);
 		mapa = new KeepMap();
 		maps.add(mapa);
 		i = 0;
-		this.guardType=guardType;
+		switch(guardTypeStr){
+		case "Rookie":
+			guardType = 0;
+			break;
+		case "Drunken":
+			guardType = 1;
+			break;
+		case "Suspicious":
+			guardType = 2;
+			break;
+		}
 		this.numberOgres=numberOgres;
 		game = new Game(maps.get(i), this.guardType, this.numberOgres);
 	}
@@ -88,7 +98,7 @@ public class Play {
 					game.printMap();
 					continue;
 				}
-				game = new Game(maps.get(i));
+				game = new Game(maps.get(i),guardType,numberOgres);
 				continue;
 			}
 			
