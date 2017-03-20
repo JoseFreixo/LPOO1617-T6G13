@@ -81,7 +81,7 @@ public class Game {
 			}
 		}
 	}
-	
+
 	public CellPosition getHeroPosition(){
 		return heroi.getPosition();
 	}

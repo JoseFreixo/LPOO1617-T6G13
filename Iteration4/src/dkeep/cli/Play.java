@@ -16,6 +16,12 @@ public class Play {
 		game = new Game(maps.get(i));
 	}
 	
+	public Play(ArrayList<GameMap> maps, int numberOgres, String guardType){
+		this.maps = maps;
+		i = 0;
+		game = new Game(maps.get(i), guardType, numberOgres);
+	}
+	
 	public String getMapInString(){
 		String mapa = "";
 		for (int i = 0; i < game.getMap().getMap().length; i++){
