@@ -7,23 +7,18 @@ import javax.swing.JTextField;
 
 import dkeep.cli.*;
 
-import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Font;
-import java.awt.Window.Type;
-import java.awt.Dialog.ModalExclusionType;
-import javax.swing.DropMode;
+
 
 public class GameWindow {
 

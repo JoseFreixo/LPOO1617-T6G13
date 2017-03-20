@@ -108,6 +108,9 @@ public class Game {
 	}
 	
 	public void MoveAllTheOgres(){	
+		if (ogres.size()==0)
+			return;
+		
 		ClearAllOgresAndAttacks();
 		
 		for (Ogre ogre: ogres){
@@ -220,7 +223,9 @@ public class Game {
 			x += 1;
 		else
 			return;
-	
+		
+		map.setCharOnPos(heroi.getPosition(), ' ');
+		
 		if (isKey && new CellPosition(y, x).equals(lever.getPosition()))
 			heroi.setRepresentation('K');
 		else if (!isKey && new CellPosition(y, x).equals(lever.getPosition())){
@@ -228,20 +233,29 @@ public class Game {
 			printKey = true;
 			openDoors = true;
 		}
+		else if (printKey) {
+			map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+			printKey = false;
+		}
+		
 	
 		if (map.validPosition(y, x)) {
 			if (map.getCharOnPos(new CellPosition(y, x)) == 'S'){
 				Status = false;
 				return;
 			}
-			map.setUnitPosMap(new CellPosition(y, x), getHeroPosition(), heroi.getRepresentation());
+			map.setCharOnPos(new CellPosition(y, x), heroi.getRepresentation());
+			//map.setUnitPosMap(new CellPosition(y, x), getHeroPosition(), heroi.getRepresentation());
 			heroi.setPosition(y, x);
-			if (printKey) {
-				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
-				printKey = false;
-			}
+//			if (printKey) {
+//				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
+//				printKey = false;
+//			}
 		}
-
+		else{ 
+			map.setCharOnPos(heroi.getPosition(), heroi.getRepresentation());
+		}
+		
 		if (isKey && map.getMap()[y][x] == 'I' && heroi.getRepresentation() == 'K') {
 			map.openDoors(isKey, heroi.getPosition());
 			openDoors = true;
