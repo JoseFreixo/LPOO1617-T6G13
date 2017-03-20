@@ -5,7 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-
+import dkeep.cli.*;
+import dkeep.logic.*;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -15,6 +16,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Font;
@@ -25,7 +29,8 @@ import javax.swing.DropMode;
 public class GameWindow {
 
 	private JFrame frmDungeonKeep;
-	private JTextField textField;
+	private JTextField numberOgresField;
+	private Play play;
 
 	/**
 	 * Launch the application.
@@ -65,28 +70,57 @@ public class GameWindow {
 		lblNumberOfOgres.setBounds(22, 19, 97, 36);
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
 		
-		textField = new JTextField();
-		textField.setBounds(129, 27, 95, 20);
-		frmDungeonKeep.getContentPane().add(textField);
-		textField.setColumns(10);
+		numberOgresField = new JTextField();
+		numberOgresField.setBounds(129, 27, 95, 20);
+		frmDungeonKeep.getContentPane().add(numberOgresField);
+		numberOgresField.setColumns(10);
 		
 		JLabel lblGuardPersonality = new JLabel("Guard Personality:");
 		lblGuardPersonality.setBounds(22, 65, 97, 14);
 		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
 		
-
+		JComboBox<String> guardTypeCombo = new JComboBox<String>();
+		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
+		guardTypeCombo.setToolTipText("Choose the Guard Personality");
+		guardTypeCombo.setMaximumRowCount(3);
+		guardTypeCombo.setBounds(129, 62, 95, 20);
+		frmDungeonKeep.getContentPane().add(guardTypeCombo);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
-		comboBox.setToolTipText("Choose the Guard Personality");
-		comboBox.setMaximumRowCount(3);
-		comboBox.setBounds(129, 62, 95, 20);
-		frmDungeonKeep.getContentPane().add(comboBox);
+		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
+		textArea.setBounds(22, 95, 235, 235);
+		frmDungeonKeep.getContentPane().add(textArea);
+		
+		JLabel lblNewLabel = new JLabel("You can start a new game.");
+		lblNewLabel.setBounds(22, 341, 400, 21);
+		frmDungeonKeep.getContentPane().add(lblNewLabel);
 		
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("WHHHHHHHHAT");
+				ArrayList<GameMap> mapas = new ArrayList<GameMap>();
+				mapas.add(new DungeonMap());
+				mapas.add(new KeepMap());
+				
+				int nOgres;
+				
+				try {
+					Scanner scan = new Scanner(numberOgresField.getText());
+					nOgres = scan.nextInt();
+					if (nOgres <= 0)
+						throw new NoSuchElementException();
+				}
+				catch (NoSuchElementException Excp){
+					lblNewLabel.setText("The number of ogres must be between 1 and 5.");
+					return;
+				}
+				
+				String guardType = ((String)guardTypeCombo.getSelectedItem());
+				
+				lblNewLabel.setText("Game is Running in the 90's");
+				play = new Play(mapas);
+				textArea.setText(play.getMapInString());
 			}
 		});
 		btnNewGame.setBounds(311, 45, 95, 23);
@@ -95,16 +129,11 @@ public class GameWindow {
 		JButton btnExitGame = new JButton("Exit");
 		btnExitGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 			}
 		});
 		btnExitGame.setBounds(311, 307, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnExitGame);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
-		textArea.setBounds(22, 95, 235, 235);
-		frmDungeonKeep.getContentPane().add(textArea);
 		
 		JButton btnUp = new JButton("Up");
 		btnUp.setEnabled(false);
@@ -130,8 +159,5 @@ public class GameWindow {
 		btnDown.setBounds(326, 219, 59, 23);
 		frmDungeonKeep.getContentPane().add(btnDown);
 		
-		JLabel lblNewLabel = new JLabel("You can start a new game.");
-		lblNewLabel.setBounds(22, 341, 235, 21);
-		frmDungeonKeep.getContentPane().add(lblNewLabel);
 	}
 }

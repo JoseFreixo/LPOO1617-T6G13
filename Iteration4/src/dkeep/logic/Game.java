@@ -102,7 +102,6 @@ public class Game {
 		return ogres;
 	}
 	
-	
 	public boolean isGameOver(){
 		
 		if(guarda != null && guarda.getRepresentation() == 'G' && HeroCaught(getGuardPosition(),getHeroPosition())){

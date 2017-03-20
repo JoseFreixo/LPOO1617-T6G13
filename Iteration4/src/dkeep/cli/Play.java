@@ -16,6 +16,17 @@ public class Play {
 		game = new Game(maps.get(i));
 	}
 	
+	public String getMapInString(){
+		String mapa = "";
+		for (int i = 0; i < game.getMap().getMap().length; i++){
+			for (int j = 0; j < game.getMap().getMap()[i].length; j++){
+				mapa += game.getMap().getMap()[i][j] + " ";
+			}
+			mapa += "\n";
+		}
+		return mapa;
+	}
+	
 	public void playGame(){
 		int [] nextGuardMove = { 0 };
 		char c;
