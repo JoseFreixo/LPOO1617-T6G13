@@ -21,10 +21,11 @@ public class CustomPanel extends JPanel{
 	private BufferedImage leverImage;
 	private BufferedImage doorImage;
 	private BufferedImage doorOpenImage;
+	private BufferedImage clubImage;
 	
 	public CustomPanel(){
 		try {
-			heroImage = ImageIO.read(new File("../../resources/player.png"));
+			heroImage = ImageIO.read(new File("../../resources/player.png")); // mesmo processo para o resto das imagens
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
