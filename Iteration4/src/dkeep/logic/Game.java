@@ -226,8 +226,10 @@ public class Game {
 		
 		map.setCharOnPos(heroi.getPosition(), ' ');
 		
-		if (isKey && new CellPosition(y, x).equals(lever.getPosition()))
+		if (isKey && new CellPosition(y, x).equals(lever.getPosition())){
 			heroi.setRepresentation('K');
+			lever.setPosition(0, 0);
+		}
 		else if (!isKey && new CellPosition(y, x).equals(lever.getPosition())){
 			map.openDoors(isKey, heroi.getPosition());
 			printKey = true;
