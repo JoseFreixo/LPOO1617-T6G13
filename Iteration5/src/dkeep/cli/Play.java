@@ -41,15 +41,8 @@ public class Play {
 		game = new Game(maps.get(i), this.guardType, this.numberOgres);
 	}
 	
-	public String getMapInString(){
-		String mapa = "";
-		for (int i = 0; i < game.getMap().getMap().length; i++){
-			for (int j = 0; j < game.getMap().getMap()[i].length; j++){
-				mapa += game.getMap().getMap()[i][j] + " ";
-			}
-			mapa += "\n";
-		}
-		return mapa;
+	public GameMap getMap(){
+		return game.getMap();
 	}
 	
 	public int moveHeroWindow(char c){

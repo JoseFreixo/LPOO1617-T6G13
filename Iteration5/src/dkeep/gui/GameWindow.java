@@ -18,6 +18,8 @@ import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Font;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 
 public class GameWindow {
@@ -56,7 +58,7 @@ public class GameWindow {
 		frmDungeonKeep = new JFrame();
 		frmDungeonKeep.setResizable(false);
 		frmDungeonKeep.setTitle("Dungeon Keep");
-		frmDungeonKeep.setBounds(100, 100, 450, 412);
+		frmDungeonKeep.setBounds(100, 100, 650, 650);
 		frmDungeonKeep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDungeonKeep.getContentPane().setLayout(null);
 		
@@ -81,14 +83,12 @@ public class GameWindow {
 		guardTypeCombo.setBounds(129, 62, 95, 20);
 		frmDungeonKeep.getContentPane().add(guardTypeCombo);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
-		textArea.setBounds(22, 95, 235, 235);
-		frmDungeonKeep.getContentPane().add(textArea);
+		CustomPanel gameArea = new CustomPanel();
+		gameArea.setBounds(22, 95, 440, 440);
+		frmDungeonKeep.getContentPane().add(gameArea);
 		
 		JLabel StatusLabel = new JLabel("You can start a new game.");
-		StatusLabel.setBounds(22, 346, 400, 21);
+		StatusLabel.setBounds(29, 571, 583, 21);
 		frmDungeonKeep.getContentPane().add(StatusLabel);
 		
 		JButton btnUp = new JButton("Up");
@@ -99,48 +99,48 @@ public class GameWindow {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int status = play.moveHeroWindow('W');
-				setMapAndStatusLabel(status,"Up.", StatusLabel, textArea,
+				setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnUp.setEnabled(false);
-		btnUp.setBounds(309, 151, 76, 23);
+		btnUp.setBounds(513, 273, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnUp);
 		
 		
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = play.moveHeroWindow('A');
-				setMapAndStatusLabel(status,"Left.", StatusLabel, textArea,
+				setMapAndStatusLabel(status,"Left.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnLeft.setEnabled(false);
-		btnLeft.setBounds(267, 185, 76, 23);
+		btnLeft.setBounds(472, 307, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnLeft);
 		
 		
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = play.moveHeroWindow('D');
-				setMapAndStatusLabel(status,"Right.", StatusLabel, textArea,
+				setMapAndStatusLabel(status,"Right.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnRight.setEnabled(false);
-		btnRight.setBounds(353, 185, 76, 23);
+		btnRight.setBounds(558, 307, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnRight);
 		
 		
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = play.moveHeroWindow('S');
-				setMapAndStatusLabel(status,"Down.", StatusLabel, textArea,
+				setMapAndStatusLabel(status,"Down.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
 		btnDown.setEnabled(false);
-		btnDown.setBounds(309, 219, 76, 23);
+		btnDown.setBounds(513, 341, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnDown);
 		
 		JButton btnNewGame = new JButton("New Game");
@@ -165,13 +165,13 @@ public class GameWindow {
 				
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
-				textArea.setText(play.getMapInString());
+				gameArea.updateMap(play.getMap());
 				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight);
 				scan.close();
 				
 			}
 		});
-		btnNewGame.setBounds(300, 45, 95, 23);
+		btnNewGame.setBounds(502, 56, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnNewGame);
 		
 		JButton btnExitGame = new JButton("Exit");
@@ -180,7 +180,7 @@ public class GameWindow {
 				System.exit(0);
 			}
 		});
-		btnExitGame.setBounds(300, 307, 95, 23);
+		btnExitGame.setBounds(502, 535, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnExitGame);
 
 	}
@@ -192,7 +192,7 @@ public class GameWindow {
 		btnRight.setEnabled(isEnabled);
 	}
 	
-	public void setMapAndStatusLabel(int status,String move, JLabel StatusLabel, JTextArea textArea,
+	public void setMapAndStatusLabel(int status,String move, JLabel StatusLabel, CustomPanel gameArea,
 			JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
 		
 		if (status == 0){
@@ -209,6 +209,6 @@ public class GameWindow {
 			StatusLabel.setText("You win.");
 			enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
 		}
-		textArea.setText(play.getMapInString());
+		gameArea.updateMap(play.getMap());
 	}
 }

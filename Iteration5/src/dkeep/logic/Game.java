@@ -79,7 +79,7 @@ public class Game {
 		}
 		
 		for (int i = 0; i < ogres.size(); i++){
-			if(ogres.get(i).getRepresentation()=='O'&&HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
+			if(HeroCaught(ogres.get(i).getAttack(),getHeroPosition())){
 				Status = true;
 				return true;
 			}
@@ -175,8 +175,6 @@ public class Game {
 	}
 	
 	public void ogreSwingClub(Ogre ogre){
-		if(ogre.getRepresentation()=='o')
-			return; 
 		
 		boolean swinged=false;
 		int trys=25;
@@ -194,7 +192,7 @@ public class Game {
 			else if (pos == 3)
 				x += 1;
 			
-			if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'&&map.getMap()[y][x] != '$'&&map.getMap()[y][x] != 'O'){
+			if (map.validPosition(y, x)&&map.getMap()[y][x] != 'S'&&map.getMap()[y][x] != '$'&&map.getMap()[y][x] != 'O'&&map.getMap()[y][x] != 'o'){
 				ogre.setAttack(new CellPosition(y,x));
 				if(new CellPosition(y,x).equals(lever.getPosition()))
 					map.setCharOnPos(ogre.getAttack(), '$');
