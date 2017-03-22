@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class GameWindow {
@@ -103,6 +105,16 @@ public class GameWindow {
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
+		btnUp.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()== KeyEvent.VK_UP){
+					int status = play.moveHeroWindow('W');
+					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
+				
+				}
+			}
+		});
 		btnUp.setEnabled(false);
 		btnUp.setBounds(513, 273, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnUp);
@@ -113,6 +125,16 @@ public class GameWindow {
 				int status = play.moveHeroWindow('A');
 				setMapAndStatusLabel(status,"Left.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
+			}
+		});
+		btnLeft.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()== KeyEvent.VK_LEFT){
+					int status = play.moveHeroWindow('W');
+					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
+				
+				}
 			}
 		});
 		btnLeft.setEnabled(false);
@@ -127,6 +149,16 @@ public class GameWindow {
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
+		btnRight.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()== KeyEvent.VK_RIGHT){
+					int status = play.moveHeroWindow('W');
+					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
+				
+				}
+			}
+		});
 		btnRight.setEnabled(false);
 		btnRight.setBounds(558, 307, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnRight);
@@ -137,6 +169,16 @@ public class GameWindow {
 				int status = play.moveHeroWindow('S');
 				setMapAndStatusLabel(status,"Down.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
+			}
+		});
+		btnDown.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()== KeyEvent.VK_DOWN){
+					int status = play.moveHeroWindow('W');
+					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
+				
+				}
 			}
 		});
 		btnDown.setEnabled(false);
