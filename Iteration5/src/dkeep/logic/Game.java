@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
+	
 	public static final boolean DEFEAT = true;
 	Boolean Status;
 	Boolean openDoors;

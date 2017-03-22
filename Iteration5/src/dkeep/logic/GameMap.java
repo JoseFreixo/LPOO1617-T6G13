@@ -48,6 +48,7 @@ public class GameMap {
 	
 
 	public void openDoors(boolean isKey, CellPosition heroiPos) {
+		
 		if (isKey){
 			int x = heroiPos.getX();
 			int y = heroiPos.getY();

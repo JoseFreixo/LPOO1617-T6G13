@@ -13,6 +13,7 @@ public class Play {
 	int [] nextGuardMove = { 0 };
 	
 	public Play(ArrayList<GameMap> maps) {
+		
 		this.maps = maps;
 		i = 0;
 		numberOgres=ThreadLocalRandom.current().nextInt(1, 6); 

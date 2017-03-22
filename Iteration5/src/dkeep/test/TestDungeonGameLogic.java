@@ -78,7 +78,6 @@ public class TestDungeonGameLogic {
 		assertEquals(true, game.areDoorsOpen());
 	}
 	
-	//TASK 2
 	@Test
 	public void testHeroIsCapturedByOgre(){
 		GameMap gameMap = new GameMap(map_for_task2);
