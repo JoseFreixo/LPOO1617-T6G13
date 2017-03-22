@@ -50,6 +50,10 @@ public class Game {
 			}
 		}
 	}
+	
+	public CellPosition getLeverPosition(){
+		return lever.getPosition();
+	}
 
 	public CellPosition getHeroPosition(){
 		return heroi.getPosition();
@@ -63,8 +67,16 @@ public class Game {
 		return heroi.getRepresentation();
 	}
 	
+	public char getGuardRepresentation(){
+		return guarda.getRepresentation();
+	}
+	
 	public char getMapChar(CellPosition Pos){
 		return map.getCharOnPos(Pos);
+	}
+	
+	public Guard getGuard(){
+		return guarda;
 	}
 	
 	public ArrayList<Ogre> getOgres() {
@@ -206,7 +218,7 @@ public class Game {
 		}	
 	}
 
-	public void moveHero(char c) { 
+	public void moveHero(char c) {
 		c = Character.toUpperCase(c);
 		int y = heroi.getPosition().getY();
 		int x = heroi.getPosition().getX();
@@ -245,12 +257,7 @@ public class Game {
 				return;
 			}
 			map.setCharOnPos(new CellPosition(y, x), heroi.getRepresentation());
-			//map.setUnitPosMap(new CellPosition(y, x), getHeroPosition(), heroi.getRepresentation());
 			heroi.setPosition(y, x);
-//			if (printKey) {
-//				map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
-//				printKey = false;
-//			}
 		}
 		else{ 
 			map.setCharOnPos(heroi.getPosition(), heroi.getRepresentation());

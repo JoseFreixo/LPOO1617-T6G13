@@ -45,6 +45,10 @@ public class Play {
 		return game.getMap();
 	}
 	
+	public Game getGame(){
+		return game;
+	}
+	
 	public int moveHeroWindow(char c){
 		game.moveHero(c);
 		
