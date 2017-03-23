@@ -60,8 +60,7 @@ public class LevelEditorWindow {
 		
 		JButton btnNewMap = new JButton("New Map");
 		btnNewMap.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+			public void actionPerformed(ActionEvent arg0) {				
 				int lines, columns;
 				Scanner scan;
 				try {
