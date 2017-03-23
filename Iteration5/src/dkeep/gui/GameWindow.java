@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JToolBar;
 
 
 public class GameWindow {
@@ -63,14 +64,13 @@ public class GameWindow {
 		frmDungeonKeep.setBounds(100, 100, 650, 650);
 		frmDungeonKeep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDungeonKeep.getContentPane().setLayout(null);
-		frmDungeonKeep.requestFocus();
 		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres:");
-		lblNumberOfOgres.setBounds(22, 19, 97, 36);
+		lblNumberOfOgres.setBounds(22, 38, 97, 36);
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
 		
 		numberOgresField = new JTextField();
-		numberOgresField.setBounds(129, 27, 95, 20);
+		numberOgresField.setBounds(129, 38, 95, 20);
 		frmDungeonKeep.getContentPane().add(numberOgresField);
 		numberOgresField.setColumns(10);
 		numberOgresField.setText("3");
@@ -88,6 +88,7 @@ public class GameWindow {
 		
 		CustomPanel gameArea = new CustomPanel();
 		gameArea.setBounds(22, 95, 440, 440);
+		gameArea.requestFocusInWindow();
 		frmDungeonKeep.getContentPane().add(gameArea);
 		
 		JLabel StatusLabel = new JLabel("You can start a new game.");
@@ -101,8 +102,7 @@ public class GameWindow {
 		
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int status = play.moveHeroWindow('W');
-				setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,
+				setMapAndStatusLabel("Up.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
@@ -110,8 +110,7 @@ public class GameWindow {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode()== KeyEvent.VK_UP){
-					int status = play.moveHeroWindow('W');
-					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
+					setMapAndStatusLabel("Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
 				
 				}
 			}
@@ -123,19 +122,8 @@ public class GameWindow {
 		
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status = play.moveHeroWindow('A');
-				setMapAndStatusLabel(status,"Left.", StatusLabel, gameArea,
+				setMapAndStatusLabel("Left.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
-			}
-		});
-		btnLeft.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()== KeyEvent.VK_LEFT){
-					int status = play.moveHeroWindow('W');
-					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
-				
-				}
 			}
 		});
 		btnLeft.setEnabled(false);
@@ -145,19 +133,8 @@ public class GameWindow {
 		
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status = play.moveHeroWindow('D');
-				setMapAndStatusLabel(status,"Right.", StatusLabel, gameArea,
+				setMapAndStatusLabel("Right.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
-			}
-		});
-		btnRight.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()== KeyEvent.VK_RIGHT){
-					int status = play.moveHeroWindow('W');
-					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
-				
-				}
 			}
 		});
 		btnRight.setEnabled(false);
@@ -167,19 +144,8 @@ public class GameWindow {
 		
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status = play.moveHeroWindow('S');
-				setMapAndStatusLabel(status,"Down.", StatusLabel, gameArea,
+				setMapAndStatusLabel("Down.", StatusLabel, gameArea,
 						btnUp, btnDown, btnLeft, btnRight);
-			}
-		});
-		btnDown.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()== KeyEvent.VK_DOWN){
-					int status = play.moveHeroWindow('W');
-					setMapAndStatusLabel(status,"Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
-				
-				}
 			}
 		});
 		btnDown.setEnabled(false);
@@ -225,6 +191,14 @@ public class GameWindow {
 		});
 		btnExitGame.setBounds(502, 535, 95, 23);
 		frmDungeonKeep.getContentPane().add(btnExitGame);
+		
+		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		toolBar.setBounds(0, 0, 644, 30);
+		frmDungeonKeep.getContentPane().add(toolBar);
+		
+		JButton btnLevelEditor = new JButton("Level Editor");
+		toolBar.add(btnLevelEditor);
 
 	}
 	
@@ -235,8 +209,24 @@ public class GameWindow {
 		btnRight.setEnabled(isEnabled);
 	}
 	
-	public void setMapAndStatusLabel(int status,String move, JLabel StatusLabel, CustomPanel gameArea,
+	public void setMapAndStatusLabel(String move, JLabel StatusLabel, CustomPanel gameArea,
 			JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
+		int status=3; //does nothing
+		
+		switch(move){
+		case "Up.": 
+			status=play.moveHeroWindow('W'); 
+			break;
+		case "Down.": 
+			status=play.moveHeroWindow('S'); 
+			break;
+		case "Left.": 
+			status=play.moveHeroWindow('A'); 
+			break;
+		case "Right.": 
+			status=play.moveHeroWindow('D'); 
+			break;
+		}
 		
 		if (status == 0){
 			StatusLabel.setText("Hero moved " + move);
@@ -248,7 +238,7 @@ public class GameWindow {
 		else if(status == 2){
 			StatusLabel.setText("Next Level.");
 		}
-		else{
+		else if (status==1){
 			StatusLabel.setText("You win.");
 			enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
 		}
