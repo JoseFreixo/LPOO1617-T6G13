@@ -59,6 +59,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 	}
 	
 	public void newMap(int lines, int columns){
+		
 		char [][] mapa = new char [lines][columns];
 		for (int i = 0; i < mapa.length; i++){
 			Arrays.fill(mapa[i], ' ');
