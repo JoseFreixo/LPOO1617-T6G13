@@ -101,8 +101,12 @@ public class GameWindow {
 		
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setMapAndStatusLabel("Up.", StatusLabel, gameArea,
-						btnUp, btnDown, btnLeft, btnRight);
+				int status=setMapAndStatusLabel("Up.", StatusLabel);
+				
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				
+				gameArea.updateMap(play.getMap());
 			}
 		});
 		btnUp.setEnabled(false);
@@ -112,8 +116,12 @@ public class GameWindow {
 		
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Left.", StatusLabel, gameArea,
-						btnUp, btnDown, btnLeft, btnRight);
+				int status=setMapAndStatusLabel("Left.", StatusLabel);
+				
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				
+				gameArea.updateMap(play.getMap());
 			}
 		});
 		btnLeft.setEnabled(false);
@@ -123,8 +131,12 @@ public class GameWindow {
 		
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Right.", StatusLabel, gameArea,
-						btnUp, btnDown, btnLeft, btnRight);
+				int status=setMapAndStatusLabel("Right.", StatusLabel);
+				
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				
+				gameArea.updateMap(play.getMap());
 			}
 		});
 		btnRight.setEnabled(false);
@@ -134,8 +146,12 @@ public class GameWindow {
 		
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Down.", StatusLabel, gameArea,
-						btnUp, btnDown, btnLeft, btnRight);
+				int status=setMapAndStatusLabel("Down.", StatusLabel);
+				
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				
+				gameArea.updateMap(play.getMap());
 			}
 		});
 		btnDown.setEnabled(false);
@@ -199,8 +215,7 @@ public class GameWindow {
 		btnRight.setEnabled(isEnabled);
 	}
 	
-	public void setMapAndStatusLabel(String move, JLabel StatusLabel, CustomPanel gameArea,
-			JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
+	public int setMapAndStatusLabel(String move, JLabel StatusLabel){
 		int status=-2; //does nothing
 		
 		switch(move){
@@ -223,15 +238,13 @@ public class GameWindow {
 		}
 		else if(status == -1){
 			StatusLabel.setText("You lost.");
-			enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
 		}
 		else if(status == 2){
 			StatusLabel.setText("Next Level.");
 		}
 		else if (status==1){
 			StatusLabel.setText("You win.");
-			enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);
 		}
-		gameArea.updateMap(play.getMap());
+		return status;
 	}
 }
