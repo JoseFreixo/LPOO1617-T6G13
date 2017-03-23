@@ -105,15 +105,6 @@ public class GameWindow {
 						btnUp, btnDown, btnLeft, btnRight);
 			}
 		});
-		btnUp.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()== KeyEvent.VK_UP){
-					setMapAndStatusLabel("Up.", StatusLabel, gameArea,btnUp, btnDown, btnLeft, btnRight);
-				
-				}
-			}
-		});
 		btnUp.setEnabled(false);
 		btnUp.setBounds(513, 273, 76, 23);
 		frmDungeonKeep.getContentPane().add(btnUp);
@@ -210,7 +201,7 @@ public class GameWindow {
 	
 	public void setMapAndStatusLabel(String move, JLabel StatusLabel, CustomPanel gameArea,
 			JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
-		int status=3; //does nothing
+		int status=-2; //does nothing
 		
 		switch(move){
 		case "Up.": 
