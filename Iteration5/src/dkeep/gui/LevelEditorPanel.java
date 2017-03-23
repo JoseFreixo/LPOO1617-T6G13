@@ -64,6 +64,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			Arrays.fill(mapa[i], ' ');
 		}
 		map = new GameMap(mapa);
+		repaint();
 	}
 	
 	public BufferedImage getImage(int y, int x){
@@ -120,5 +121,28 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 		int c = arg0.getX() / x_size;
 		map.setCharOnPos(new CellPosition(l, c), toPaintChar);
 		repaint();
+	}
+	
+	public boolean verifyMap(){
+		int heroCounter = 0, ogreCounter = 0, keyCounter = 0;
+		for (int i = 0; i < map.getMap().length; i++){
+			for (int j = 0; j < map.getMap()[1].length; j++){
+				if ((i == 0 || j == 0 || i == map.getMap().length - 1 || j == map.getMap()[i].length - 1) && (map.getMap()[i][j] != 'X' || map.getMap()[i][j] != 'I'))
+					return false;
+				if (map.getMap()[i][j] == 'A')
+					heroCounter++;
+				else if(map.getMap()[i][j] == 'O')
+					ogreCounter++;
+				else if (map.getMap()[i][j] == 'k')
+					keyCounter++;
+			}
+		}
+		if (heroCounter != 1 || ogreCounter != 1 || keyCounter != 1)
+			return false;
+		return true;
+	}
+	
+	public GameMap returnMap(){
+		return map;
 	}
 }

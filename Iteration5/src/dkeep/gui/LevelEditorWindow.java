@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import dkeep.logic.GameMap;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
@@ -17,6 +20,7 @@ public class LevelEditorWindow {
 	private JFrame frame;
 	private JTextField textLines;
 	private JTextField textColumns;
+	private GameMap map;
 
 	/**
 	 * Launch the application.
@@ -84,6 +88,7 @@ public class LevelEditorWindow {
 				btnKey.setEnabled(true);
 				btnDoor.setEnabled(true);
 				scan.close();
+				panel.newMap(lines, columns);
 			}
 		});
 		btnNewMap.setBounds(472, 11, 89, 23);
@@ -109,34 +114,78 @@ public class LevelEditorWindow {
 		
 		
 		btnWall.setEnabled(false);
-		btnWall.setBounds(472, 118, 89, 23);
+		btnWall.setBounds(472, 90, 89, 23);
+		btnWall.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel.updateChar('X');
+			}
+		});
 		frame.getContentPane().add(btnWall);
 		
 		btnFloor.setEnabled(false);
-		btnFloor.setBounds(472, 152, 89, 23);
+		btnFloor.setBounds(472, 124, 89, 23);
+		btnFloor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel.updateChar(' ');
+			}
+		});
 		frame.getContentPane().add(btnFloor);
 		
 		btnHero.setEnabled(false);
-		btnHero.setBounds(472, 186, 89, 23);
+		btnHero.setBounds(472, 158, 89, 23);
+		btnHero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel.updateChar('A');
+			}
+		});
 		frame.getContentPane().add(btnHero);
 
 		btnOgre.setEnabled(false);
-		btnOgre.setBounds(472, 220, 89, 23);
+		btnOgre.setBounds(472, 192, 89, 23);
+		btnOgre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel.updateChar('O');
+			}
+		});
 		frame.getContentPane().add(btnOgre);
 
 		btnKey.setEnabled(false);
-		btnKey.setBounds(472, 254, 89, 23);
+		btnKey.setBounds(472, 226, 89, 23);
+		btnKey.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel.updateChar('k');
+			}
+		});
 		frame.getContentPane().add(btnKey);
 		
 		btnDoor.setEnabled(false);
-		btnDoor.setBounds(472, 288, 89, 23);
+		btnDoor.setBounds(472, 260, 89, 23);
+		btnDoor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel.updateChar('I');
+			}
+		});
 		frame.getContentPane().add(btnDoor);
 
 		panel.setBounds(20, 53, 418, 418);
 		frame.getContentPane().add(panel);
 		
 		JButton btnDone = new JButton("Done");
+		btnDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		btnDone.setBounds(472, 433, 89, 23);
 		frame.getContentPane().add(btnDone);
+		
+		JButton btnSaveMap = new JButton("Save Map");
+		btnSaveMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnSaveMap.setBounds(472, 349, 89, 23);
+		frame.getContentPane().add(btnSaveMap);
 	}
 }
