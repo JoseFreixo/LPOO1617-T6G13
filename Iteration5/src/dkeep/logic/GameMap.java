@@ -2,7 +2,11 @@ package dkeep.logic;
 
 import java.util.Arrays;
 
-public class GameMap {
+public class GameMap implements java.io.Serializable {
+
+	
+	private static final long serialVersionUID = 1L;
+	
 	char[][] map;
 	
 	public GameMap(char[][] map){

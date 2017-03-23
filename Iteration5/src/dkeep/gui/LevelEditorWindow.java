@@ -22,7 +22,7 @@ public class LevelEditorWindow {
 	private JFrame frame;
 	private JTextField textLines;
 	private JTextField textColumns;
-	private GameMap map;
+	
 
 	/**
 	 * Launch the application.

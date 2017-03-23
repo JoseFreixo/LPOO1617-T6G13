@@ -106,24 +106,23 @@ public class CustomPanel extends JPanel implements KeyListener{
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// // DO NOTHING
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// DO NOTHING
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {
+		//I HATE YOU SO MUCH FUCK OFF
 		switch(e.getKeyCode()){
 		 case KeyEvent.VK_LEFT: System.out.println("PRESSED"); break;
 		 case KeyEvent.VK_RIGHT: System.out.println("PRESSED"); break;
 		 case KeyEvent.VK_UP: System.out.println("PRESSED"); break;
 		 case KeyEvent.VK_DOWN: System.out.println("PRESSED"); break;
 		 }
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// DO NOTHING
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// DO NOTHING
 	}
 }

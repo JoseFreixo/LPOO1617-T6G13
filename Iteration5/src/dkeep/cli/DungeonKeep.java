@@ -11,6 +11,10 @@ public class DungeonKeep {
 		maps.add(new DungeonMap());
 		maps.add(new KeepMap());
 		Play play = new Play(maps);
+		/*testar no debug e ver que funciona
+		play.save();
+		play.load();
+		*/
 		play.playGame();
 	}
 }
