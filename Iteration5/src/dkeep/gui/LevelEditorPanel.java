@@ -66,6 +66,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener{
 	}
 	
 	public BufferedImage getImage(int y, int x){
+		
 		if(map.getMap()[y][x] == ' ')
 			return floorImage;
 		if(map.getMap()[y][x] == 'I')

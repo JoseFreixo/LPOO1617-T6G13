@@ -7,7 +7,6 @@ import javax.swing.JTextField;
 
 import dkeep.cli.*;
 
-
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
