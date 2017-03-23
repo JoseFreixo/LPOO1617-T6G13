@@ -63,6 +63,7 @@ public class GameWindow {
 		frmDungeonKeep.setBounds(100, 100, 650, 650);
 		frmDungeonKeep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDungeonKeep.getContentPane().setLayout(null);
+		frmDungeonKeep.requestFocus();
 		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres:");
 		lblNumberOfOgres.setBounds(22, 19, 97, 36);
