@@ -10,20 +10,21 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import dkeep.logic.CellPosition;
 import dkeep.logic.GameMap;
 
-public class LevelEditorPanel extends JPanel implements MouseListener{
+public class LevelEditorPanel extends JPanel implements MouseListener, MouseMotionListener{
 	private BufferedImage heroArmedImage;
 	private BufferedImage ogreImage;
 	private BufferedImage wallImage;
 	private BufferedImage floorImage;
 	private BufferedImage keyImage;
 	private BufferedImage doorImage;
+	private char toPaintChar;
 	private GameMap map;
 	
-	public LevelEditorPanel(int lines, int columns){
+	public LevelEditorPanel(){
 		super();
-		addMouseListener(this);
 		try {
 			heroArmedImage = ImageIO.read(new File("src/resources/player_armed.png"));
 			ogreImage = ImageIO.read(new File("src/resources/ogre.png"));
@@ -31,11 +32,8 @@ public class LevelEditorPanel extends JPanel implements MouseListener{
 			floorImage = ImageIO.read(new File("src/resources/floor.png"));
 			keyImage = ImageIO.read(new File("src/resources/key.png"));
 			doorImage = ImageIO.read(new File("src/resources/door.png"));
-			char [][] mapa = new char [lines][columns];
-			for (int i = 0; i < mapa.length; i++){
-				Arrays.fill(mapa[i], ' ');
-			}
-			map = new GameMap(mapa);
+			toPaintChar = 'X';
+			addMouseListener(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -60,9 +58,12 @@ public class LevelEditorPanel extends JPanel implements MouseListener{
 		}
 	}
 	
-	public void updateMap(GameMap map){
-		this.map = map;
-		repaint();
+	public void newMap(int lines, int columns){
+		char [][] mapa = new char [lines][columns];
+		for (int i = 0; i < mapa.length; i++){
+			Arrays.fill(mapa[i], ' ');
+		}
+		map = new GameMap(mapa);
 	}
 	
 	public BufferedImage getImage(int y, int x){
@@ -82,7 +83,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		
+		updateStuff(arg0);
 	}
 
 	@Override
@@ -93,13 +94,31 @@ public class LevelEditorPanel extends JPanel implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+		updateStuff(arg0);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 	
-	public void mouseDragged(MouseEvent e) {
-		
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		updateStuff(arg0);
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {}
+	
+	
+	public void updateChar(char carater){
+		toPaintChar = carater;
+	}
+	
+	public void updateStuff(MouseEvent arg0){
+		int x_size = this.getWidth() / map.getMap()[0].length;
+		int y_size = this.getHeight() / map.getMap().length;
+		int l = arg0.getY() / y_size;
+		int c = arg0.getX() / x_size;
+		map.setCharOnPos(new CellPosition(l, c), toPaintChar);
+		repaint();
 	}
 }
