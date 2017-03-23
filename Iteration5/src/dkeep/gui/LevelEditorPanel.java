@@ -34,6 +34,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			doorImage = ImageIO.read(new File("src/resources/door.png"));
 			toPaintChar = 'X';
 			addMouseListener(this);
+			addMouseMotionListener(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -115,12 +116,15 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 	}
 	
 	public void updateStuff(MouseEvent arg0){
-		int x_size = this.getWidth() / map.getMap()[0].length;
-		int y_size = this.getHeight() / map.getMap().length;
-		int l = arg0.getY() / y_size;
-		int c = arg0.getX() / x_size;
-		map.setCharOnPos(new CellPosition(l, c), toPaintChar);
-		repaint();
+		try{
+			int x_size = this.getWidth() / map.getMap()[0].length;
+			int y_size = this.getHeight() / map.getMap().length;
+			int l = arg0.getY() / y_size;
+			int c = arg0.getX() / x_size;
+			map.setCharOnPos(new CellPosition(l, c), toPaintChar);
+			repaint();
+		}
+		catch (ArrayIndexOutOfBoundsException e){}
 	}
 	
 	public boolean verifyMap(){

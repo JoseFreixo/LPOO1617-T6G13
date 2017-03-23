@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
 
 public class LevelEditorWindow {
 
@@ -55,12 +57,15 @@ public class LevelEditorWindow {
 		frame.getContentPane().setLayout(null);
 		
 		LevelEditorPanel panel = new LevelEditorPanel();
+
 		JButton btnWall = new JButton("Wall");
 		JButton btnFloor = new JButton("Floor");
 		JButton btnHero = new JButton("Hero");
 		JButton btnOgre = new JButton("Ogre");
 		JButton btnKey = new JButton("Key");
 		JButton btnDoor = new JButton("Door");
+		
+		JLabel lblMapStatus = new JLabel("");
 		
 		JButton btnNewMap = new JButton("New Map");
 		btnNewMap.addActionListener(new ActionListener() {
@@ -79,8 +84,10 @@ public class LevelEditorWindow {
 					}
 				}
 				catch (NoSuchElementException Excp){
+					lblMapStatus.setText("The number of lines and columns must be between 5 and 15 (included).");
 					return;
 				}
+				lblMapStatus.setText("");
 				btnWall.setEnabled(true);
 				btnFloor.setEnabled(true);
 				btnHero.setEnabled(true);
@@ -98,6 +105,7 @@ public class LevelEditorWindow {
 		textLines.setBounds(110, 12, 86, 20);
 		frame.getContentPane().add(textLines);
 		textLines.setColumns(10);
+		textLines.setText("5");
 		
 		JLabel lblLines = new JLabel("Lines:");
 		lblLines.setBounds(65, 15, 35, 14);
@@ -111,7 +119,7 @@ public class LevelEditorWindow {
 		textColumns.setColumns(10);
 		textColumns.setBounds(296, 12, 86, 20);
 		frame.getContentPane().add(textColumns);
-		
+		textColumns.setText("5");
 		
 		btnWall.setEnabled(false);
 		btnWall.setBounds(472, 90, 89, 23);
@@ -167,7 +175,7 @@ public class LevelEditorWindow {
 		});
 		frame.getContentPane().add(btnDoor);
 
-		panel.setBounds(20, 53, 418, 418);
+		panel.setBounds(20, 60, 418, 418);
 		frame.getContentPane().add(panel);
 		
 		JButton btnDone = new JButton("Done");
@@ -187,5 +195,8 @@ public class LevelEditorWindow {
 		});
 		btnSaveMap.setBounds(472, 349, 89, 23);
 		frame.getContentPane().add(btnSaveMap);
+		
+		lblMapStatus.setBounds(20, 34, 418, 25);
+		frame.getContentPane().add(lblMapStatus);
 	}
 }
