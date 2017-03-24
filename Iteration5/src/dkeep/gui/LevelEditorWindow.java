@@ -22,23 +22,6 @@ public class LevelEditorWindow {
 	private JFrame frame;
 	private JTextField textLines;
 	private JTextField textColumns;
-	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LevelEditorWindow window = new LevelEditorWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -198,5 +181,7 @@ public class LevelEditorWindow {
 		
 		lblMapStatus.setBounds(20, 34, 418, 25);
 		frame.getContentPane().add(lblMapStatus);
+		
+		frame.setVisible(true);
 	}
 }
