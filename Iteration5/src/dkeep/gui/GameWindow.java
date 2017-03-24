@@ -65,6 +65,7 @@ public class GameWindow {
 		frmDungeonKeep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDungeonKeep.getContentPane().setLayout(null);
 		
+		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres:");
 		lblNumberOfOgres.setBounds(22, 38, 97, 20);
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
@@ -88,7 +89,6 @@ public class GameWindow {
 		
 		CustomPanel gameArea = new CustomPanel();
 		gameArea.setBounds(22, 95, 440, 440);
-		gameArea.requestFocusInWindow();
 		frmDungeonKeep.getContentPane().add(gameArea);
 		
 		JLabel StatusLabel = new JLabel("You can start a new game.");
@@ -108,6 +108,7 @@ public class GameWindow {
 					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
 				
 				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
 			}
 		});
 		btnUp.setEnabled(false);
@@ -123,6 +124,7 @@ public class GameWindow {
 					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
 				
 				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
 			}
 		});
 		btnLeft.setEnabled(false);
@@ -138,6 +140,7 @@ public class GameWindow {
 					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
 				
 				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
 			}
 		});
 		btnRight.setEnabled(false);
@@ -153,6 +156,7 @@ public class GameWindow {
 					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
 				
 				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
 			}
 		});
 		btnDown.setEnabled(false);
@@ -184,7 +188,7 @@ public class GameWindow {
 				gameArea.updateMap(play.getMap());
 				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight);
 				scan.close();
-				
+				frmDungeonKeep.requestFocus();
 			}
 		});
 		btnNewGame.setBounds(502, 56, 95, 23);
@@ -212,6 +216,39 @@ public class GameWindow {
 			}
 		});
 		toolBar.add(btnLevelEditor);
+		
+		frmDungeonKeep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+			int status = -1;
+			switch(e.getKeyCode()){
+			case KeyEvent.VK_UP:
+				status=setMapAndStatusLabel("Up.", StatusLabel);	
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				gameArea.updateMap(play.getMap());
+				break;
+			case KeyEvent.VK_LEFT:
+				status=setMapAndStatusLabel("Left.", StatusLabel);	
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				gameArea.updateMap(play.getMap());
+				break;
+			case KeyEvent.VK_DOWN:
+				status=setMapAndStatusLabel("Down.", StatusLabel);	
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				gameArea.updateMap(play.getMap());
+				break;
+			case KeyEvent.VK_RIGHT:
+				status=setMapAndStatusLabel("Right.", StatusLabel);	
+				if(status==-1||status==1)
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+				gameArea.updateMap(play.getMap());
+				break;
+			}
+			}
+		});
 
 	}
 	
@@ -258,4 +295,6 @@ public class GameWindow {
 		}
 		return status;
 	}
+	
+	
 }

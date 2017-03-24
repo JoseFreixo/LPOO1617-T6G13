@@ -11,7 +11,7 @@ import javax.swing.*;
 
 import dkeep.logic.GameMap;
 
-public class CustomPanel extends JPanel implements KeyListener{
+public class CustomPanel extends JPanel{
 	private BufferedImage heroImage;
 	private BufferedImage heroArmedImage;
 	private BufferedImage heroArmedKeyImage;
@@ -45,7 +45,6 @@ public class CustomPanel extends JPanel implements KeyListener{
 			doorOpenImage = ImageIO.read(new File("src/resources/open_door.png"));
 			clubImage = ImageIO.read(new File("src/resources/club.png"));
 			cifraoImage = ImageIO.read(new File("src/resources/cifrao.png"));
-			addKeyListener(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,26 +102,5 @@ public class CustomPanel extends JPanel implements KeyListener{
 		if(map.getMap()[y][x] == '$')
 			return cifraoImage;
 		return wallImage;
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		//I HATE YOU SO MUCH FUCK OFF
-		switch(e.getKeyCode()){
-		 case KeyEvent.VK_LEFT: System.out.println("PRESSED"); break;
-		 case KeyEvent.VK_RIGHT: System.out.println("PRESSED"); break;
-		 case KeyEvent.VK_UP: System.out.println("PRESSED"); break;
-		 case KeyEvent.VK_DOWN: System.out.println("PRESSED"); break;
-		 }
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// DO NOTHING
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// DO NOTHING
 	}
 }
