@@ -208,11 +208,15 @@ public class GameWindow {
 		btnLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmDungeonKeep.dispose();
-				levelEditor = new LevelEditorWindow();
+				levelEditor = new LevelEditorWindow(play);
 			}
 		});
 		toolBar.add(btnLevelEditor);
 
+	}
+	
+	public JFrame getFrame(){
+		return frmDungeonKeep;
 	}
 	
 	public void enableDisableMoves(boolean isEnabled, JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){

@@ -45,6 +45,10 @@ public class Play implements java.io.Serializable{
 		game = new Game(maps.get(i), this.guardType, this.numberOgres);
 	}
 	
+	public int getMapsSize(){
+		return maps.size();
+	}
+	
 	public GameMap getMap(){
 		return game.getMap();
 	}

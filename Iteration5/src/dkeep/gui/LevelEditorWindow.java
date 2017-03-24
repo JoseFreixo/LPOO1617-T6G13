@@ -6,12 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import dkeep.cli.Play;
 import dkeep.logic.GameMap;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -22,18 +24,26 @@ public class LevelEditorWindow {
 	private JFrame frame;
 	private JTextField textLines;
 	private JTextField textColumns;
+	private GameWindow gameWindow;
+	private Play play;
+	private JTextField textField;
 
 	/**
 	 * Create the application.
 	 */
-	public LevelEditorWindow() {
-		initialize();
+	public LevelEditorWindow(Play currentGame) {
+		initialize(currentGame);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Play currentGame) {
+		gameWindow = new GameWindow();
+		gameWindow.getFrame().setVisible(false);
+		
+		play = currentGame;
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 615, 528);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +57,7 @@ public class LevelEditorWindow {
 		JButton btnOgre = new JButton("Ogre");
 		JButton btnKey = new JButton("Key");
 		JButton btnDoor = new JButton("Door");
+		textField = new JTextField();
 		
 		JLabel lblMapStatus = new JLabel("");
 		
@@ -170,18 +181,73 @@ public class LevelEditorWindow {
 		btnDone.setBounds(472, 433, 89, 23);
 		frame.getContentPane().add(btnDone);
 		
-		JButton btnSaveMap = new JButton("Save Map");
+		JButton btnSaveMap = new JButton("Add Map");
 		btnSaveMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if (panel.verifyMap()){
+					play.addMap(panel.returnMap());
+					lblMapStatus.setText("Map added successfuly!");
+				}
+				else{
+					Random rand = new Random();
+					int r = rand.nextInt(3);
+					if (r == 0)
+						lblMapStatus.setText("Map not added. Perhaps you forgot the walls/door around the map?");
+					if (r == 1)
+						lblMapStatus.setText("Map not added. Perhaps you added more than one ogre/hero sprite.");
+					if (r == 2)
+						lblMapStatus.setText("Map not added. Perhaps you added more than one key sprite.");
+				}
 			}
 		});
-		btnSaveMap.setBounds(472, 349, 89, 23);
+		btnSaveMap.setBounds(472, 312, 89, 23);
 		frame.getContentPane().add(btnSaveMap);
 		
 		lblMapStatus.setBounds(20, 34, 418, 25);
 		frame.getContentPane().add(lblMapStatus);
 		
+		JButton btnReplaceWithLevel = new JButton("Replace");
+		btnReplaceWithLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (panel.verifyMap()){
+					try {
+						Scanner scan = new Scanner(textField.getText());
+						int index = scan.nextInt() - 1;
+						scan.close();
+						if (index > play.getMapsSize() || index < 0)
+							throw new NoSuchElementException();
+						play.replaceMap(panel.returnMap(), index);
+						lblMapStatus.setText("Map replaced successfuly!");
+					}
+					catch (NoSuchElementException exception){
+						lblMapStatus.setText("Not a number or the level you want to replace does not exist!");
+					}
+				}
+				else{
+					Random rand = new Random();
+					int r = rand.nextInt(3);
+					if (r == 0)
+						lblMapStatus.setText("Map not replaced. Perhaps you forgot the walls/door around the map?");
+					if (r == 1)
+						lblMapStatus.setText("Map not replaced. Perhaps you added more than one ogre/hero sprite.");
+					if (r == 2)
+						lblMapStatus.setText("Map not replaced. Perhaps you added more than one key sprite.");
+				}
+			}
+		});
+		btnReplaceWithLevel.setBounds(472, 345, 89, 23);
+		frame.getContentPane().add(btnReplaceWithLevel);
+		
+		textField.setText("2");
+		textField.setColumns(10);
+		textField.setBounds(538, 367, 23, 20);
+		frame.getContentPane().add(textField);
+		
+		JLabel lblWithLevel = new JLabel("With level:");
+		lblWithLevel.setBounds(482, 370, 58, 14);
+		frame.getContentPane().add(lblWithLevel);
+		
 		frame.setVisible(true);
+		
 	}
 }

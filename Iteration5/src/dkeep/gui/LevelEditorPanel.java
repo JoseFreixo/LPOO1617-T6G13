@@ -131,7 +131,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 		int heroCounter = 0, ogreCounter = 0, keyCounter = 0;
 		for (int i = 0; i < map.getMap().length; i++){
 			for (int j = 0; j < map.getMap()[1].length; j++){
-				if ((i == 0 || j == 0 || i == map.getMap().length - 1 || j == map.getMap()[i].length - 1) && (map.getMap()[i][j] != 'X' || map.getMap()[i][j] != 'I'))
+				if ((i == 0 || j == 0 || i == map.getMap().length - 1 || j == map.getMap()[i].length - 1) && (map.getMap()[i][j] != 'X' && map.getMap()[i][j] != 'I'))
 					return false;
 				if (map.getMap()[i][j] == 'A')
 					heroCounter++;
