@@ -102,13 +102,14 @@ public class GameWindow {
 		JButton btnLeft = new JButton("Left");
 		JButton btnRight = new JButton("Right");
 		JButton btnDown = new JButton("Down");
+		JButton btnLevelEditor = new JButton("Level Editor");
 		
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int status=setMapAndStatusLabel("Up.", StatusLabel);
 				
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
@@ -124,7 +125,7 @@ public class GameWindow {
 				int status=setMapAndStatusLabel("Left.", StatusLabel);
 				
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
@@ -140,7 +141,7 @@ public class GameWindow {
 				int status=setMapAndStatusLabel("Right.", StatusLabel);
 				
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
@@ -156,7 +157,7 @@ public class GameWindow {
 				int status=setMapAndStatusLabel("Down.", StatusLabel);
 				
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
@@ -189,7 +190,8 @@ public class GameWindow {
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
 				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight);
+				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);
+				btnLevelEditor.setEnabled(false);
 				scan.close();
 				frmDungeonKeep.requestFocus();
 			}
@@ -211,7 +213,6 @@ public class GameWindow {
 		toolBar.setBounds(0, 0, 644, 30);
 		frmDungeonKeep.getContentPane().add(toolBar);
 		
-		JButton btnLevelEditor = new JButton("Level Editor");
 		btnLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmDungeonKeep.dispose();
@@ -228,25 +229,25 @@ public class GameWindow {
 			case KeyEvent.VK_UP:
 				status=setMapAndStatusLabel("Up.", StatusLabel);	
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				gameArea.updateMap(play.getMap());
 				break;
 			case KeyEvent.VK_LEFT:
 				status=setMapAndStatusLabel("Left.", StatusLabel);	
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				gameArea.updateMap(play.getMap());
 				break;
 			case KeyEvent.VK_DOWN:
 				status=setMapAndStatusLabel("Down.", StatusLabel);	
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				gameArea.updateMap(play.getMap());
 				break;
 			case KeyEvent.VK_RIGHT:
 				status=setMapAndStatusLabel("Right.", StatusLabel);	
 				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight);	
+					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
 				gameArea.updateMap(play.getMap());
 				break;
 			}
@@ -259,11 +260,12 @@ public class GameWindow {
 		return frmDungeonKeep;
 	}
 	
-	public void enableDisableMoves(boolean isEnabled, JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight){
+	public void enableDisableMoves(boolean isEnabled, JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight, JButton levelEditor){
 		btnUp.setEnabled(isEnabled);
 		btnDown.setEnabled(isEnabled);
 		btnLeft.setEnabled(isEnabled);
 		btnRight.setEnabled(isEnabled);
+		levelEditor.setEnabled(!isEnabled);
 	}
 	
 	public int setMapAndStatusLabel(String move, JLabel StatusLabel){
