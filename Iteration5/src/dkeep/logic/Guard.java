@@ -2,9 +2,7 @@ package dkeep.logic;
 
 
 public class Guard extends Unit implements java.io.Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 6L;
 	int type; // 0 -> Rookie | 1 -> Drunken | 2 -> Suspicious
 	int timeOut;

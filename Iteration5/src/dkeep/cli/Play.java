@@ -9,9 +9,6 @@ import dkeep.logic.*;
 
 public class Play implements java.io.Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 9L;
 	private Game game;
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();

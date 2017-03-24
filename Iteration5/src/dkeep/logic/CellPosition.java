@@ -1,9 +1,7 @@
 package dkeep.logic;
 
 public class CellPosition implements java.io.Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 7L;
 	int x;
 	int y;
