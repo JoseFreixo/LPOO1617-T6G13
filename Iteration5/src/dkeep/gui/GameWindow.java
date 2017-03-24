@@ -29,6 +29,7 @@ public class GameWindow {
 	private JFrame frmDungeonKeep;
 	private JTextField numberOgresField;
 	private Play play;
+	private LevelEditorWindow levelEditor;
 
 	/**
 	 * Launch the application.
@@ -65,7 +66,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().setLayout(null);
 		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres:");
-		lblNumberOfOgres.setBounds(22, 38, 97, 36);
+		lblNumberOfOgres.setBounds(22, 38, 97, 20);
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
 		
 		numberOgresField = new JTextField();
@@ -204,6 +205,12 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(toolBar);
 		
 		JButton btnLevelEditor = new JButton("Level Editor");
+		btnLevelEditor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmDungeonKeep.dispose();
+				levelEditor = new LevelEditorWindow();
+			}
+		});
 		toolBar.add(btnLevelEditor);
 
 	}
