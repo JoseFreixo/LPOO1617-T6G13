@@ -53,6 +53,15 @@ public class Play implements java.io.Serializable{
 		return game;
 	}
 	
+	public void addMap(GameMap map){
+		maps.add(map);
+	}
+	
+	public void replaceMap(GameMap map, int index){
+		maps.add(index + 1, map);
+		maps.remove(index);
+	}
+	
 	public int moveHeroWindow(char c){
 		game.moveHero(c);
 		
