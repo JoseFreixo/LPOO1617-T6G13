@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import dkeep.logic.*;
+import dkeep.saveLoadMaps.SLMaps;
 
 public class Play implements java.io.Serializable{
 
@@ -21,14 +22,11 @@ public class Play implements java.io.Serializable{
 		i = 0;
 		numberOgres=ThreadLocalRandom.current().nextInt(1, 6); 
 		guardType=ThreadLocalRandom.current().nextInt(0, 3); 
-		game = new Game(maps.get(i),guardType,numberOgres);
+		game = new Game(maps.get(i), guardType, numberOgres);
 	}
 	
 	public Play(int numberOgres, String guardTypeStr){
-		GameMap mapa = new DungeonMap();
-		maps.add(mapa);
-		mapa = new KeepMap();
-		maps.add(mapa);
+		maps = SLMaps.getMaps();
 		i = 0;
 		switch(guardTypeStr){
 		case "Rookie":
@@ -55,15 +53,6 @@ public class Play implements java.io.Serializable{
 	
 	public Game getGame(){
 		return game;
-	}
-	
-	public void addMap(GameMap map){
-		maps.add(map);
-	}
-	
-	public void replaceMap(GameMap map, int index){
-		maps.add(index + 1, map);
-		maps.remove(index);
 	}
 	
 	public int moveHeroWindow(char c){

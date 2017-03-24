@@ -6,12 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import dkeep.cli.*;
+import dkeep.logic.GameMap;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
@@ -28,6 +30,7 @@ public class GameWindow {
 
 	private JFrame frmDungeonKeep;
 	private JTextField numberOgresField;
+	private ArrayList<GameMap> maps = new ArrayList<GameMap>(); 
 	private Play play;
 	private LevelEditorWindow levelEditor;
 
@@ -67,24 +70,24 @@ public class GameWindow {
 		
 		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres:");
-		lblNumberOfOgres.setBounds(22, 38, 97, 20);
+		lblNumberOfOgres.setBounds(22, 38, 116, 20);
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
 		
 		numberOgresField = new JTextField();
-		numberOgresField.setBounds(129, 38, 95, 20);
+		numberOgresField.setBounds(148, 38, 95, 20);
 		frmDungeonKeep.getContentPane().add(numberOgresField);
 		numberOgresField.setColumns(10);
 		numberOgresField.setText("3");
 		
 		JLabel lblGuardPersonality = new JLabel("Guard Personality:");
-		lblGuardPersonality.setBounds(22, 65, 97, 14);
+		lblGuardPersonality.setBounds(22, 65, 116, 14);
 		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
 		
 		JComboBox<String> guardTypeCombo = new JComboBox<String>();
 		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		guardTypeCombo.setToolTipText("Choose the Guard Personality");
 		guardTypeCombo.setMaximumRowCount(3);
-		guardTypeCombo.setBounds(129, 62, 95, 20);
+		guardTypeCombo.setBounds(148, 62, 95, 20);
 		frmDungeonKeep.getContentPane().add(guardTypeCombo);
 		
 		CustomPanel gameArea = new CustomPanel();

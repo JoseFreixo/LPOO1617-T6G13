@@ -1,4 +1,4 @@
-package dkeep.cli;
+package dkeep.saveLoadMaps;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,25 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import dkeep.logic.*;
+import dkeep.cli.Play;
+import dkeep.logic.GameMap;
 
-public class DungeonKeep {
-
+public class SLMaps {
 	
-	public static void main(String[] args) {
-		ArrayList<GameMap> maps = new ArrayList<GameMap>();
-		maps.add(new DungeonMap());
-		maps.add(new KeepMap());
-		Play play = new Play(maps);
-		save (maps);
-//		save(play);
-//		play=null;
-//		play=load();
-//		play.playGame();
-	}
-
-
-	public static void save(ArrayList<GameMap> maps) {
+	
+	public static void setMaps(ArrayList<GameMap> maps) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream("maps.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -40,20 +28,21 @@ public class DungeonKeep {
 
 
 
-	public static Play load() {
+	public static ArrayList<GameMap> getMaps() {
 
 		try {
-			FileInputStream fis = new FileInputStream("save.ser");
+			FileInputStream fis = new FileInputStream("maps.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			Play play = (Play) ois.readObject();
+			@SuppressWarnings("unchecked")
+			ArrayList<GameMap> maps = (ArrayList<GameMap>) ois.readObject();
 			ois.close();
 			fis.close();
-			return play;
+			return maps;
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 			return null;
 		} catch (ClassNotFoundException c) {
-			System.out.println("Class not found");
+			System.out.println("Maps not found");
 			c.printStackTrace();
 			return null;
 		}

@@ -28,6 +28,10 @@ public class Guard extends Unit implements java.io.Serializable {
 	public void setFront(boolean front) {
 		this.front = front;
 	}
+	
+	public void setType(int i){
+		type = i;
+	}
 
 	public int getTimeOut() {
 		return timeOut;

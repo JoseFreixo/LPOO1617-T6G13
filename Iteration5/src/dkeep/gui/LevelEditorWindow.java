@@ -8,10 +8,13 @@ import javax.swing.JTextField;
 
 import dkeep.cli.Play;
 import dkeep.logic.GameMap;
+import dkeep.saveLoadMaps.SLMaps;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
@@ -25,7 +28,6 @@ public class LevelEditorWindow {
 	private JTextField textLines;
 	private JTextField textColumns;
 	private GameWindow gameWindow;
-	private Play play;
 	private JTextField textField;
 
 	/**
@@ -41,8 +43,6 @@ public class LevelEditorWindow {
 	private void initialize(Play currentGame) {
 		gameWindow = new GameWindow();
 		gameWindow.getFrame().setVisible(false);
-		
-		play = currentGame;
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 615, 528);
@@ -175,17 +175,20 @@ public class LevelEditorWindow {
 		JButton btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+				frame.dispose();
+				gameWindow.getFrame().setVisible(true);
 			}
 		});
 		btnDone.setBounds(472, 433, 89, 23);
 		frame.getContentPane().add(btnDone);
 		
-		JButton btnSaveMap = new JButton("Add Map");
-		btnSaveMap.addActionListener(new ActionListener() {
+		JButton btnAddMap = new JButton("Add Map");
+		btnAddMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
-					play.addMap(panel.returnMap());
+					ArrayList<GameMap> maps = SLMaps.getMaps();
+					maps.add(panel.returnMap());
+					SLMaps.setMaps(maps);
 					lblMapStatus.setText("Map added successfuly!");
 				}
 				else{
@@ -200,8 +203,8 @@ public class LevelEditorWindow {
 				}
 			}
 		});
-		btnSaveMap.setBounds(472, 312, 89, 23);
-		frame.getContentPane().add(btnSaveMap);
+		btnAddMap.setBounds(472, 312, 89, 23);
+		frame.getContentPane().add(btnAddMap);
 		
 		lblMapStatus.setBounds(20, 34, 418, 25);
 		frame.getContentPane().add(lblMapStatus);
@@ -214,9 +217,15 @@ public class LevelEditorWindow {
 						Scanner scan = new Scanner(textField.getText());
 						int index = scan.nextInt() - 1;
 						scan.close();
-						if (index > play.getMapsSize() || index < 0)
+						ArrayList<GameMap> maps = SLMaps.getMaps();
+						if (maps == null){
+							JOptionPane.showMessageDialog(null, "Maps file corruped!");
+							System.exit(1);
+						}
+						if (index > maps.size() || index < 1)
 							throw new NoSuchElementException();
-						play.replaceMap(panel.returnMap(), index);
+						maps.set(index, panel.returnMap());
+						SLMaps.setMaps(maps);
 						lblMapStatus.setText("Map replaced successfuly!");
 					}
 					catch (NoSuchElementException exception){
@@ -244,7 +253,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(textField);
 		
 		JLabel lblWithLevel = new JLabel("With level:");
-		lblWithLevel.setBounds(482, 370, 58, 14);
+		lblWithLevel.setBounds(472, 370, 58, 14);
 		frame.getContentPane().add(lblWithLevel);
 		
 		frame.setVisible(true);
