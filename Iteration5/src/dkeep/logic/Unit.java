@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public abstract class Unit {
+public abstract class Unit implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2L;
 	CellPosition posicao;
 	char representation;
 	

@@ -1,17 +1,18 @@
 package dkeep.cli;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import dkeep.logic.*;
 
-public class Play {
+public class Play implements java.io.Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9L;
 	private Game game;
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();
 	private int i, numberOgres, guardType;
@@ -125,41 +126,4 @@ public class Play {
 		else
 			System.out.println("You win!");
 	}
-	
-	public void save(){
-		try {
-	         FileOutputStream fileOut =
-	         new FileOutputStream("save.ser");
-	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-	         out.writeObject(maps);
-	         out.close();
-	         fileOut.close();
-	         
-	      }catch(IOException i) {
-	         i.printStackTrace();
-	      }
-	}
-	
-	
-	
-	@SuppressWarnings("unchecked")
-	public void load(){
-
-        try
-        {
-            FileInputStream fis = new FileInputStream("save.ser");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            maps.clear();
-            maps = (ArrayList<GameMap>) ois.readObject();
-            ois.close();
-            fis.close();
-         }catch(IOException ioe){
-             ioe.printStackTrace();
-             return;
-          }catch(ClassNotFoundException c){
-             System.out.println("Class not found");
-             c.printStackTrace();
-             return;
-          }
-   }
 }

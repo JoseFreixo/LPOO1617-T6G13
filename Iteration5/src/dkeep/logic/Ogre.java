@@ -1,6 +1,10 @@
 package dkeep.logic;
 
-public class Ogre extends Unit{
+public class Ogre extends Unit implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3L;
 	int stunTimeout;
 	Boolean OgreOnKey;
 	Boolean swingedOnKey;

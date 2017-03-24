@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Game {
+public class Game implements java.io.Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8L;
 	public static final boolean DEFEAT = true;
 	Boolean Status;
 	Boolean openDoors;
