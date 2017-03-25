@@ -8,10 +8,10 @@ import org.junit.Test;
 
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
-import dkeep.logic.KeepMap;
 import dkeep.logic.Ogre;
+import dkeep.saveLoadMaps.DungeonMap;
+import dkeep.saveLoadMaps.KeepMap;
 import dkeep.logic.CellPosition;
-import dkeep.logic.DungeonMap;
 	
 public class TestDungeonGameLogic {
 	

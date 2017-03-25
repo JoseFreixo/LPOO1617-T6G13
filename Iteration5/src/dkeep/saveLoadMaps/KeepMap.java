@@ -1,6 +1,8 @@
-package dkeep.logic;
+package dkeep.saveLoadMaps;
 
-public class KeepMap extends GameMap{
+import dkeep.logic.GameMap;
+
+public class KeepMap{
 	
 	private static char[][] map = {{'X','X','X','X','X','X','X','X','X'},
 	 		{'I',' ',' ',' ','O',' ',' ','k','X'},
@@ -12,7 +14,7 @@ public class KeepMap extends GameMap{
 	 		{'X','A',' ',' ',' ',' ',' ',' ','X'},
 	 		{'X','X','X','X','X','X','X','X','X'}};
 	
-	public KeepMap() {
-		super(map);
+	public static GameMap getKeepMap() {
+		return new GameMap(map);
 	}
 }

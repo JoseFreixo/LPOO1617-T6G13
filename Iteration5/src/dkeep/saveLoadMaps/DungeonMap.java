@@ -1,6 +1,8 @@
-package dkeep.logic;
+package dkeep.saveLoadMaps;
 
-public class DungeonMap extends GameMap{
+import dkeep.logic.GameMap;
+
+public class DungeonMap {
 
 	private static char[][] map = {{'X','X','X','X','X','X','X','X','X','X'},
 			 {'X','H',' ',' ','I',' ','X',' ','G','X'},
@@ -13,8 +15,8 @@ public class DungeonMap extends GameMap{
 			 {'X',' ','I',' ','I',' ','X','k',' ','X'},
 			 {'X','X','X','X','X','X','X','X','X','X'}};
 	
-	public DungeonMap() {
-		super(map);
+	public static GameMap getDungeonMap() {
+		return new GameMap(map);
 	}
 
 }

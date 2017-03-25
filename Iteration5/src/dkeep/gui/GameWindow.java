@@ -33,9 +33,8 @@ public class GameWindow {
 
 	private JFrame frmDungeonKeep;
 	private JTextField numberOgresField;
-	private ArrayList<GameMap> maps = new ArrayList<GameMap>(); 
 	private Play play;
-	private LevelEditorWindow levelEditor;
+
 	
 	private static Map<String, Character> moves =
 			 new HashMap<String, Character>();
@@ -255,7 +254,7 @@ public class GameWindow {
 		btnLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmDungeonKeep.dispose();
-				levelEditor = new LevelEditorWindow(play);
+				new LevelEditorWindow(play);
 			}
 		});
 		toolBar.add(btnLevelEditor);
