@@ -218,40 +218,40 @@ public class Game implements java.io.Serializable {
 				ogre.setAttack(ogre.getPosition());
 		}	
 	}
-
-	public void moveHero(char c) {
-		c = Character.toUpperCase(c);
-		int y = heroi.getPosition().getY();
-		int x = heroi.getPosition().getX();
 	
+	private int newHeroY(char c){
 		if (c == 'W')
-			y -= 1;
+			return -1;
 		else if (c == 'S')
-			y += 1;
-		else if (c == 'A')
-			x -= 1;
-		else if (c == 'D')
-			x += 1;
+			return 1;
 		else
-			return;
-		
-		map.setCharOnPos(heroi.getPosition(), ' ');
-		
+			return 0;
+	}
+	
+	private int newHeroX(char c){
+		if (c == 'A')
+			return -1;
+		else if (c == 'D')
+			return 1;
+		else
+			return 0;
+	}
+	
+	private void printObjectsAfterHeroMoved(int y, int x){
 		if (isKey && new CellPosition(y, x).equals(lever.getPosition())){
 			heroi.setRepresentation('K');
 			lever.setPosition(0, 0);
-		}
-		else if (!isKey && new CellPosition(y, x).equals(lever.getPosition())){
+		} else if (!isKey && new CellPosition(y, x).equals(lever.getPosition())){
 			map.openDoors(isKey, heroi.getPosition());
 			printKey = true;
 			openDoors = true;
-		}
-		else if (printKey) {
+		} else if (printKey) {
 			map.setUnitPosMap(lever.getPosition(), lever.getPosition(), lever.getRepresentation());
 			printKey = false;
 		}
-		
+	}
 	
+	private void changeHeroLocation(int y, int x){
 		if (map.validPosition(y, x)) {
 			if (map.getCharOnPos(new CellPosition(y, x)) == 'S'){
 				Status = false;
@@ -259,15 +259,21 @@ public class Game implements java.io.Serializable {
 			}
 			map.setCharOnPos(new CellPosition(y, x), heroi.getRepresentation());
 			heroi.setPosition(y, x);
-		}
-		else{ 
-			map.setCharOnPos(heroi.getPosition(), heroi.getRepresentation());
-		}
+		} else { map.setCharOnPos(heroi.getPosition(), heroi.getRepresentation()); }
 		
 		if (isKey && map.getMap()[y][x] == 'I' && heroi.getRepresentation() == 'K') {
 			map.openDoors(isKey, heroi.getPosition());
 			openDoors = true;
 		}
+	}
+
+	public void moveHero(char c) {
+		c = Character.toUpperCase(c);
+		int y = heroi.getPosition().getY() + newHeroY(c);
+		int x = heroi.getPosition().getX() + newHeroX(c);
+		map.setCharOnPos(heroi.getPosition(), ' ');
+		printObjectsAfterHeroMoved(y, x);
+		changeHeroLocation(y, x);
 	}
 	
 	public void moveGuard(int [] i){
