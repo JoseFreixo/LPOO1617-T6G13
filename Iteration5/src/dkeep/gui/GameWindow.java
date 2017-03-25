@@ -247,7 +247,7 @@ public class GameWindow {
 		btnLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmDungeonKeep.dispose();
-				new LevelEditorWindow(play);
+				new LevelEditorWindow();
 			}
 		});
 		toolBar.add(btnLevelEditor);

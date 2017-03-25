@@ -5,7 +5,6 @@ package dkeep.gui;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import dkeep.cli.Play;
 import dkeep.logic.GameMap;
 import dkeep.saveLoadMaps.SLMaps;
 import javax.swing.JLabel;
@@ -29,14 +28,14 @@ public class LevelEditorWindow {
 	/**
 	 * Create the application.
 	 */
-	public LevelEditorWindow(Play currentGame) {
-		initialize(currentGame);
+	public LevelEditorWindow() {
+		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Play currentGame) {
+	private void initialize() {
 		gameWindow = new GameWindow();
 		gameWindow.getFrame().setVisible(false);
 		
