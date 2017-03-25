@@ -276,9 +276,63 @@ public class Game implements java.io.Serializable {
 		changeHeroLocation(y, x);
 	}
 	
-	public void moveGuard(int [] i){
-		if (guarda == null)
+	private void resetMovementIndex(int [] i){
+		if (i[0] < 0)
+			i[0] = guarda.getMovement().length - 1;
+		else if (i[0] > guarda.getMovement().length - 1)
+			i[0] = 0;
+	}
+	
+	private void moveRookie(int [] i, int y, int x){
+		if (guarda.getMovement()[i[0]] == 'W')
+			y -= 1;
+		else if (guarda.getMovement()[i[0]] == 'S')
+			y += 1;
+		else if (guarda.getMovement()[i[0]] == 'A')
+			x -= 1;
+		else if (guarda.getMovement()[i[0]] == 'D')
+			x += 1;
+		i[0]++;
+		map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
+		guarda.setPosition(y, x);
+	}
+	
+	private void moveDrunkenMechanics(int [] i, int y, int x){
+		Random rand = new Random();
+		int r = rand.nextInt(5);
+		if (r == 0){
+			guarda.setTimeOut(3);
+			guarda.setRepresentation('g');
+			guarda.setGuardDirection();
+			map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
 			return;
+		}
+		moveDrunkenSuspicious(i, y, x);
+	}
+	
+	private void moveSuspiciousMechanics(int [] i, int y, int x){
+		guarda.setGuardDirection();
+		moveDrunkenSuspicious(i, y, x);
+	}
+		
+	private void moveDrunkenSuspicious(int [] i, int y, int x){
+		if(guarda.isFront()){
+			moveRookie(i, y, x);
+		}
+		else{
+			i[0]--;
+			resetMovementIndex(i);
+			if (guarda.getMovement()[i[0]] == 'W') y += 1;
+			else if (guarda.getMovement()[i[0]] == 'S') y -= 1;
+			else if (guarda.getMovement()[i[0]] == 'A') x += 1;
+			else if (guarda.getMovement()[i[0]] == 'D') x -= 1;
+			map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
+			guarda.setPosition(y, x);
+		}
+	}
+	
+	public void moveGuard(int [] i){
+		if (guarda == null) return;
 		
 		if (guarda.getTimeOut() > 0){
 			guarda.setTimeOut(guarda.getTimeOut() - 1);
@@ -286,67 +340,14 @@ public class Game implements java.io.Serializable {
 				guarda.setRepresentation('G');
 			return;
 		}
-		
-		if (i[0] < 0)
-			i[0] = guarda.getMovement().length - 1;
-		else if (i[0] > guarda.getMovement().length - 1)
-			i[0] = 0;
+
+		resetMovementIndex(i);
 		
 		int y = guarda.getPosition().getY();
 		int x = guarda.getPosition().getX();
-		if (guarda.getType() == 0){ // Rookie
-			if (guarda.getMovement()[i[0]] == 'W')
-				y -= 1;
-			else if (guarda.getMovement()[i[0]] == 'S')
-				y += 1;
-			else if (guarda.getMovement()[i[0]] == 'A')
-				x -= 1;
-			else if (guarda.getMovement()[i[0]] == 'D')
-				x += 1;
-			i[0]++;
-		}
-		else { // Drunken or Suspicious
-			Random rand = new Random();
-			int r = rand.nextInt(5);
-			if (r == 0 && guarda.getType() == 1){
-				guarda.setTimeOut(3);
-				guarda.setRepresentation('g');
-				guarda.setGuardDirection();
-				map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
-				return;
-			}
-			else if (guarda.getType() == 2)
-				guarda.setGuardDirection();
-			
-			if(guarda.isFront()){
-				if (guarda.getMovement()[i[0]] == 'W')
-					y -= 1;
-				else if (guarda.getMovement()[i[0]] == 'S')
-					y += 1;
-				else if (guarda.getMovement()[i[0]] == 'A')
-					x -= 1;
-				else if (guarda.getMovement()[i[0]] == 'D')
-					x += 1;
-				i[0]++;
-			}
-			else{
-				i[0]--;
-				if (i[0] < 0)
-					i[0] = guarda.getMovement().length - 1;
-				else if (i[0] > guarda.getMovement().length - 1)
-					i[0] = 0;
-				if (guarda.getMovement()[i[0]] == 'W')
-					y += 1;
-				else if (guarda.getMovement()[i[0]] == 'S')
-					y -= 1;
-				else if (guarda.getMovement()[i[0]] == 'A')
-					x += 1;
-				else if (guarda.getMovement()[i[0]] == 'D')
-					x -= 1;
-			}	
-		}
-		map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
-		guarda.setPosition(y, x);
+		if (guarda.getType() == 0) moveRookie(i, y, x);
+		else if (guarda.getType() == 1) moveDrunkenMechanics(i, y, x);
+		else moveSuspiciousMechanics(i, y, x);
 	}
 	
 	public void stunOgres(){
