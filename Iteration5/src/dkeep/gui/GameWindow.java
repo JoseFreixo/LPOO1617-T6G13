@@ -269,31 +269,38 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_DOWN]);
 	}
 	
+	private int scanNumberOgres(JLabel StatusLabel){
+		int nOgres;
+		Scanner scan;
+		try {
+			scan = new Scanner(numberOgresField.getText());
+			nOgres = scan.nextInt();
+			if (nOgres <= 0 || nOgres > 5){
+				scan.close();
+				throw new NoSuchElementException();
+			}
+		}
+		catch (NoSuchElementException Excp){
+			StatusLabel.setText("The number of ogres must be between 1 and 5.");
+			return -1;
+		}
+		scan.close();
+		return nOgres;
+	}
+	
 	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo){
 		Buttons[BT_NEWGAME].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int nOgres;
-				Scanner scan;
-				try {
-					scan = new Scanner(numberOgresField.getText());
-					nOgres = scan.nextInt();
-					if (nOgres <= 0 || nOgres > 5){
-						scan.close();
-						throw new NoSuchElementException();
-					}
-				}
-				catch (NoSuchElementException Excp){
-					StatusLabel.setText("The number of ogres must be between 1 and 5.");
+				int nOgres=scanNumberOgres(StatusLabel);
+				if(nOgres==-1)
 					return;
-				}
-
+				
 				String guardType = ((String)guardTypeCombo.getSelectedItem());
 
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
 				gameArea.updateMap(play.getMap());
 				enableDisableMoves(true, Buttons, stopGame);
-				scan.close();
 				frmDungeonKeep.requestFocus();
 			}
 		});
