@@ -9,16 +9,17 @@ import java.io.ObjectOutputStream;
 import dkeep.cli.Play;
 
 public class SLPlay {
-	public static void save(Play play) {
+	public static boolean save(Play play) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream("play.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(play);
 			out.close();
 			fileOut.close();
-
+			return true;
 		} catch (IOException i) {
 			i.printStackTrace();
+			return false;
 		}
 	}
 
@@ -27,18 +28,15 @@ public class SLPlay {
 	public static Play load() {
 
 		try {
-			FileInputStream fis = new FileInputStream("maps.ser");
+			FileInputStream fis = new FileInputStream("play.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Play play = (Play) ois.readObject();
 			ois.close();
 			fis.close();
 			return play;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
 			return null;
 		} catch (ClassNotFoundException c) {
-			System.out.println("Maps not found");
-			c.printStackTrace();
 			return null;
 		}
 	}
