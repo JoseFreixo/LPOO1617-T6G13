@@ -127,6 +127,7 @@ public class Play implements java.io.Serializable{
 		return;
 	}
 	
+	
 	public void callOgreFunctions(){
 		game.stunOgres();
 		game.MoveAllTheOgres();
