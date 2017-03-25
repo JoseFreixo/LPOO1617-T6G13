@@ -88,7 +88,7 @@ public class Play implements java.io.Serializable{
 		boolean gameIsOver = false;
 		Scanner scan;
 		while(!gameIsOver){
-			game.printMap();
+			printMap();
 			System.out.print("To which direction would you like to move: ");
 			scan = new Scanner(System.in);
 			c = scan.next().charAt(0);
@@ -98,7 +98,7 @@ public class Play implements java.io.Serializable{
 				i++;
 				if (i >= maps.size()){
 					gameIsOver = true;
-					game.printMap();
+					printMap();
 					continue;
 				}
 				game = new Game(maps.get(i),guardType,numberOgres);
@@ -106,7 +106,7 @@ public class Play implements java.io.Serializable{
 			}
 			
 			if (game.isGameOver()){
-				game.printMap();
+				printMap();
 				gameIsOver = true;
 			}
 			
@@ -116,7 +116,7 @@ public class Play implements java.io.Serializable{
 			game.moveGuard(nextGuardMove);
 			
 			if (game.isGameOver()){
-				game.printMap();
+				printMap();
 				gameIsOver = true;
 			}
 		}
@@ -124,5 +124,14 @@ public class Play implements java.io.Serializable{
 			System.out.println("You lose!");
 		else
 			System.out.println("You win!");
+	}
+	
+	public void printMap(){
+		for (int i = 0; i < game.getMap().getMap().length; i++){
+			for (int j = 0; j < game.getMap().getMap()[i].length; j++){
+				System.out.print(game.getMap().getMap()[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 }

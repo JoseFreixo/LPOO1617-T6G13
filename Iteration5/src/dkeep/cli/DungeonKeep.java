@@ -17,45 +17,6 @@ public class DungeonKeep {
 		maps.add(new DungeonMap());
 		maps.add(new KeepMap());
 		Play play = new Play(maps);
-		save (maps);
-//		save(play);
-//		play=null;
-//		play=load();
-//		play.playGame();
-	}
-
-
-	public static void save(ArrayList<GameMap> maps) {
-		try {
-			FileOutputStream fileOut = new FileOutputStream("maps.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(maps);
-			out.close();
-			fileOut.close();
-
-		} catch (IOException i) {
-			i.printStackTrace();
-		}
-	}
-
-
-
-	public static Play load() {
-
-		try {
-			FileInputStream fis = new FileInputStream("save.ser");
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			Play play = (Play) ois.readObject();
-			ois.close();
-			fis.close();
-			return play;
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			return null;
-		} catch (ClassNotFoundException c) {
-			System.out.println("Class not found");
-			c.printStackTrace();
-			return null;
-		}
+		play.playGame();
 	}
 }
