@@ -347,8 +347,7 @@ public class Game implements java.io.Serializable {
 		int x = guarda.getPosition().getX();
 		if (guarda.getType() == 0) moveRookie(i, y, x);
 		else if (guarda.getType() == 1) moveDrunkenMechanics(i, y, x);
-		else moveSuspiciousMechanics(i, y, x);
-	}
+		else moveSuspiciousMechanics(i, y, x); }
 	
 	public void stunOgres(){
 		for (Ogre ogre: ogres){
