@@ -300,53 +300,19 @@ public class Game implements java.io.Serializable {
 				x += 1;
 			i[0]++;
 		}
-		else if (guarda.getType() == 1){ // Drunken
+		else { // Drunken or Suspicious
 			Random rand = new Random();
 			int r = rand.nextInt(5);
-			if (r == 0){
+			if (r == 0 && guarda.getType() == 1){
 				guarda.setTimeOut(3);
 				guarda.setRepresentation('g');
-				r = rand.nextInt(2);
-				if (r == 0)
-					guarda.setFront(true);
-				else
-					guarda.setFront(false);
+				guarda.setGuardDirection();
+				map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
+				guarda.setPosition(y, x);
+				return;
 			}
-			else if(guarda.isFront()){
-				if (guarda.getMovement()[i[0]] == 'W')
-					y -= 1;
-				else if (guarda.getMovement()[i[0]] == 'S')
-					y += 1;
-				else if (guarda.getMovement()[i[0]] == 'A')
-					x -= 1;
-				else if (guarda.getMovement()[i[0]] == 'D')
-					x += 1;
-				i[0]++;
-			}
-			else{
-				i[0]--;
-				if (i[0] < 0)
-					i[0] = guarda.getMovement().length - 1;
-				else if (i[0] > guarda.getMovement().length - 1)
-					i[0] = 0;
-				if (guarda.getMovement()[i[0]] == 'W')
-					y += 1;
-				else if (guarda.getMovement()[i[0]] == 'S')
-					y -= 1;
-				else if (guarda.getMovement()[i[0]] == 'A')
-					x += 1;
-				else if (guarda.getMovement()[i[0]] == 'D')
-					x -= 1;
-			}
-			
-		}
-		else { // Suspicious
-			Random rand = new Random();
-			int r = rand.nextInt(2);
-			if (r == 0)
-				guarda.setFront(true);
-			else
-				guarda.setFront(false);
+			else if (guarda.getType() == 2)
+				guarda.setGuardDirection();
 			
 			if(guarda.isFront()){
 				if (guarda.getMovement()[i[0]] == 'W')
@@ -373,9 +339,8 @@ public class Game implements java.io.Serializable {
 					x += 1;
 				else if (guarda.getMovement()[i[0]] == 'D')
 					x -= 1;
-			}
+			}	
 		}
-		
 		map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
 		guarda.setPosition(y, x);
 	}
@@ -404,14 +369,5 @@ public class Game implements java.io.Serializable {
 	
 	public GameMap getMap(){
 		return map;
-	}
-	
-	public void printMap(){
-		for (int i = 0; i < map.getMap().length; i++){
-			for (int j = 0; j < map.getMap()[i].length; j++){
-				System.out.print(map.getMap()[i][j] + " ");
-			}
-			System.out.println();
-		}
 	}
 }
