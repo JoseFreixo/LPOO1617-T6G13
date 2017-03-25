@@ -35,7 +35,6 @@ public class GameWindow {
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>(); 
 	private Play play;
 	private LevelEditorWindow levelEditor;
-	private boolean stopGame;
 	
 	private static Map<String, Character> moves =
 			 new HashMap<String, Character>();
@@ -80,8 +79,8 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JButton []buttonsToEdit= new JButton[5];
-		stopGame=true;
+		//JButton []buttonsToEdit= new JButton[5];
+		boolean stopGame=true;
 		
 		frmDungeonKeep = new JFrame();
 		frmDungeonKeep.setResizable(false);
@@ -125,15 +124,12 @@ public class GameWindow {
 		JButton btnRight = new JButton("Right");
 		JButton btnDown = new JButton("Down");
 		JButton btnLevelEditor = new JButton("Level Editor");
-		buttonsToEdit[0]= btnUp;
-		buttonsToEdit[1]= btnLeft;
-		buttonsToEdit[2]= btnRight;
-		buttonsToEdit[3]= btnDown;
-		buttonsToEdit[4]= btnLevelEditor;
+		JButton []buttonsToEdit={btnUp,btnLeft,btnRight,btnDown,btnLevelEditor};
+
 		
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setMapAndStatusLabel("Up.", StatusLabel, buttonsToEdit);			
+				setMapAndStatusLabel("Up.", StatusLabel, buttonsToEdit,stopGame);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -145,7 +141,7 @@ public class GameWindow {
 		
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Left.", StatusLabel, buttonsToEdit);			
+				setMapAndStatusLabel("Left.", StatusLabel, buttonsToEdit,stopGame);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -157,7 +153,7 @@ public class GameWindow {
 		
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Right.", StatusLabel, buttonsToEdit);			
+				setMapAndStatusLabel("Right.", StatusLabel, buttonsToEdit, stopGame);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -169,7 +165,7 @@ public class GameWindow {
 		
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Down.", StatusLabel, buttonsToEdit);			
+				setMapAndStatusLabel("Down.", StatusLabel, buttonsToEdit, stopGame);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -201,7 +197,7 @@ public class GameWindow {
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
 				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, buttonsToEdit);
+				enableDisableMoves(true, buttonsToEdit, stopGame);
 				scan.close();
 				frmDungeonKeep.requestFocus();
 			}
@@ -240,7 +236,7 @@ public class GameWindow {
 			if(move==null)
 				return;
 			
-			setMapAndStatusLabel(move, StatusLabel, buttonsToEdit);	
+			setMapAndStatusLabel(move, StatusLabel, buttonsToEdit, stopGame);	
 			gameArea.updateMap(play.getMap());
 			frmDungeonKeep.requestFocus();
 			return;
@@ -253,7 +249,7 @@ public class GameWindow {
 		return frmDungeonKeep;
 	}
 	
-	public void enableDisableMoves(boolean isEnabled, JButton []Buttons){
+	public void enableDisableMoves(boolean isEnabled, JButton []Buttons, boolean stopGame){
 		Buttons[0].setEnabled(isEnabled);
 		Buttons[1].setEnabled(isEnabled);
 		Buttons[2].setEnabled(isEnabled);
@@ -262,7 +258,7 @@ public class GameWindow {
 		stopGame=!isEnabled;
 	}
 	
-	public void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons){
+	public void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons, boolean stopGame){
 		int status;
 		
 		char keyTyped = moves.get(move);
@@ -274,14 +270,14 @@ public class GameWindow {
 		}
 		else if(status == -1){
 			StatusLabel.setText("You lost.");
-			enableDisableMoves(false, Buttons);	
+			enableDisableMoves(false, Buttons, stopGame);	
 		}
 		else if(status == 2){
 			StatusLabel.setText("Next Level.");
 		}
 		else if (status==1){
 			StatusLabel.setText("You win.");
-			enableDisableMoves(false, Buttons);	
+			enableDisableMoves(false, Buttons, stopGame);	
 		}
 		return;
 	}
