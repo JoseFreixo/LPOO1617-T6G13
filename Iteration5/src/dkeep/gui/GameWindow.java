@@ -75,42 +75,16 @@ public class GameWindow {
 	private void initialize() {
 		Boolean[] stopGame={true};
 		
-		frmDungeonKeep = new JFrame();
-		frmDungeonKeep.setResizable(false);
-		frmDungeonKeep.setTitle("Dungeon Keep");
-		frmDungeonKeep.setBounds(100, 100, 650, 650);
-		frmDungeonKeep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmDungeonKeep.getContentPane().setLayout(null);
+		setFrmDungeonKeep();
+		setlblNumberOfOgres();
+		setNumberOgresField();
+		setlblGuardPersonality();
 		
+		JComboBox<String> guardTypeCombo = new JComboBox<String>(); setGuardTypeCombo(guardTypeCombo);
 		
-		JLabel lblNumberOfOgres = new JLabel("Number of Ogres:");
-		lblNumberOfOgres.setBounds(22, 38, 116, 20);
-		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
+		CustomPanel gameArea = new CustomPanel(); setGameArea(gameArea);
 		
-		numberOgresField = new JTextField();
-		numberOgresField.setBounds(148, 38, 95, 20);
-		frmDungeonKeep.getContentPane().add(numberOgresField);
-		numberOgresField.setColumns(10);
-		numberOgresField.setText("3");
-		
-		JLabel lblGuardPersonality = new JLabel("Guard Personality:");
-		lblGuardPersonality.setBounds(22, 65, 116, 14);
-		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
-		
-		JComboBox<String> guardTypeCombo = new JComboBox<String>();
-		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
-		guardTypeCombo.setToolTipText("Choose the Guard Personality");
-		guardTypeCombo.setMaximumRowCount(3);
-		guardTypeCombo.setBounds(148, 62, 95, 20);
-		frmDungeonKeep.getContentPane().add(guardTypeCombo);
-		
-		CustomPanel gameArea = new CustomPanel();
-		gameArea.setBounds(22, 95, 440, 440);
-		frmDungeonKeep.getContentPane().add(gameArea);
-		
-		JLabel StatusLabel = new JLabel("You can start a new game.");
-		StatusLabel.setBounds(29, 571, 583, 21);
-		frmDungeonKeep.getContentPane().add(StatusLabel);
+		JLabel StatusLabel = new JLabel("You can start a new game."); setStatusLabel(StatusLabel);
 		
 		JButton btnUp = new JButton("Up");
 		JButton btnLeft = new JButton("Left");
@@ -270,6 +244,11 @@ public class GameWindow {
 
 	}
 	
+	private void setStatusLabel(JLabel statusLabel) {
+		statusLabel.setBounds(29, 571, 583, 21);
+		frmDungeonKeep.getContentPane().add(statusLabel);
+	}
+
 	public JFrame getFrame(){
 		return frmDungeonKeep;
 	}
@@ -308,5 +287,47 @@ public class GameWindow {
 		return;
 	}
 	
+	public void setFrmDungeonKeep(){
+		frmDungeonKeep = new JFrame();
+		frmDungeonKeep.setResizable(false);
+		frmDungeonKeep.setTitle("Dungeon Keep");
+		frmDungeonKeep.setBounds(100, 100, 650, 650);
+		frmDungeonKeep.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDungeonKeep.getContentPane().setLayout(null);
+	}
 	
+	public void setlblNumberOfOgres(){
+		JLabel lblNumberOfOgres= new JLabel("Number of Ogres:"); 
+		lblNumberOfOgres.setBounds(22, 38, 116, 20);
+		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
+	}
+	
+	public void setNumberOgresField(){
+		numberOgresField = new JTextField();
+		numberOgresField.setBounds(148, 38, 95, 20);
+		frmDungeonKeep.getContentPane().add(numberOgresField);
+		numberOgresField.setColumns(10);
+		numberOgresField.setText("3");
+	}
+	
+	public void setlblGuardPersonality(){
+		JLabel lblGuardPersonality = new JLabel("Guard Personality:");
+		lblGuardPersonality.setBounds(22, 65, 116, 14);
+		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
+	}
+	
+	public void setGuardTypeCombo(JComboBox<String> guardTypeCombo){
+		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
+		guardTypeCombo.setToolTipText("Choose the Guard Personality");
+		guardTypeCombo.setMaximumRowCount(3);
+		guardTypeCombo.setBounds(148, 62, 95, 20);
+		frmDungeonKeep.getContentPane().add(guardTypeCombo);
+	}
+	
+	public void setGameArea(CustomPanel gameArea){
+		gameArea.setBounds(22, 95, 440, 440);
+		frmDungeonKeep.getContentPane().add(gameArea);
+	}
+	
+
 }
