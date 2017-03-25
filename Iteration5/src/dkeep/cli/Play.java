@@ -17,7 +17,6 @@ public class Play implements java.io.Serializable{
 	int [] nextGuardMove = { 0 };
 	
 	public Play(ArrayList<GameMap> maps) {
-		
 		this.maps = maps;
 		i = 0;
 		numberOgres=ThreadLocalRandom.current().nextInt(1, 6); 
@@ -67,58 +66,37 @@ public class Play implements java.io.Serializable{
 			return 2; // Next Level
 		}
 		
-		if (game.isGameOver()){
-			return -1; // Defeat
-		}
+		if (game.isGameOver()) return -1;
 		
 		game.stunOgres();
-		
 		game.MoveAllTheOgres();
 		game.moveGuard(nextGuardMove);
 		
-		if (game.isGameOver()){
-			return -1; // Defeat
-		}
+		if (game.isGameOver()) return -1;
 		
 		return 0; // Keep Playing
 	}
 	
+	//CONSOLE FUNCTIONS!!!!
+	
 	public void playGame(){
 		char c;
-		boolean gameIsOver = false;
+		boolean []gameIsOver = {false};
 		Scanner scan;
-		while(!gameIsOver){
+		while(!gameIsOver[0]){
 			printMap();
 			System.out.print("To which direction would you like to move: ");
 			scan = new Scanner(System.in);
 			c = scan.next().charAt(0);
 			c = Character.toUpperCase(c);
 			game.moveHero(c);
-			if (game.EndStatus() != null && game.EndStatus() == false){
-				i++;
-				if (i >= maps.size()){
-					gameIsOver = true;
-					printMap();
-					continue;
-				}
-				game = new Game(maps.get(i),guardType,numberOgres);
-				continue;
-			}
 			
-			if (game.isGameOver()){
-				printMap();
-				gameIsOver = true;
-			}
+           if(getAndUpdateStatus(gameIsOver))
+        	   continue;
 			
-			game.stunOgres();
+			callOgreFunctions();
 			
-			game.MoveAllTheOgres();
-			game.moveGuard(nextGuardMove);
-			
-			if (game.isGameOver()){
-				printMap();
-				gameIsOver = true;
-			}
+			updateGameIsOver(gameIsOver);
 		}
 		if (i < maps.size())
 			System.out.println("You lose!");
@@ -126,6 +104,35 @@ public class Play implements java.io.Serializable{
 			System.out.println("You win!");
 	}
 	
+	public boolean getAndUpdateStatus(boolean []gameIsOver){
+		if (game.EndStatus() != null && game.EndStatus() == false){
+			i++;
+			if (i >= maps.size()){
+				gameIsOver[0] = true;
+				printMap();
+				return true;
+			}
+			game = new Game(maps.get(i),guardType,numberOgres);
+			return true;
+		}
+		updateGameIsOver(gameIsOver);
+		return false;
+	}
+	
+	public void updateGameIsOver(boolean []gameIsOver){
+		if (game.isGameOver()){
+			printMap();
+			gameIsOver[0] = true;
+		}
+		return;
+	}
+	
+	public void callOgreFunctions(){
+		game.stunOgres();
+		game.MoveAllTheOgres();
+		game.moveGuard(nextGuardMove);
+	}
+
 	public void printMap(){
 		for (int i = 0; i < game.getMap().getMap().length; i++){
 			for (int j = 0; j < game.getMap().getMap()[i].length; j++){
