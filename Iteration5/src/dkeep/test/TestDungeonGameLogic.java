@@ -33,6 +33,7 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s'); // move hero down.
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
+		assertEquals('H', game.getMap().getMap()[2][1]);
 		assertEquals(' ', game.getMap().getMap()[1][1]);
 	}
 	
@@ -249,6 +250,7 @@ public class TestDungeonGameLogic {
 			m++;
 		}
 		assertEquals(game.getGuardRepresentation(), 'g');
+		assertEquals(game.getMap().getCharOnPos(game.getGuardPosition()), 'g');
 		m = 0;
 		while (m < 100){
 			game.moveGuard(i);
@@ -317,5 +319,9 @@ public class TestDungeonGameLogic {
 		assertEquals(game.getHeroPosition(), new CellPosition(1, 2));
 		game.stunOgres();
 		assertEquals(game.getOgres().get(0).getRepresentation(), 'o');
+		while(game.getOgres().get(0).getRepresentation() == 'o'){
+			game.moveOgre(game.getOgres().get(0));
+		}
+		assertEquals(game.getOgres().get(0).getRepresentation(), 'O');
 	}
 }

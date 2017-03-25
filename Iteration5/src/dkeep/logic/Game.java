@@ -308,7 +308,6 @@ public class Game implements java.io.Serializable {
 				guarda.setRepresentation('g');
 				guarda.setGuardDirection();
 				map.setUnitPosMap(new CellPosition(y, x), guarda.getPosition(), guarda.getRepresentation());
-				guarda.setPosition(y, x);
 				return;
 			}
 			else if (guarda.getType() == 2)
