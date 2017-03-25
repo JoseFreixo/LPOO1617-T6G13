@@ -1,26 +1,22 @@
 package dkeep.gui;
 
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
 import dkeep.cli.Play;
 import dkeep.logic.GameMap;
 import dkeep.saveLoadMaps.SLMaps;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseEvent;
+
 
 public class LevelEditorWindow {
 

@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import dkeep.cli.*;
-import dkeep.logic.GameMap;
 import dkeep.saveLoadMaps.SLPlay;
 
 import javax.swing.JLabel;
@@ -14,16 +13,11 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import java.awt.Font;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JToolBar;

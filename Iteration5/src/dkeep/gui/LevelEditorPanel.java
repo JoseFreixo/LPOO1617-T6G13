@@ -13,6 +13,7 @@ import javax.swing.*;
 import dkeep.logic.CellPosition;
 import dkeep.logic.GameMap;
 
+@SuppressWarnings("serial")
 public class LevelEditorPanel extends JPanel implements MouseListener, MouseMotionListener{
 	private BufferedImage heroArmedImage;
 	private BufferedImage ogreImage;

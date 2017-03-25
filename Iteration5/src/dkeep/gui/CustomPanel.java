@@ -1,7 +1,7 @@
 package dkeep.gui;
 
 import java.awt.*;
-import java.awt.event.*;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import dkeep.logic.GameMap;
 
+@SuppressWarnings("serial")
 public class CustomPanel extends JPanel{
 	private BufferedImage heroImage;
 	private BufferedImage heroArmedImage;

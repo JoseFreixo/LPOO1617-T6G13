@@ -2,10 +2,9 @@ package dkeep.test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+
 
 import org.junit.Test;
-
 import dkeep.logic.Game;
 import dkeep.logic.GameMap;
 import dkeep.logic.Ogre;
