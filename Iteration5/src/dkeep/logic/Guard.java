@@ -1,5 +1,6 @@
 package dkeep.logic;
 
+import java.util.Random;
 
 public class Guard extends Unit implements java.io.Serializable {
 
@@ -47,5 +48,14 @@ public class Guard extends Unit implements java.io.Serializable {
 	
 	public char [] getMovement(){
 		return movement;
+	}
+	
+	public void setGuardDirection(){
+		Random random = new Random();
+		int dir = random.nextInt(2);
+		if (dir == 0)
+			front = true;
+		else
+			front = false;
 	}
 }
