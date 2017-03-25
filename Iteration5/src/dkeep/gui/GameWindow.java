@@ -25,6 +25,17 @@ import javax.swing.JToolBar;
 
 public class GameWindow {
 
+	private static final int NUMBER_OF_BUTTONS= 9;
+	private static final int BT_UP= 0;
+	private static final int BT_LEFT= 1;
+	private static final int BT_RIGHT= 2;
+	private static final int BT_DOWN= 3;
+	private static final int BT_NEWGAME= 4;
+	private static final int BT_EXIT= 5;
+	private static final int BT_SAVE= 6;
+	private static final int BT_LOAD= 7;
+	private static final int BT_LVLEDIT= 8;
+
 	private JFrame frmDungeonKeep;
 	private JTextField numberOgresField;
 	private Play play;
@@ -74,197 +85,52 @@ public class GameWindow {
 	 */
 	private void initialize() {
 		Boolean[] stopGame={true};
-
-		setFrmDungeonKeep();
-		setlblNumberOfOgres();
-		setNumberOgresField();
-		setlblGuardPersonality();
-
-		JComboBox<String> guardTypeCombo = new JComboBox<String>(); setGuardTypeCombo(guardTypeCombo);
+		
+		setBasicWindow();
+		
+		JComboBox<String> guardTypeCombo = new JComboBox<String>(); 
+		setGuardTypeCombo(guardTypeCombo);
 
 		CustomPanel gameArea = new CustomPanel(); setGameArea(gameArea);
 
-		JLabel StatusLabel = new JLabel("You can start a new game."); setStatusLabel(StatusLabel);
+		JLabel StatusLabel = new JLabel("You can start a new game."); 
+		setStatusLabel(StatusLabel);
+		
+		JToolBar toolBar = new JToolBar();setToolBar(toolBar);
 
+		JButton []Buttons= new JButton[NUMBER_OF_BUTTONS]; 
+		initializeAllButtons(Buttons);
+		
+		setAllButtonsAndKeys(Buttons, StatusLabel, stopGame, gameArea,guardTypeCombo, toolBar);
 
-		JButton btnUp = new JButton("Up");
-		JButton btnLeft = new JButton("Left");
-		JButton btnRight = new JButton("Right");
-		JButton btnDown = new JButton("Down");
-		JButton btnLevelEditor = new JButton("Level Editor");
-		JButton btnSave = new JButton("Save");
-		JButton []buttonsToEdit={btnUp,btnLeft,btnRight,btnDown,btnLevelEditor,btnSave};
-
-
-		btnUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setMapAndStatusLabel("Up.", StatusLabel, buttonsToEdit,stopGame);			
-				gameArea.updateMap(play.getMap());
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnUp.setEnabled(false);
-		btnUp.setBounds(513, 273, 76, 23);
-		frmDungeonKeep.getContentPane().add(btnUp);
-
-
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Left.", StatusLabel, buttonsToEdit,stopGame);			
-				gameArea.updateMap(play.getMap());
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnLeft.setEnabled(false);
-		btnLeft.setBounds(472, 307, 76, 23);
-		frmDungeonKeep.getContentPane().add(btnLeft);
-
-
-		btnRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Right.", StatusLabel, buttonsToEdit, stopGame);			
-				gameArea.updateMap(play.getMap());
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnRight.setEnabled(false);
-		btnRight.setBounds(558, 307, 76, 23);
-		frmDungeonKeep.getContentPane().add(btnRight);
-
-
-		btnDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Down.", StatusLabel, buttonsToEdit, stopGame);			
-				gameArea.updateMap(play.getMap());
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnDown.setEnabled(false);
-		btnDown.setBounds(513, 341, 76, 23);
-		frmDungeonKeep.getContentPane().add(btnDown);
-
-		JButton btnNewGame = new JButton("New Game");
-		btnNewGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int nOgres;
-				Scanner scan;
-				try {
-					scan = new Scanner(numberOgresField.getText());
-					nOgres = scan.nextInt();
-					if (nOgres <= 0 || nOgres > 5){
-						scan.close();
-						throw new NoSuchElementException();
-					}
-				}
-				catch (NoSuchElementException Excp){
-					StatusLabel.setText("The number of ogres must be between 1 and 5.");
-					return;
-				}
-
-				String guardType = ((String)guardTypeCombo.getSelectedItem());
-
-				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
-				play = new Play(nOgres, guardType);
-				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, buttonsToEdit, stopGame);
-				scan.close();
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnNewGame.setBounds(502, 56, 95, 23);
-		frmDungeonKeep.getContentPane().add(btnNewGame);
-
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(SLPlay.save(play))
-					StatusLabel.setText("Game Saved with success.");
-				else 
-					StatusLabel.setText("Some error ocurred game didn't save.");
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnSave.setEnabled(false);
-		btnSave.setBounds(502, 95, 95, 23);
-		frmDungeonKeep.getContentPane().add(btnSave);
-
-		JButton btnLoad = new JButton("Load");
-		btnLoad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				play=SLPlay.load();
-				if(play==null){
-					StatusLabel.setText("Some erro ocurred, make sure you already saved a game once!");
-					enableDisableMoves(false, buttonsToEdit, stopGame);
-					return;
-				}
-				StatusLabel.setText("Game Loaded with success.");
-				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, buttonsToEdit, stopGame);
-				frmDungeonKeep.requestFocus();
-			}
-		});
-		btnLoad.setBounds(502, 132, 95, 23);
-		frmDungeonKeep.getContentPane().add(btnLoad);
-
-		JButton btnExitGame = new JButton("Exit");
-		btnExitGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		btnExitGame.setBounds(502, 535, 95, 23);
-		frmDungeonKeep.getContentPane().add(btnExitGame);
-
-		JToolBar toolBar = new JToolBar();
-		toolBar.setFloatable(false);
-		toolBar.setBounds(0, 0, 644, 30);
-		frmDungeonKeep.getContentPane().add(toolBar);
-
-		btnLevelEditor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frmDungeonKeep.dispose();
-				new LevelEditorWindow();
-			}
-		});
-		toolBar.add(btnLevelEditor);
-
-		frmDungeonKeep.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {		
-				if(stopGame[0])	
-					return;
-				String move=keysToType.get(e.getKeyCode());	
-				if(move==null)
-					return;
-
-				setMapAndStatusLabel(move, StatusLabel, buttonsToEdit, stopGame);	
-				gameArea.updateMap(play.getMap());
-				frmDungeonKeep.requestFocus();
-				return;
-			}
-		});
-
+//		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
+//		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
+//		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
+//		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
+//		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea,guardTypeCombo);
+//		setBT_SAVE(Buttons,StatusLabel);
+//		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
+//		setBT_EXIT(Buttons);
+//		setBT_LVLEDIT(toolBar,Buttons);
+//		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
 	}
 
-	private void setStatusLabel(JLabel statusLabel) {
-		statusLabel.setBounds(29, 571, 583, 21);
-		frmDungeonKeep.getContentPane().add(statusLabel);
-	}
 
 	public JFrame getFrame(){
 		return frmDungeonKeep;
 	}
 
-	public void enableDisableMoves(boolean isEnabled, JButton []Buttons, Boolean []stopGame){
-		Buttons[0].setEnabled(isEnabled);
-		Buttons[1].setEnabled(isEnabled);
-		Buttons[2].setEnabled(isEnabled);
-		Buttons[3].setEnabled(isEnabled);
-		Buttons[4].setEnabled(!isEnabled);
-		Buttons[5].setEnabled(isEnabled);
+	private void enableDisableMoves(boolean isEnabled, JButton []Buttons, Boolean []stopGame){
+		Buttons[BT_UP].setEnabled(isEnabled);
+		Buttons[BT_LEFT].setEnabled(isEnabled);
+		Buttons[BT_RIGHT].setEnabled(isEnabled);
+		Buttons[BT_DOWN].setEnabled(isEnabled);
+		Buttons[BT_SAVE].setEnabled(isEnabled);
+		Buttons[BT_LVLEDIT].setEnabled(!isEnabled);
 		stopGame[0]=!isEnabled;
 	}
 
-	public void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons, Boolean []stopGame){
+	private void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons, Boolean []stopGame){
 		int status;
 
 		char keyTyped = moves.get(move);
@@ -288,7 +154,7 @@ public class GameWindow {
 		return;
 	}
 
-	public void setFrmDungeonKeep(){
+	private void setFrmDungeonKeep(){
 		frmDungeonKeep = new JFrame();
 		frmDungeonKeep.setResizable(false);
 		frmDungeonKeep.setTitle("Dungeon Keep");
@@ -297,13 +163,13 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().setLayout(null);
 	}
 
-	public void setlblNumberOfOgres(){
+	private void setlblNumberOfOgres(){
 		JLabel lblNumberOfOgres= new JLabel("Number of Ogres:"); 
 		lblNumberOfOgres.setBounds(22, 38, 116, 20);
 		frmDungeonKeep.getContentPane().add(lblNumberOfOgres);
 	}
 
-	public void setNumberOgresField(){
+	private void setNumberOgresField(){
 		numberOgresField = new JTextField();
 		numberOgresField.setBounds(148, 38, 95, 20);
 		frmDungeonKeep.getContentPane().add(numberOgresField);
@@ -311,13 +177,18 @@ public class GameWindow {
 		numberOgresField.setText("3");
 	}
 
-	public void setlblGuardPersonality(){
+	private void setStatusLabel(JLabel statusLabel) {
+		statusLabel.setBounds(29, 571, 583, 21);
+		frmDungeonKeep.getContentPane().add(statusLabel);
+	}
+
+	private void setlblGuardPersonality(){
 		JLabel lblGuardPersonality = new JLabel("Guard Personality:");
 		lblGuardPersonality.setBounds(22, 65, 116, 14);
 		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
 	}
 
-	public void setGuardTypeCombo(JComboBox<String> guardTypeCombo){
+	private void setGuardTypeCombo(JComboBox<String> guardTypeCombo){
 		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		guardTypeCombo.setToolTipText("Choose the Guard Personality");
 		guardTypeCombo.setMaximumRowCount(3);
@@ -325,10 +196,202 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(guardTypeCombo);
 	}
 
-	public void setGameArea(CustomPanel gameArea){
+	private void setGameArea(CustomPanel gameArea){
 		gameArea.setBounds(22, 95, 440, 440);
 		frmDungeonKeep.getContentPane().add(gameArea);
 	}
+	
+	private void setToolBar(JToolBar toolBar) {
+		toolBar.setFloatable(false);
+		toolBar.setBounds(0, 0, 644, 30);
+		frmDungeonKeep.getContentPane().add(toolBar);
+	}
 
+	private void initializeAllButtons(JButton [] Buttons){
+		Buttons[BT_UP] = new JButton("Up");
+		Buttons[BT_LEFT] = new JButton("Left");
+		Buttons[BT_RIGHT] = new JButton("Right");
+		Buttons[BT_DOWN] = new JButton("Down");
+		Buttons[BT_NEWGAME] = new JButton("New Game");
+		Buttons[BT_EXIT] = new JButton("Exit");
+		Buttons[BT_SAVE] = new JButton("Save");
+		Buttons[BT_LOAD] = new JButton("Load");
+		Buttons[BT_LVLEDIT] = new JButton("Level Editor");
+	}
 
+	private void setBT_UP(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+		Buttons[BT_UP].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setMapAndStatusLabel("Up.", StatusLabel, Buttons,stopGame);			
+				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_UP].setEnabled(false);
+		Buttons[BT_UP].setBounds(513, 273, 76, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_UP]);
+	}
+
+	private void setBT_LEFT(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+		Buttons[BT_LEFT].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setMapAndStatusLabel("Left.", StatusLabel, Buttons,stopGame);			
+				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_LEFT].setEnabled(false);
+		Buttons[BT_LEFT].setBounds(472, 307, 76, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_LEFT]);
+	}
+	
+	private void setBT_RIGHT(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+		Buttons[BT_RIGHT].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setMapAndStatusLabel("Right.", StatusLabel, Buttons, stopGame);			
+				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_RIGHT].setEnabled(false);
+		Buttons[BT_RIGHT].setBounds(558, 307, 76, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_RIGHT]);
+	}
+
+	private void setBT_DOWN(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+		Buttons[BT_DOWN].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setMapAndStatusLabel("Down.", StatusLabel, Buttons, stopGame);			
+				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_DOWN].setEnabled(false);
+		Buttons[BT_DOWN].setBounds(513, 341, 76, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_DOWN]);
+	}
+	
+	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo){
+		Buttons[BT_NEWGAME].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int nOgres;
+				Scanner scan;
+				try {
+					scan = new Scanner(numberOgresField.getText());
+					nOgres = scan.nextInt();
+					if (nOgres <= 0 || nOgres > 5){
+						scan.close();
+						throw new NoSuchElementException();
+					}
+				}
+				catch (NoSuchElementException Excp){
+					StatusLabel.setText("The number of ogres must be between 1 and 5.");
+					return;
+				}
+
+				String guardType = ((String)guardTypeCombo.getSelectedItem());
+
+				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
+				play = new Play(nOgres, guardType);
+				gameArea.updateMap(play.getMap());
+				enableDisableMoves(true, Buttons, stopGame);
+				scan.close();
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_NEWGAME].setBounds(502, 56, 95, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_NEWGAME]);
+	}
+	
+	private void setBT_SAVE(JButton [] Buttons,JLabel StatusLabel){
+	Buttons[BT_SAVE].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			if(SLPlay.save(play))
+				StatusLabel.setText("Game Saved with success.");
+			else 
+				StatusLabel.setText("Some error occurred game didn't save.");
+			frmDungeonKeep.requestFocus();
+		}
+	});
+	Buttons[BT_SAVE].setEnabled(false);
+	Buttons[BT_SAVE].setBounds(502, 95, 95, 23);
+	frmDungeonKeep.getContentPane().add(Buttons[BT_SAVE]);
+	}
+	
+	private void setBT_LOAD(JButton [] Buttons,JLabel StatusLabel, Boolean stopGame[],CustomPanel gameArea){
+		Buttons[BT_LOAD].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				play=SLPlay.load();
+				if(play==null){
+					StatusLabel.setText("Some erro occurred, make sure you already saved a game once!");
+					enableDisableMoves(false, Buttons, stopGame);
+					return;
+				}
+				StatusLabel.setText("Game Loaded with success.");
+				gameArea.updateMap(play.getMap());
+				enableDisableMoves(true, Buttons, stopGame);
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_LOAD].setBounds(502, 132, 95, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_LOAD]);
+	}
+	
+	private void setBT_EXIT(JButton [] Buttons){
+		Buttons[BT_EXIT].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		Buttons[BT_EXIT].setBounds(502, 535, 95, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_EXIT]);
+	}
+	
+	private void setBT_LVLEDIT(JToolBar toolBar,JButton [] Buttons){
+		Buttons[BT_LVLEDIT].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmDungeonKeep.dispose();
+				new LevelEditorWindow();
+			}
+		});
+		toolBar.add(Buttons[BT_LVLEDIT]);
+	}
+	
+	private void setAddKeyListener(JButton [] Buttons,JLabel StatusLabel, Boolean stopGame[],CustomPanel gameArea){
+		frmDungeonKeep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {		
+				if(stopGame[0])	
+					return;
+				String move=keysToType.get(e.getKeyCode());	
+				if(move==null)
+					return;
+
+				setMapAndStatusLabel(move, StatusLabel, Buttons, stopGame);	
+				gameArea.updateMap(play.getMap());
+				frmDungeonKeep.requestFocus();
+				return;
+			}
+		});
+	}
+	
+	private void setBasicWindow(){
+		setFrmDungeonKeep();
+		setlblNumberOfOgres();
+		setNumberOgresField();
+		setlblGuardPersonality();
+	}
+	
+	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo,JToolBar toolBar){
+		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea,guardTypeCombo);
+		setBT_SAVE(Buttons,StatusLabel);
+		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_EXIT(Buttons);
+		setBT_LVLEDIT(toolBar,Buttons);
+		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
+	}
 }
