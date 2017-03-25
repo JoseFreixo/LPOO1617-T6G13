@@ -133,7 +133,7 @@ public class TestDungeonGameLogic {
 	
 	@Test
 	public void testHeroWinGame(){
-		GameMap gameMap = new KeepMap();
+		GameMap gameMap = KeepMap.getKeepMap();
 		Game game = new Game(gameMap,0,1);
 		assertEquals(game.getHeroPosition(), new CellPosition(7, 1));
 		game.moveHero('d');
@@ -217,7 +217,7 @@ public class TestDungeonGameLogic {
 
 	@Test
 	public void testMoveGuardRookie() {
-		Game game = new Game(new DungeonMap(), 0, 1);
+		Game game = new Game(DungeonMap.getDungeonMap(), 0, 1);
 		int i[] = { 0 };
 		game.moveGuard(i);
 		assertEquals(new CellPosition(1, 7), game.getGuardPosition());
@@ -239,7 +239,7 @@ public class TestDungeonGameLogic {
 	
 	@Test
 	public void testMoveGuardDrunken(){
-		Game game = new Game (new DungeonMap(), 1, 1);
+		Game game = new Game (DungeonMap.getDungeonMap(), 1, 1);
 		int i[] = { 0 };
 		int m = 0;
 		while (m < 100){
@@ -260,7 +260,7 @@ public class TestDungeonGameLogic {
 			m++;
 		}
 		assertEquals(game.getGuardRepresentation(), 'G');
-		game = new Game (new DungeonMap(), 1, 1);
+		game = new Game (DungeonMap.getDungeonMap(), 1, 1);
 		int j[] = { 0 };
 		m = 0;
 		assertEquals(game.getGuard().isFront(), true);
@@ -291,7 +291,7 @@ public class TestDungeonGameLogic {
 	
 	@Test
 	public void testMoveGuardSuspicious(){
-		Game game = new Game (new DungeonMap(), 2, 1);
+		Game game = new Game (DungeonMap.getDungeonMap(), 2, 1);
 		int i[] = { 0 };
 		boolean cond1 = false, cond2 = false;
 		int m = 0;
@@ -313,6 +313,7 @@ public class TestDungeonGameLogic {
 	public void testStunOgre(){
 		GameMap map = new GameMap(map_for_task2);
 		Game game = new Game(map, 0, 1);
+		assertEquals(game.getOgres().size(), 1);
 		game.stunOgres();
 		assertEquals(game.getOgres().get(0).getRepresentation(), 'O');
 		game.moveHero('d');
