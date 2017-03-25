@@ -14,6 +14,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
@@ -33,6 +35,23 @@ public class GameWindow {
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>(); 
 	private Play play;
 	private LevelEditorWindow levelEditor;
+	private boolean stopGame;
+	
+	private static Map<String, Character> moves =
+			 new HashMap<String, Character>();
+	private static Map<Integer,String> keysToType =
+			 new HashMap<Integer,String>();
+	
+	static {
+		 moves.put("Up.", 'W');
+		 moves.put("Down.", 'S');
+		 moves.put("Left.", 'A');
+		 moves.put("Right.", 'D');
+		 keysToType.put(KeyEvent.VK_UP,"Up.");
+		 keysToType.put(KeyEvent.VK_DOWN,"Down.");
+		 keysToType.put(KeyEvent.VK_LEFT,"Left.");
+		 keysToType.put(KeyEvent.VK_RIGHT,"Right.");
+		 } 
 
 	/**
 	 * Launch the application.
@@ -61,6 +80,9 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		JButton []buttonsToEdit= new JButton[5];
+		stopGame=true;
+		
 		frmDungeonKeep = new JFrame();
 		frmDungeonKeep.setResizable(false);
 		frmDungeonKeep.setTitle("Dungeon Keep");
@@ -103,14 +125,15 @@ public class GameWindow {
 		JButton btnRight = new JButton("Right");
 		JButton btnDown = new JButton("Down");
 		JButton btnLevelEditor = new JButton("Level Editor");
+		buttonsToEdit[0]= btnUp;
+		buttonsToEdit[1]= btnLeft;
+		buttonsToEdit[2]= btnRight;
+		buttonsToEdit[3]= btnDown;
+		buttonsToEdit[4]= btnLevelEditor;
 		
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int status=setMapAndStatusLabel("Up.", StatusLabel);
-				
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				
+				setMapAndStatusLabel("Up.", StatusLabel, buttonsToEdit);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -122,11 +145,7 @@ public class GameWindow {
 		
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status=setMapAndStatusLabel("Left.", StatusLabel);
-				
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				
+				setMapAndStatusLabel("Left.", StatusLabel, buttonsToEdit);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -138,11 +157,7 @@ public class GameWindow {
 		
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status=setMapAndStatusLabel("Right.", StatusLabel);
-				
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				
+				setMapAndStatusLabel("Right.", StatusLabel, buttonsToEdit);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -154,11 +169,7 @@ public class GameWindow {
 		
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status=setMapAndStatusLabel("Down.", StatusLabel);
-				
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				
+				setMapAndStatusLabel("Down.", StatusLabel, buttonsToEdit);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -184,14 +195,13 @@ public class GameWindow {
 					StatusLabel.setText("The number of ogres must be between 1 and 5.");
 					return;
 				}
-				
+
 				String guardType = ((String)guardTypeCombo.getSelectedItem());
 				
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
 				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);
-				btnLevelEditor.setEnabled(false);
+				enableDisableMoves(true, buttonsToEdit);
 				scan.close();
 				frmDungeonKeep.requestFocus();
 			}
@@ -223,34 +233,17 @@ public class GameWindow {
 		
 		frmDungeonKeep.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
-			int status = -1;
-			switch(e.getKeyCode()){
-			case KeyEvent.VK_UP:
-				status=setMapAndStatusLabel("Up.", StatusLabel);	
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				gameArea.updateMap(play.getMap());
-				break;
-			case KeyEvent.VK_LEFT:
-				status=setMapAndStatusLabel("Left.", StatusLabel);	
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				gameArea.updateMap(play.getMap());
-				break;
-			case KeyEvent.VK_DOWN:
-				status=setMapAndStatusLabel("Down.", StatusLabel);	
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				gameArea.updateMap(play.getMap());
-				break;
-			case KeyEvent.VK_RIGHT:
-				status=setMapAndStatusLabel("Right.", StatusLabel);	
-				if(status==-1||status==1)
-					enableDisableMoves(false, btnUp, btnDown, btnLeft, btnRight, btnLevelEditor);	
-				gameArea.updateMap(play.getMap());
-				break;
-			}
+			public void keyPressed(KeyEvent e) {		
+			if(stopGame)	
+				return;
+			String move=keysToType.get(e.getKeyCode());	
+			if(move==null)
+				return;
+			
+			setMapAndStatusLabel(move, StatusLabel, buttonsToEdit);	
+			gameArea.updateMap(play.getMap());
+			frmDungeonKeep.requestFocus();
+			return;
 			}
 		});
 
@@ -260,45 +253,37 @@ public class GameWindow {
 		return frmDungeonKeep;
 	}
 	
-	public void enableDisableMoves(boolean isEnabled, JButton btnUp, JButton btnDown, JButton btnLeft, JButton btnRight, JButton levelEditor){
-		btnUp.setEnabled(isEnabled);
-		btnDown.setEnabled(isEnabled);
-		btnLeft.setEnabled(isEnabled);
-		btnRight.setEnabled(isEnabled);
-		levelEditor.setEnabled(!isEnabled);
+	public void enableDisableMoves(boolean isEnabled, JButton []Buttons){
+		Buttons[0].setEnabled(isEnabled);
+		Buttons[1].setEnabled(isEnabled);
+		Buttons[2].setEnabled(isEnabled);
+		Buttons[3].setEnabled(isEnabled);
+		Buttons[4].setEnabled(!isEnabled);
+		stopGame=!isEnabled;
 	}
 	
-	public int setMapAndStatusLabel(String move, JLabel StatusLabel){
-		int status=-2; //does nothing
+	public void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons){
+		int status;
 		
-		switch(move){
-		case "Up.": 
-			status=play.moveHeroWindow('W'); 
-			break;
-		case "Down.": 
-			status=play.moveHeroWindow('S'); 
-			break;
-		case "Left.": 
-			status=play.moveHeroWindow('A'); 
-			break;
-		case "Right.": 
-			status=play.moveHeroWindow('D'); 
-			break;
-		}
+		char keyTyped = moves.get(move);
+		
+		status=play.moveHeroWindow(keyTyped);
 		
 		if (status == 0){
 			StatusLabel.setText("Hero moved " + move);
 		}
 		else if(status == -1){
 			StatusLabel.setText("You lost.");
+			enableDisableMoves(false, Buttons);	
 		}
 		else if(status == 2){
 			StatusLabel.setText("Next Level.");
 		}
 		else if (status==1){
 			StatusLabel.setText("You win.");
+			enableDisableMoves(false, Buttons);	
 		}
-		return status;
+		return;
 	}
 	
 	

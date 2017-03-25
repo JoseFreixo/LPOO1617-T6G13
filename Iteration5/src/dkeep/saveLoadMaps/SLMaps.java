@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import dkeep.cli.Play;
 import dkeep.logic.GameMap;
 
 public class SLMaps {
