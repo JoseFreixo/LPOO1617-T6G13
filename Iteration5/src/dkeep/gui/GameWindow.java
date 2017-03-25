@@ -137,21 +137,19 @@ public class GameWindow {
 
 		status=play.moveHeroWindow(keyTyped);
 
-		if (status == 0){
-			StatusLabel.setText("Hero moved " + move);
-		}
+		if (status == 0) StatusLabel.setText("Hero moved " + move);
+	
 		else if(status == -1){
 			StatusLabel.setText("You lost.");
 			enableDisableMoves(false, Buttons, stopGame);	
 		}
-		else if(status == 2){
-			StatusLabel.setText("Next Level.");
-		}
+		
+		else if(status == 2) StatusLabel.setText("Next Level.");
+
 		else if (status==1){
 			StatusLabel.setText("You win.");
 			enableDisableMoves(false, Buttons, stopGame);	
 		}
-		return;
 	}
 
 	private void setFrmDungeonKeep(){
