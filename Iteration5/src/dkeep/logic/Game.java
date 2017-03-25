@@ -46,8 +46,7 @@ public class Game implements java.io.Serializable {
 		}
 		if(isKey){
 			heroi.setRepresentation('A');
-			int n = numberOfOgres;
-			for (int i = 0; i < n; i++){
+			for (int i = 0; i < numberOfOgres; i++){
 				ogres.add(new Ogre(y, x, 'O'));
 			}
 		}
