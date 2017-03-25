@@ -26,6 +26,12 @@ public class Play implements java.io.Serializable{
 	
 	public Play(int numberOgres, String guardTypeStr){
 		maps = SLMaps.getMaps();
+		
+		if(maps==null){
+			SLMaps.resetMaps();
+			maps = SLMaps.getMaps();
+			}
+		
 		i = 0;
 		switch(guardTypeStr){
 		case "Rookie":

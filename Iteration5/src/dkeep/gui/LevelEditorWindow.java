@@ -183,6 +183,13 @@ public class LevelEditorWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
 					ArrayList<GameMap> maps = SLMaps.getMaps();
+					
+					if(maps==null){
+						JOptionPane.showMessageDialog(null, "Maps file corruped! \nReseting maps file to the original one\nand adding the one you created!");
+						SLMaps.resetMaps();
+						maps = SLMaps.getMaps();
+					}
+					
 					maps.add(panel.returnMap());
 					SLMaps.setMaps(maps);
 					lblMapStatus.setText("Map added successfuly!");
@@ -215,8 +222,9 @@ public class LevelEditorWindow {
 						scan.close();
 						ArrayList<GameMap> maps = SLMaps.getMaps();
 						if (maps == null){
-							JOptionPane.showMessageDialog(null, "Maps file corruped!");
-							System.exit(1);
+							JOptionPane.showMessageDialog(null, "Maps file corruped! Reseting maps file to the original one and replace the level you choose!");
+							SLMaps.resetMaps();
+							maps = SLMaps.getMaps();
 						}
 						if (index > maps.size() || index < 1)
 							throw new NoSuchElementException();
@@ -251,6 +259,16 @@ public class LevelEditorWindow {
 		JLabel lblWithLevel = new JLabel("With level:");
 		lblWithLevel.setBounds(472, 370, 58, 14);
 		frame.getContentPane().add(lblWithLevel);
+		
+		JButton btnResetMap = new JButton("Reset Maps");
+		btnResetMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SLMaps.resetMaps();
+				lblMapStatus.setText("Maps reseted to the original ones successfully!!");
+			}
+		});
+		btnResetMap.setBounds(472, 45, 89, 23);
+		frame.getContentPane().add(btnResetMap);
 		
 		frame.setVisible(true);
 		

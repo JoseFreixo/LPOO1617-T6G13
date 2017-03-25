@@ -21,11 +21,23 @@ public class SLMaps {
 			fileOut.close();
 
 		} catch (IOException i) {
-			i.printStackTrace();
 		}
 	}
 
+	public static void resetMaps() {
+		try {
+			ArrayList<GameMap> maps= new ArrayList<GameMap>();
+			maps.add(DungeonMap.getDungeonMap());
+			maps.add(KeepMap.getKeepMap());
+			FileOutputStream fileOut = new FileOutputStream("maps.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(maps);
+			out.close();
+			fileOut.close();
 
+		} catch (IOException i) {
+		}
+	}
 
 	public static ArrayList<GameMap> getMaps() {
 
@@ -38,11 +50,9 @@ public class SLMaps {
 			fis.close();
 			return maps;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
 			return null;
 		} catch (ClassNotFoundException c) {
 			System.out.println("Maps not found");
-			c.printStackTrace();
 			return null;
 		}
 	}

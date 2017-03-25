@@ -73,7 +73,6 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//JButton []buttonsToEdit= new JButton[5];
 		Boolean[] stopGame={true};
 		
 		frmDungeonKeep = new JFrame();
