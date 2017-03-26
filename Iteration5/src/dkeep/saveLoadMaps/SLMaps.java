@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import dkeep.logic.GameMap;
 
 public class SLMaps {
@@ -21,6 +23,7 @@ public class SLMaps {
 			fileOut.close();
 
 		} catch (IOException i) {
+			JOptionPane.showMessageDialog(null, "Some unexpected error ocurred"); 
 		}
 	}
 
@@ -36,6 +39,7 @@ public class SLMaps {
 			fileOut.close();
 
 		} catch (IOException i) {
+			JOptionPane.showMessageDialog(null, "Some unexpected error ocurred"); 
 		}
 	}
 

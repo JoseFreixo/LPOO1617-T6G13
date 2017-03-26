@@ -18,7 +18,6 @@ public class SLPlay {
 			fileOut.close();
 			return true;
 		} catch (IOException i) {
-			i.printStackTrace();
 			return false;
 		}
 	}

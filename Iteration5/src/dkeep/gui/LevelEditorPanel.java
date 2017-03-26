@@ -37,7 +37,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			addMouseListener(this);
 			addMouseMotionListener(this);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Some unexpected error ocurred"); 
 		}
 	}
 
@@ -125,7 +125,9 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			map.setCharOnPos(new CellPosition(l, c), toPaintChar);
 			repaint();
 		}
-		catch (ArrayIndexOutOfBoundsException e){}
+		catch (ArrayIndexOutOfBoundsException e){
+			//DO NOTHING
+		}
 	}
 
 	public boolean verifyMap(){

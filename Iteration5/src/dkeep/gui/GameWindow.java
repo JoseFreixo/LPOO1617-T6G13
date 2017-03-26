@@ -9,6 +9,7 @@ import dkeep.cli.*;
 import dkeep.saveLoadMaps.SLPlay;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -69,7 +70,7 @@ public class GameWindow {
 					GameWindow window = new GameWindow();
 					window.frmDungeonKeep.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Some unexpected error ocurred"); 
 				}
 			}
 		});
@@ -319,7 +320,7 @@ public class GameWindow {
 			public void actionPerformed(ActionEvent e) {
 				play=SLPlay.load();
 				if(play==null){
-					StatusLabel.setText("Some erro occurred, make sure you already saved a game once!");
+					JOptionPane.showMessageDialog(null, "Some unexpected error ocurred, make sure you already saved a game once!!!"); 
 					enableDisableMoves(false, Buttons);
 					return;
 				}

@@ -50,7 +50,7 @@ public class CustomPanel extends JPanel{
 			clubImage = ImageIO.read(new File("src/resources/club.png"));
 			cifraoImage = ImageIO.read(new File("src/resources/cifrao.png"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Some unexpected error ocurred"); 
 		}
 		
 		CharToImage.put('H',heroImage);

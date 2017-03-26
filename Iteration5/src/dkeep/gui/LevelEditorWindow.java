@@ -170,11 +170,11 @@ public class LevelEditorWindow {
 					columns = scan.nextInt();
 					if (isCorrectLinesColumns(lines,columns)){
 						scan.close();
-						Labels[LBL_MAPSTATUS].setText("The number of lines and columns must be between 5 and 15 (included).");
+						throw new NoSuchElementException();
 					}
 				}
 				catch (NoSuchElementException Excp){
-					Labels[LBL_MAPSTATUS].setText("The number of lines and columns must be between 5 and 15 (included).");
+					JOptionPane.showMessageDialog(null, "The number of lines and columns must be between 5 and 15 (included).");
 					return;
 				}
 				Labels[LBL_MAPSTATUS].setText("");
@@ -290,7 +290,7 @@ public class LevelEditorWindow {
 					SLMaps.setMaps(maps);
 					Labels[LBL_MAPSTATUS].setText("Map added successfuly!");
 				}
-				else Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key/Ogre/Hero sprite!");	
+				else JOptionPane.showMessageDialog(null, "Map not added. Perhaps you added more than one key/Ogre/Hero sprite,\n or you forgot the walls/door around the map"); 
 			}
 		});
 		Buttons[BT_ADDMAP].setBounds(472, 312, 89, 23);
@@ -304,7 +304,7 @@ public class LevelEditorWindow {
 			scan.close();
 			ArrayList<GameMap> maps = SLMaps.getMaps();
 			if (maps == null){
-				JOptionPane.showMessageDialog(null, "Maps file corruped! Reseting maps file to the original one and replace the level you choose!");
+				JOptionPane.showMessageDialog(null, "Maps file corruped!\nReseting maps file to the original one and replace the level you choose!");
 				SLMaps.resetMaps();
 				maps = SLMaps.getMaps();
 			}
@@ -315,7 +315,7 @@ public class LevelEditorWindow {
 			Labels[LBL_MAPSTATUS].setText("Map replaced successfuly!");
 		}
 		catch (NoSuchElementException exception){
-			Labels[LBL_MAPSTATUS].setText("Not a number or the level you want to replace does not exist!");
+			JOptionPane.showMessageDialog(null, "Not a number or the level you want to replace does not exist!");
 		}
 	}
 	
@@ -325,7 +325,7 @@ public class LevelEditorWindow {
 				if (panel.verifyMap()){
 					 ReplaceLvl(Labels);
 				}
-				else Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key/Ogre/Hero sprite, or you forgot the Walls/Door around the map!");	
+				else JOptionPane.showMessageDialog(null, "Map not added. Perhaps you added more than one key/Ogre/Hero sprite,\n or you forgot the walls/door around the map");	
 			}
 		});
 		Buttons[BT_REPLACELVL].setBounds(472, 345, 89, 23);
