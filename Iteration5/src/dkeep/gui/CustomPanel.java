@@ -1,10 +1,11 @@
 package dkeep.gui;
 
 import java.awt.*;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,24 +14,26 @@ import dkeep.logic.GameMap;
 
 @SuppressWarnings("serial")
 public class CustomPanel extends JPanel{
-	private BufferedImage heroImage;
-	private BufferedImage heroArmedImage;
-	private BufferedImage heroArmedKeyImage;
-	private BufferedImage guardImage;
-	private BufferedImage guardSleepingImage;
-	private BufferedImage ogreImage;
-	private BufferedImage ogreStunnedImage;
-	private BufferedImage wallImage;
-	private BufferedImage floorImage;
-	private BufferedImage keyImage;
-	private BufferedImage doorImage;
-	private BufferedImage doorOpenImage;
-	private BufferedImage clubImage;
-	private BufferedImage cifraoImage;
+	private static BufferedImage heroImage;
+	private static BufferedImage heroArmedImage;
+	private static BufferedImage heroArmedKeyImage;
+	private static BufferedImage guardImage;
+	private static BufferedImage guardSleepingImage;
+	private static BufferedImage ogreImage;
+	private static BufferedImage ogreStunnedImage;
+	private static BufferedImage wallImage;
+	private static BufferedImage floorImage;
+	private static BufferedImage keyImage;
+	private static BufferedImage doorImage;
+	private static BufferedImage doorOpenImage;
+	private static BufferedImage clubImage;
+	private static BufferedImage cifraoImage;
 	private GameMap map;
+	
+	private static Map<Character,BufferedImage> CharToImage =
+			new HashMap<Character,BufferedImage>();
 
-	public CustomPanel(){
-		super();
+	static {
 		try {
 			heroImage = ImageIO.read(new File("src/resources/player.png")); // mesmo processo para o resto das imagens
 			heroArmedImage = ImageIO.read(new File("src/resources/player_armed.png"));
@@ -49,6 +52,26 @@ public class CustomPanel extends JPanel{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		CharToImage.put('H',heroImage);
+		CharToImage.put('A',heroArmedImage);
+		CharToImage.put('K',heroArmedKeyImage);
+		CharToImage.put('G',guardImage);
+		CharToImage.put('g',guardSleepingImage);
+		CharToImage.put('O',ogreImage);
+		CharToImage.put('o',ogreStunnedImage);
+		CharToImage.put('X',wallImage);
+		CharToImage.put(' ',floorImage);
+		CharToImage.put('k',keyImage);
+		CharToImage.put('I',doorImage);
+		CharToImage.put('S',doorOpenImage);
+		CharToImage.put('*',clubImage);
+		CharToImage.put('$',cifraoImage);
+	} 
+
+
+	public CustomPanel(){
+		super();
 	}
 
 	@Override
@@ -76,32 +99,33 @@ public class CustomPanel extends JPanel{
 	}
 
 	public BufferedImage getImage(int y, int x){
-		if(map.getMap()[y][x] == ' ')
-			return floorImage;
-		if(map.getMap()[y][x] == 'I')
-			return doorImage;
-		if(map.getMap()[y][x] == 'S')
-			return doorOpenImage;
-		if(map.getMap()[y][x] == 'H')
-			return heroImage;
-		if(map.getMap()[y][x] == 'A')
-			return heroArmedImage;
-		if(map.getMap()[y][x] == 'K')
-			return heroArmedKeyImage;
-		if(map.getMap()[y][x] == 'k')
-			return keyImage;
-		if(map.getMap()[y][x] == 'O')
-			return ogreImage;
-		if(map.getMap()[y][x] == 'o')
-			return ogreStunnedImage;
-		if(map.getMap()[y][x] == '*')
-			return clubImage;
-		if(map.getMap()[y][x] == 'G')
-			return guardImage;
-		if(map.getMap()[y][x] == 'g')
-			return guardSleepingImage;
-		if(map.getMap()[y][x] == '$')
-			return cifraoImage;
-		return wallImage;
+		return CharToImage.get(map.getMap()[y][x]);
+//		if(map.getMap()[y][x] == ' ')
+//			return floorImage;
+//		if(map.getMap()[y][x] == 'I')
+//			return doorImage;
+//		if(map.getMap()[y][x] == 'S')
+//			return doorOpenImage;
+//		if(map.getMap()[y][x] == 'H')
+//			return heroImage;
+//		if(map.getMap()[y][x] == 'A')
+//			return heroArmedImage;
+//		if(map.getMap()[y][x] == 'K')
+//			return heroArmedKeyImage;
+//		if(map.getMap()[y][x] == 'k')
+//			return keyImage;
+//		if(map.getMap()[y][x] == 'O')
+//			return ogreImage;
+//		if(map.getMap()[y][x] == 'o')
+//			return ogreStunnedImage;
+//		if(map.getMap()[y][x] == '*')
+//			return clubImage;
+//		if(map.getMap()[y][x] == 'G')
+//			return guardImage;
+//		if(map.getMap()[y][x] == 'g')
+//			return guardSleepingImage;
+//		if(map.getMap()[y][x] == '$')
+//			return cifraoImage;
+//		return wallImage;
 	}
 }
