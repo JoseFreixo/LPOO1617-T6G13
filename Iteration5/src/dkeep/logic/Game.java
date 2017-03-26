@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * 
+ * This class handles all of the game's logic.
  * @author José Freixo and Ruben Torres
  *
  */
@@ -23,6 +23,11 @@ public class Game implements java.io.Serializable {
 	Lever lever;
 	ArrayList<Ogre> ogres = new ArrayList<Ogre>();
 
+	/**
+	 * Constructor of class Game.
+	 * @param map Map in which the game will occur.
+	 * @param enemyTypes Personality of the guard and number of ogres.
+	 */
 	public Game(GameMap map, int [] enemyTypes){
 		this.map = map;
 		Status = null;
@@ -63,38 +68,75 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * This method returns the lever/key's position
+	 * @return CellPosition Returns the position of the lever/key.
+	 */
 	public CellPosition getLeverPosition(){
 		return lever.getPosition();
 	}
 
+	/**
+	 * This method returns the hero's position
+	 * @return CellPosition Returns the position of the hero.
+	 */
 	public CellPosition getHeroPosition(){
 		return heroi.getPosition();
 	}
 
+	/**
+	 * This method returns the guard's position
+	 * @return CellPosition Returns the position of the guard.
+	 */
 	public CellPosition getGuardPosition(){
 		return guarda.getPosition();
 	}
 
+	/**
+	 * This method returns the hero's representation.
+	 * @return char Returns the representation of the hero.
+	 */
 	public char getHeroRepresentation(){
 		return heroi.getRepresentation();
 	}
 
+	/**
+	 * This method returns the guard's representation.
+	 * @return char Returns the representation of the guard.
+	 */
 	public char getGuardRepresentation(){
 		return guarda.getRepresentation();
 	}
 
-	public char getMapChar(CellPosition Pos){
-		return map.getCharOnPos(Pos);
+	/**
+	 * This method returns a specific element of the map.
+	 * @param pos The position of the desired char.
+	 * @return char Returns the element (char) of the specefied position.
+	 */
+	public char getMapChar(CellPosition pos){
+		return map.getCharOnPos(pos);
 	}
 
+	/**
+	 * This method returns the guard.
+	 * @return Guard Returns the guard.
+	 */
 	public Guard getGuard(){
 		return guarda;
 	}
 
+	/**
+	 * This method returns the list of all the ogres.
+	 * @return ArrayList<Ogre> Returns the list of all the ogres.
+	 */
 	public ArrayList<Ogre> getOgres() {
 		return ogres;
 	}
 
+	/**
+	 * This method checks if the user lost the level or not.
+	 * @return boolean Returns true if the user lost, false if otherwise.
+	 */
 	public boolean isGameOver(){
 
 		if(guarda != null && guarda.getRepresentation() == 'G' && HeroCaught(getGuardPosition(),getHeroPosition())){
@@ -111,6 +153,12 @@ public class Game implements java.io.Serializable {
 		return false;
 	}
 
+	/**
+	 * This method checks if the hero is near a deadly enemy (ogre swing or guard).
+	 * @param Guard_or_OgrePos The position of the deadly enemy.
+	 * @param HeroPos The position of the hero.
+	 * @return boolean Returns true if the hero was caught, false if otherwise.
+	 */
 	public boolean HeroCaught(CellPosition Guard_or_OgrePos, CellPosition HeroPos){
 		if(Guard_or_OgrePos.getY()==HeroPos.getY())
 			if(Guard_or_OgrePos.getX()==HeroPos.getX()-1||Guard_or_OgrePos.getX()==HeroPos.getX()+1||Guard_or_OgrePos.getX()==HeroPos.getX())
@@ -123,6 +171,9 @@ public class Game implements java.io.Serializable {
 		return false;
 	}
 
+	/**
+	 * This method moves all ogres, checks if they get stunned and then swings their clubs.
+	 */
 	public void MoveAllTheOgres(){	
 		if (ogres.size()==0)
 			return;
@@ -146,6 +197,7 @@ public class Game implements java.io.Serializable {
 			ogreSwingClub(ogre);
 		}
 	}
+	
 	private void ClearAllOgresAndAttacks() {
 		for (Ogre ogre: ogres){
 			map.setCharOnPos(ogre.getPosition(), ' ');
@@ -153,6 +205,10 @@ public class Game implements java.io.Serializable {
 		}	
 	}
 
+	/**
+	 * This method moves a specific ogre, changing it's representation accordingly.
+	 * @param ogre The ogre that shall be moved.
+	 */
 	public void moveOgre(Ogre ogre) {
 		if(ogre.getStunTimeout()>0){
 			ogre.setStunTimeout(ogre.getStunTimeout()-1);
@@ -194,6 +250,10 @@ public class Game implements java.io.Serializable {
 
 	}
 
+	/**
+	 * This method swings a specific ogre's club. If the ogre has no valid positions to attack the club is stored on the ogre's position.
+	 * @param ogre The ogre that shall attack.
+	 */
 	public void ogreSwingClub(Ogre ogre){
 
 		boolean swinged=false;
@@ -276,6 +336,10 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * This method moves the hero, checking for special game conditions (Ex: Opening doors, lifting/pushing the key/lever).
+	 * @param c The movement's direction.
+	 */
 	public void moveHero(char c) {
 		c = Character.toUpperCase(c);
 		int y = heroi.getPosition().getY() + newHeroY(c);
@@ -342,6 +406,10 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * This method moves the guard, according to it's personality.
+	 * @param i The index of the guard's next move.
+	 */
 	public void moveGuard(int [] i){
 		if (guarda == null) return;
 
@@ -359,6 +427,9 @@ public class Game implements java.io.Serializable {
 		else if (guarda.getType() == 1) i[0] = moveDrunkenMechanics(n);
 		else i[0] = moveSuspiciousMechanics(n); }
 
+	/**
+	 * This method stuns the ogres that are near the hero.
+	 */
 	public void stunOgres(){
 		for (Ogre ogre: ogres){
 
@@ -379,14 +450,26 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * This method returns the current game status.
+	 * @return Boolean Returns true if the user lost, false if he won the level and stays null until one of the previous 2 happens.
+	 */
 	public Boolean EndStatus() {
 		return Status;
 	}
 
+	/**
+	 * This method returns the door's state.
+	 * @return boolean Returns true if the doors are open, false if otherwise.
+	 */
 	public boolean areDoorsOpen(){
 		return openDoors;
 	}
 
+	/**
+	 * This method returns the current level's map.
+	 * @return GameMap Returns the current level's map.
+	 */
 	public GameMap getMap(){
 		return map;
 	}

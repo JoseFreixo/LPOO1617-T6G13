@@ -29,9 +29,9 @@ public class GameMap implements java.io.Serializable {
 	}
 
 	/**
-	 * returns char that contains the information on a given position (as a parameter) of the map
+	 * Returns char that contains the information on a given position (as a parameter) of the map
 	 * @param Pos Position you want on the map
-	 * @return char that contains the information on a given position of the map
+	 * @return char Returns a char that contains the information on a given position of the map
 	 */
 	public char getCharOnPos(CellPosition Pos){
 		return map[Pos.getY()][Pos.getX()];
@@ -39,17 +39,17 @@ public class GameMap implements java.io.Serializable {
 /**
  * Set a given char on a given position of the map
  * @param Pos Position on the map
- * @param Representation Which Char u want to put on given position of the map
+ * @param Representation Which Char you want to put on given position.
  */
 	public void setCharOnPos(CellPosition Pos,char Representation){
 		map[Pos.getY()][Pos.getX()]=Representation;
 	}
 	
 /**
- * Checks if a given position on the map is a Wall or a closed door (which means you can't move to there)
+ * Checks if a given position on the map is a Wall or a closed door (which means you can't move there)
  * @param y coordinate Y of a position of the map
  * @param x coordinate X of a position of the map
- * @return boolean as true if the positions is valid, false if not
+ * @return boolean Returns true if the position is valid, false if otherwise.
  */
 	public boolean validPosition(int y, int x){
 		if (map[y][x] == 'X' || map[y][x] == 'I')
@@ -60,7 +60,7 @@ public class GameMap implements java.io.Serializable {
 	/**
 	 * Copy a given char[][] to another in different memory position
 	 * @param mapa map to copy
-	 * @return char[][] that contains the map copied 
+	 * @return char[][] Returns a char[][] that contains the map copied
 	 */
 	public char [][] copyMap(char[][] mapa){
 		char[][] copy = new char[mapa.length][mapa[0].length];
@@ -73,11 +73,11 @@ public class GameMap implements java.io.Serializable {
 	}
 	
 /**
- * Set a char on a given position of the map(position_to_set) and 
- * erases a char (substitutes to ' ') also on a given position of the map (position_to_erase)
- * @param position_to_set position of the you want to set a char on
- * @param position_to_erase position of the map you want to erase
- * @param representation char to set on given position of the map
+ * Set a char on a given position of the map and 
+ * erases a char (replaces it with ' ') on a given position
+ * @param position_to_set position you want to set a char on
+ * @param position_to_erase position you want to erase
+ * @param representation char to set on given position
  */
 	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char representation){
 		map[position_to_erase.getY()][position_to_erase.getX()] = ' ';
@@ -85,9 +85,9 @@ public class GameMap implements java.io.Serializable {
 	}
 
 /**
- * If the hero try to move against a closed the door with the key, 
- * this function opens that door and all the doors adjacent to it and themselves recursively
- * @param isKey is used to know if the map is a lever or a key map, if it's a lever this functions do nothing
+ * If there's a key and this the hero tries to move against a closed door with it, the function opens that door and all the doors adjacent to it recursively
+ * If there's a lever, when the hero pushes it, all of the outer doors open
+ * @param isKey used to know if the map has a lever or a key
  * @param heroiPos position of the Hero
  */
 	public void openDoors(boolean isKey, CellPosition heroiPos) {
@@ -125,7 +125,7 @@ public class GameMap implements java.io.Serializable {
 	}
 
 	/**
-	 * Functions used to see if a GameMap is equal to another
+	 * Function used to see if a GameMap is equal to another
 	 */
 	@Override
 	public boolean equals(Object obj) {
