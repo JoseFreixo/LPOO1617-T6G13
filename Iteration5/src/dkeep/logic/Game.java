@@ -22,35 +22,39 @@ public class Game implements java.io.Serializable {
 		this.map = map;
 		Status = null;
 		openDoors = false;
-		int x = 0, y = 0;
+		int xy[]= {0,0};
 		for (int i=0;i<map.getMap().length;i++){
 			for (int j=0; j<map.getMap()[i].length;j++){
 				int [] pos = { i, j };
-				switch(map.getMap()[i][j]){
-				case 'H': heroi = new Hero(pos, 'H');
-				break;
-				case 'A': heroi = new Hero(pos, 'A');
-				break;
-				case 'G': 
-					guarda = new Guard(pos, 'G', enemyTypes[0]);
-					isKey = false;
-					break;
-				case 'O':
-					x = j;
-					y = i;
-					isKey = true;
-					break;
-				case 'k': lever = new Lever(pos, 'k');
-				break;
-				}
+				createUnits(pos, enemyTypes[0],xy);
 			}
 		}
 		if(isKey){
 			heroi.setRepresentation('A');
-			int [] pos = { y, x };
+			int [] pos = { xy[1], xy[0] };
 			for (int i = 0; i < enemyTypes[1]; i++){
 				ogres.add(new Ogre(pos, 'O'));
 			}
+		}
+	}
+
+	private void createUnits(int [] pos, int GuardType,int xy[]){
+		switch(map.getMap()[pos[0]][pos[1]]){
+		case 'H': heroi = new Hero(pos, 'H');
+		break;
+		case 'A': heroi = new Hero(pos, 'A');
+		break;
+		case 'G': 
+			guarda = new Guard(pos, 'G', GuardType);
+			isKey = false;
+			break;
+		case 'O':
+			xy[0] = pos[1];
+			xy[1] = pos[0];
+			isKey = true;
+			break;
+		case 'k': lever = new Lever(pos, 'k');
+		break;
 		}
 	}
 
@@ -365,12 +369,7 @@ public class Game implements java.io.Serializable {
 
 		}
 	}
-//	if((ogre.getPosition().getX()==heroi.getPosition().getX()-1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
-	//						(ogre.getPosition().getX()==heroi.getPosition().getX()+1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
-	//						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()-1) ||
-	//						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()+1)){
-	//					ogre.setRepresentation('o');
-	//					ogre.setStunTimeout(3);
+
 	public Boolean EndStatus() {
 		return Status;
 	}
