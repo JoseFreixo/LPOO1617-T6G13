@@ -212,10 +212,10 @@ public class Game implements java.io.Serializable {
 				else
 					map.setCharOnPos(ogre.getAttack(), '*');
 				swinged=true;
-				trys--;
 			}
 			if(!swinged)
 				ogre.setAttack(ogre.getPosition());
+			trys--;
 		}	
 	}
 
