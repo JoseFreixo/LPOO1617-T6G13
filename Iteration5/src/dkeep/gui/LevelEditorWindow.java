@@ -37,6 +37,12 @@ public class LevelEditorWindow {
 	private static final int BT_ADDMAP= 8;
 	private static final int BT_REPLACELVL= 9;
 	private static final int BT_RESET= 10;
+	
+	private static final int NUMBER_OF_LABELS= 4;
+	private static final int LBL_LINES= 0;
+	private static final int LBL_COLUMNS= 1;
+	private static final int LBL_LEVEL= 2;
+	private static final int LBL_MAPSTATUS= 3;
 	/**
 	 * Create the application.
 	 */
@@ -50,44 +56,14 @@ public class LevelEditorWindow {
 	private void initialize() {
 
 		setGameWindowAndJFrame();
-		LevelEditorPanel panel = new LevelEditorPanel();
-		panel.setBounds(20, 60, 418, 418);
-		frame.getContentPane().add(panel);
+		setTextLinesAFieldAndColumns();
+		
+		LevelEditorPanel panel = setLvlEditPanel();
 
-		textLines = new JTextField();
-		textLines.setBounds(110, 12, 86, 20);
-		frame.getContentPane().add(textLines);
-		textLines.setColumns(10);
-		textLines.setText("5");
-
-		JLabel lblLines = new JLabel("Lines:");
-		lblLines.setBounds(65, 15, 35, 14);
-		frame.getContentPane().add(lblLines);
-
-		JLabel lblColumns = new JLabel("Columns:");
-		lblColumns.setBounds(237, 15, 46, 14);
-		frame.getContentPane().add(lblColumns);
-
-		textColumns = new JTextField();
-		textColumns.setColumns(10);
-		textColumns.setBounds(296, 12, 86, 20);
-		frame.getContentPane().add(textColumns);
-		textColumns.setText("5");
-
-		JLabel lblWithLevel = new JLabel("With level:");
-		lblWithLevel.setBounds(472, 370, 58, 14);
-		frame.getContentPane().add(lblWithLevel);
-
-		JLabel lblMapStatus = new JLabel("");
-		lblMapStatus.setBounds(20, 34, 418, 25);
-		frame.getContentPane().add(lblMapStatus);
+		JLabel [] Labels=new JLabel[NUMBER_OF_LABELS];
+		setAllLabels(Labels);
 
 
-		textField = new JTextField();
-		textField.setText("2");
-		textField.setColumns(10);
-		textField.setBounds(538, 367, 23, 20);
-		frame.getContentPane().add(textField);
 
 		JButton btnWall = new JButton("Wall");
 		JButton btnFloor = new JButton("Floor");
@@ -113,10 +89,10 @@ public class LevelEditorWindow {
 					}
 				}
 				catch (NoSuchElementException Excp){
-					lblMapStatus.setText("The number of lines and columns must be between 5 and 15 (included).");
+					Labels[LBL_MAPSTATUS].setText("The number of lines and columns must be between 5 and 15 (included).");
 					return;
 				}
-				lblMapStatus.setText("");
+				Labels[LBL_MAPSTATUS].setText("");
 				btnWall.setEnabled(true);
 				btnFloor.setEnabled(true);
 				btnHero.setEnabled(true);
@@ -208,17 +184,17 @@ public class LevelEditorWindow {
 
 					maps.add(panel.returnMap());
 					SLMaps.setMaps(maps);
-					lblMapStatus.setText("Map added successfuly!");
+					Labels[LBL_MAPSTATUS].setText("Map added successfuly!");
 				}
 				else{
 					Random rand = new Random();
 					int r = rand.nextInt(3);
 					if (r == 0)
-						lblMapStatus.setText("Map not added. Perhaps you forgot the walls/door around the map?");
+						Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you forgot the walls/door around the map?");
 					if (r == 1)
-						lblMapStatus.setText("Map not added. Perhaps you added more than one ogre/hero sprite.");
+						Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one ogre/hero sprite.");
 					if (r == 2)
-						lblMapStatus.setText("Map not added. Perhaps you added more than one key sprite.");
+						Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key sprite.");
 				}
 			}
 		});
@@ -244,21 +220,21 @@ public class LevelEditorWindow {
 							throw new NoSuchElementException();
 						maps.set(index, panel.returnMap());
 						SLMaps.setMaps(maps);
-						lblMapStatus.setText("Map replaced successfuly!");
+						Labels[LBL_MAPSTATUS].setText("Map replaced successfuly!");
 					}
 					catch (NoSuchElementException exception){
-						lblMapStatus.setText("Not a number or the level you want to replace does not exist!");
+						Labels[LBL_MAPSTATUS].setText("Not a number or the level you want to replace does not exist!");
 					}
 				}
 				else{
 					Random rand = new Random();
 					int r = rand.nextInt(3);
 					if (r == 0)
-						lblMapStatus.setText("Map not replaced. Perhaps you forgot the walls/door around the map?");
+						Labels[LBL_MAPSTATUS].setText("Map not replaced. Perhaps you forgot the walls/door around the map?");
 					if (r == 1)
-						lblMapStatus.setText("Map not replaced. Perhaps you added more than one ogre/hero sprite.");
+						Labels[LBL_MAPSTATUS].setText("Map not replaced. Perhaps you added more than one ogre/hero sprite.");
 					if (r == 2)
-						lblMapStatus.setText("Map not replaced. Perhaps you added more than one key sprite.");
+						Labels[LBL_MAPSTATUS].setText("Map not replaced. Perhaps you added more than one key sprite.");
 				}
 			}
 		});
@@ -269,7 +245,7 @@ public class LevelEditorWindow {
 		btnResetMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SLMaps.resetMaps();
-				lblMapStatus.setText("Maps reseted to the original ones successfully!!");
+				Labels[LBL_MAPSTATUS].setText("Maps reseted to the original ones successfully!!");
 			}
 		});
 		btnResetMap.setBounds(472, 45, 89, 23);
@@ -288,5 +264,49 @@ public class LevelEditorWindow {
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 	}
-}
+	
+	private void setTextLinesAFieldAndColumns(){
+		textLines = new JTextField();
+		textLines.setBounds(110, 12, 86, 20);
+		textLines.setColumns(10);
+		textLines.setText("5");
+		frame.getContentPane().add(textLines);
+		
+		textField = new JTextField();
+		textField.setText("2");
+		textField.setColumns(10);
+		textField.setBounds(538, 367, 23, 20);
+		frame.getContentPane().add(textField);
+		
+		textColumns = new JTextField();
+		textColumns.setColumns(10);
+		textColumns.setBounds(296, 12, 86, 20);
+		textColumns.setText("5");
+		frame.getContentPane().add(textColumns);
+	}
+	
+	private void setAllLabels(JLabel[] Labels){
+		Labels[LBL_LINES] = new JLabel("Lines:");
+		Labels[LBL_LINES].setBounds(65, 15, 35, 14);
+		frame.getContentPane().add(Labels[LBL_LINES]);
 
+		Labels[LBL_COLUMNS] = new JLabel("Columns:");
+		Labels[LBL_COLUMNS].setBounds(237, 15, 46, 14);
+		frame.getContentPane().add(Labels[LBL_COLUMNS]);
+
+		Labels[LBL_LEVEL] = new JLabel("With level:");
+		Labels[LBL_LEVEL].setBounds(472, 370, 58, 14);
+		frame.getContentPane().add(Labels[LBL_LEVEL]);
+
+		Labels[LBL_MAPSTATUS] = new JLabel("");
+		Labels[LBL_MAPSTATUS].setBounds(20, 34, 418, 25);
+		frame.getContentPane().add(Labels[LBL_MAPSTATUS]);
+	}
+	
+	private LevelEditorPanel setLvlEditPanel(){
+		LevelEditorPanel panel=new LevelEditorPanel();
+		panel.setBounds(20, 60, 418, 418);
+		frame.getContentPane().add(panel);
+		return panel;
+	}
+}
