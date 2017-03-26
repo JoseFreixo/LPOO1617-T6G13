@@ -28,7 +28,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testMoveHeroIntoToFreeCell(){
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s'); // move hero down.
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
@@ -39,7 +40,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testMoveHeroIntoToWall(){
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('a'); // try to move hero to the right.
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
@@ -48,7 +50,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroIsCapturedByGuard(){
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertFalse(game.isGameOver());
 		game.moveHero('d'); // move hero to the right.
 		assertTrue(game.isGameOver());
@@ -58,7 +61,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroTriesToLeaveDoorsClosed(){
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
@@ -69,7 +73,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroIntoLeverAndDoorsOpen(){
 		GameMap gameMap = new GameMap(map);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
@@ -81,7 +86,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroIsCapturedByOgre(){
 		GameMap gameMap = new GameMap(map_for_task2);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertFalse(game.isGameOver());
 		game.moveHero('d'); // move hero to the right.
 		assertTrue(game.isGameOver());
@@ -90,7 +96,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroIntoKey(){
 		GameMap gameMap = new GameMap(map_for_task2);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
@@ -102,7 +109,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroWithoutAKeyOpenDoors(){
 		GameMap gameMap = new GameMap(map_for_task2);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
@@ -114,7 +122,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testeHeroIntoDoorsWithKey(){
 		GameMap gameMap = new GameMap(map_for_task2);
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 		game.moveHero('s');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
@@ -133,7 +142,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testHeroWinGame(){
 		GameMap gameMap = KeepMap.getKeepMap();
-		Game game = new Game(gameMap,0,1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		assertEquals(game.getHeroPosition(), new CellPosition(7, 1));
 		game.moveHero('d');
 		assertEquals(game.getHeroPosition(), new CellPosition(7, 2));
@@ -195,7 +205,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testOgreMoviment() {
 		GameMap gameMap = new GameMap(map_for_task2);
-		Game game = new Game(gameMap, 0, 1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		Ogre ogre = game.getOgres().get(0);
 		game.moveOgre(ogre);
 		if (!ogre.getPosition().equals(new CellPosition(1, 2)) && !ogre.getPosition().equals(new CellPosition(2, 3)) && !ogre.getPosition().equals(new CellPosition(1, 3))) {
@@ -206,7 +217,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testOgreSwing() {
 		GameMap gameMap = new GameMap(map_for_task2);
-		Game game = new Game(gameMap, 0, 1);
+		int [] t = { 0, 1 };
+		Game game = new Game(gameMap, t);
 		Ogre ogre = game.getOgres().get(0);
 		game.ogreSwingClub(ogre);
 		if (!ogre.getAttack().equals(new CellPosition(1, 2)) && !ogre.getAttack().equals(new CellPosition(2, 3))) {
@@ -216,7 +228,8 @@ public class TestDungeonGameLogic {
 
 	@Test
 	public void testMoveGuardRookie() {
-		Game game = new Game(DungeonMap.getDungeonMap(), 0, 1);
+		int [] t = { 0, 1 };
+		Game game = new Game(DungeonMap.getDungeonMap(), t);
 		int i[] = { 0 };
 		game.moveGuard(i);
 		assertEquals(new CellPosition(1, 7), game.getGuardPosition());
@@ -238,7 +251,8 @@ public class TestDungeonGameLogic {
 
 	@Test
 	public void testMoveGuardDrunken(){
-		Game game = new Game (DungeonMap.getDungeonMap(), 1, 1);
+		int [] t = { 1, 1 };
+		Game game = new Game (DungeonMap.getDungeonMap(), t);
 		int i[] = { 0 };
 		int m = 0;
 		while (m < 100){
@@ -259,7 +273,7 @@ public class TestDungeonGameLogic {
 			m++;
 		}
 		assertEquals(game.getGuardRepresentation(), 'G');
-		game = new Game (DungeonMap.getDungeonMap(), 1, 1);
+		game = new Game (DungeonMap.getDungeonMap(), t);
 		int j[] = { 0 };
 		m = 0;
 		assertEquals(game.getGuard().isFront(), true);
@@ -290,7 +304,8 @@ public class TestDungeonGameLogic {
 
 	@Test
 	public void testMoveGuardSuspicious(){
-		Game game = new Game (DungeonMap.getDungeonMap(), 2, 1);
+		int [] t = { 2, 1 };
+		Game game = new Game (DungeonMap.getDungeonMap(), t);
 		int i[] = { 0 };
 		boolean cond1 = false, cond2 = false;
 		int m = 0;
@@ -311,7 +326,8 @@ public class TestDungeonGameLogic {
 	@Test
 	public void testStunOgre(){
 		GameMap map = new GameMap(map_for_task2);
-		Game game = new Game(map, 0, 1);
+		int [] t = { 0, 1 };
+		Game game = new Game(map, t);
 		assertEquals(game.getOgres().size(), 1);
 		game.stunOgres();
 		assertEquals(game.getOgres().get(0).getRepresentation(), 'O');

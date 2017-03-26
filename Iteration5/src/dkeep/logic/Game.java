@@ -18,7 +18,7 @@ public class Game implements java.io.Serializable {
 	Lever lever;
 	ArrayList<Ogre> ogres = new ArrayList<Ogre>();
 
-	public Game(GameMap map, int guardPersonalaty, int numberOfOgres){
+	public Game(GameMap map, int [] enemyTypes){
 		this.map = map;
 		Status = null;
 		openDoors = false;
@@ -32,7 +32,7 @@ public class Game implements java.io.Serializable {
 				case 'A': heroi = new Hero(pos, 'A');
 				break;
 				case 'G': 
-					guarda = new Guard(pos, 'G', guardPersonalaty);
+					guarda = new Guard(pos, 'G', enemyTypes[0]);
 					isKey = false;
 					break;
 				case 'O':
@@ -48,7 +48,7 @@ public class Game implements java.io.Serializable {
 		if(isKey){
 			heroi.setRepresentation('A');
 			int [] pos = { y, x };
-			for (int i = 0; i < numberOfOgres; i++){
+			for (int i = 0; i < enemyTypes[1]; i++){
 				ogres.add(new Ogre(pos, 'O'));
 			}
 		}

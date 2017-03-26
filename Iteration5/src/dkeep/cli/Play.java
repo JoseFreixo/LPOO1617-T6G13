@@ -13,15 +13,16 @@ public class Play implements java.io.Serializable{
 	private static final long serialVersionUID = 9L;
 	private Game game;
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();
-	private int i, numberOgres, guardType;
+	private int i;
+	private int [] enemyTypes = new int [2];
 	int [] nextGuardMove = { 0 };
 
 	public Play(ArrayList<GameMap> maps) {
 		this.maps = maps;
 		i = 0;
-		numberOgres=ThreadLocalRandom.current().nextInt(1, 6); 
-		guardType=ThreadLocalRandom.current().nextInt(0, 3); 
-		game = new Game(maps.get(i), guardType, numberOgres);
+		enemyTypes[0] = ThreadLocalRandom.current().nextInt(0, 3);
+		enemyTypes[1] = ThreadLocalRandom.current().nextInt(1, 6); 
+		game = new Game(maps.get(i), enemyTypes);
 	}
 
 	public Play(int numberOgres, String guardTypeStr){
@@ -35,17 +36,17 @@ public class Play implements java.io.Serializable{
 		i = 0;
 		switch(guardTypeStr){
 		case "Rookie":
-			guardType = 0;
+			enemyTypes[0] = 0;
 			break;
 		case "Drunken":
-			guardType = 1;
+			enemyTypes[0] = 1;
 			break;
 		case "Suspicious":
-			guardType = 2;
+			enemyTypes[0] = 2;
 			break;
 		}
-		this.numberOgres=numberOgres;
-		game = new Game(maps.get(i), this.guardType, this.numberOgres);
+		enemyTypes[1] = numberOgres;
+		game = new Game(maps.get(i), enemyTypes);
 	}
 
 	public int getMapsSize(){
@@ -68,7 +69,7 @@ public class Play implements java.io.Serializable{
 			if (i >= maps.size()){
 				return 1; // Victory
 			}
-			game = new Game(maps.get(i),guardType,numberOgres);
+			game = new Game(maps.get(i), enemyTypes);
 			return 2; // Next Level
 		}
 
@@ -118,7 +119,7 @@ public class Play implements java.io.Serializable{
 				printMap();
 				return true;
 			}
-			game = new Game(maps.get(i),guardType,numberOgres);
+			game = new Game(maps.get(i), enemyTypes);
 			return true;
 		}
 		updateGameIsOver(gameIsOver);
