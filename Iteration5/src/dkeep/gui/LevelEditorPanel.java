@@ -126,7 +126,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			repaint();
 		}
 		catch (ArrayIndexOutOfBoundsException e){
-			//DO NOTHING
+			return;
 		}
 	}
 

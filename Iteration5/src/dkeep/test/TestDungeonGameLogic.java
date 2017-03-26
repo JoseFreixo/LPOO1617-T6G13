@@ -21,10 +21,17 @@ public class TestDungeonGameLogic {
 			{'X','X','X','X','X'}};
 
 	char[][] map_for_task2 = {{'X','X','X','X','X'},
-			{'X','H',' ','O','X'},
-			{'I',' ',' ',' ','X'},
+							  {'X','H',' ',' ','X'},
+							  {'I',' ','O',' ','X'},
+							  {'I','k',' ',' ','X'},
+							  {'X','X','X','X','X'}};
+	
+	char[][] map_for_ogre_attack_fail = {{'X','X','X','X','X'},
+			{'I','H','X','O','X'},
+			{'I',' ','X','X','X'},
 			{'I','k',' ',' ','X'},
 			{'X','X','X','X','X'}};
+	
 	@Test
 	public void testMoveHeroIntoToFreeCell(){
 		GameMap gameMap = new GameMap(map);
@@ -217,9 +224,17 @@ public class TestDungeonGameLogic {
 		Game game = new Game(gameMap, t);
 		Ogre ogre = game.getOgres().get(0);
 		game.moveOgre(ogre);
-		if (!ogre.getPosition().equals(new CellPosition(1, 2)) && !ogre.getPosition().equals(new CellPosition(2, 3)) && !ogre.getPosition().equals(new CellPosition(1, 3))) {
+		if (!ogre.getPosition().equals(new CellPosition(2, 1)) && !ogre.getPosition().equals(new CellPosition(2, 3)) && !ogre.getPosition().equals(new CellPosition(1, 2)) && !ogre.getPosition().equals(new CellPosition(3, 2))) {
 			fail("Ogre didn't move correctly");
 		}
+		if (ogre.getAttack().equals(new CellPosition(2, 1)))
+			assertEquals(new CellPosition(2, 1), game.getOgres().get(0).getPosition());
+		else if (ogre.getPosition().equals(new CellPosition(2, 3)))
+			assertEquals(new CellPosition(2, 3), game.getOgres().get(0).getPosition());
+		else if (ogre.getPosition().equals(new CellPosition(1, 2)))
+			assertEquals(new CellPosition(1, 2), game.getOgres().get(0).getPosition());
+		else if (ogre.getPosition().equals(new CellPosition(3, 2)))
+			assertEquals(new CellPosition(3, 2), game.getOgres().get(0).getPosition());
 	}
 
 	@Test
@@ -229,13 +244,17 @@ public class TestDungeonGameLogic {
 		Game game = new Game(gameMap, t);
 		Ogre ogre = game.getOgres().get(0);
 		game.ogreSwingClub(ogre);
-		if (!ogre.getAttack().equals(new CellPosition(1, 2)) && !ogre.getAttack().equals(new CellPosition(2, 3))) {
+		if (!ogre.getAttack().equals(new CellPosition(2, 1)) && !ogre.getAttack().equals(new CellPosition(2, 3)) && !ogre.getAttack().equals(new CellPosition(1, 2)) && !ogre.getAttack().equals(new CellPosition(3, 2))) {
 			fail("Ogre didn't swing correctly");
 		}
-		if (ogre.getAttack().equals(new CellPosition(1, 2)))
-			assertEquals('*', game.getMapChar(new CellPosition(1, 2)));
-		else
+		if (ogre.getAttack().equals(new CellPosition(2, 1)))
+			assertEquals('*', game.getMapChar(new CellPosition(2, 1)));
+		else if (ogre.getAttack().equals(new CellPosition(2, 3)))
 			assertEquals('*', game.getMapChar(new CellPosition(2, 3)));
+		else if (ogre.getAttack().equals(new CellPosition(1, 2)))
+			assertEquals('*', game.getMapChar(new CellPosition(1, 2)));
+		else if (ogre.getAttack().equals(new CellPosition(3, 2)))
+			assertEquals('*', game.getMapChar(new CellPosition(3, 2)));
 	}
 
 	@Test
@@ -357,5 +376,28 @@ public class TestDungeonGameLogic {
 			game.moveOgre(game.getOgres().get(0));
 		}
 		assertEquals(game.getOgres().get(0).getRepresentation(), 'O');
+	}
+	
+	@Test
+	public void testOpenSeveralKeepDoors(){
+		GameMap map = new GameMap(map_for_ogre_attack_fail);
+		int [] t = { 0, 1 };
+		Game game = new Game(map, t);
+		game.moveHero('s');
+		game.moveHero('s');
+		game.moveHero('w');
+		game.moveHero('a');
+		assertEquals('S', map.getCharOnPos(new CellPosition(3,0)));
+		assertEquals('S', map.getCharOnPos(new CellPosition(2,0)));
+		assertEquals('S', map.getCharOnPos(new CellPosition(1,0)));
+	}
+	
+	@Test
+	public void testOgreFailToArrack(){
+		GameMap map = new GameMap(map_for_ogre_attack_fail);
+		int [] t = { 0, 1 };
+		Game game = new Game(map, t);
+		game.ogreSwingClub(game.getOgres().get(0));
+		assertEquals(game.getOgres().get(0).getPosition(), game.getOgres().get(0).getAttack());
 	}
 }
