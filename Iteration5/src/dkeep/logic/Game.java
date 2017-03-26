@@ -112,24 +112,6 @@ public class Game implements java.io.Serializable {
 				return true;
 		
 		return false;
-						
-////
-////		if(Guard_or_OgrePos.getX()==HeroPos.getX()-1&& Guard_or_OgrePos.getY()==HeroPos.getY()){
-////			return true;
-////		}
-////		if(Guard_or_OgrePos.getX()==HeroPos.getX()+1&& Guard_or_OgrePos.getY()==HeroPos.getY()){	
-////			return true;
-////		}
-//		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()+1){
-//			return true;
-//		}
-//		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()-1){
-//			return true;
-//		}		
-////		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()){
-////			return true;
-////		}
-//		return false;
 	}
 
 	public void MoveAllTheOgres(){	

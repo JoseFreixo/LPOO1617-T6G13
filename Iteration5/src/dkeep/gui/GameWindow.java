@@ -40,6 +40,7 @@ public class GameWindow {
 	private JTextField numberOgresField;
 	private JComboBox<String> guardTypeCombo = new JComboBox<String>();
 	private Play play;
+	private Boolean stopGame=true;
 
 
 	private static Map<String, Character> moves =
@@ -85,7 +86,6 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Boolean[] stopGame={true};
 
 		setBasicWindow();
 
@@ -101,8 +101,8 @@ public class GameWindow {
 		JButton []Buttons= new JButton[NUMBER_OF_BUTTONS]; 
 		initializeAllButtons(Buttons);
 
-		setAllButtonsAndKeys(Buttons, StatusLabel, stopGame, gameArea);
-		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea);
+		setAllButtonsAndKeys(Buttons, StatusLabel, gameArea);
+		setBT_NEWGAME(Buttons,StatusLabel,gameArea);
 		setBT_LVLEDIT(toolBar,Buttons);
 	}
 
@@ -111,17 +111,17 @@ public class GameWindow {
 		return frmDungeonKeep;
 	}
 
-	private void enableDisableMoves(boolean isEnabled, JButton []Buttons, Boolean []stopGame){
+	private void enableDisableMoves(boolean isEnabled, JButton []Buttons){
 		Buttons[BT_UP].setEnabled(isEnabled);
 		Buttons[BT_LEFT].setEnabled(isEnabled);
 		Buttons[BT_RIGHT].setEnabled(isEnabled);
 		Buttons[BT_DOWN].setEnabled(isEnabled);
 		Buttons[BT_SAVE].setEnabled(isEnabled);
 		Buttons[BT_LVLEDIT].setEnabled(!isEnabled);
-		stopGame[0]=!isEnabled;
+		stopGame=!isEnabled;
 	}
 
-	private void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons, Boolean []stopGame){
+	private void setMapAndStatusLabel(String move, JLabel StatusLabel, JButton [] Buttons){
 		int status;
 
 		char keyTyped = moves.get(move);
@@ -132,14 +132,14 @@ public class GameWindow {
 
 		else if(status == -1){
 			StatusLabel.setText("You lost.");
-			enableDisableMoves(false, Buttons, stopGame);	
+			enableDisableMoves(false, Buttons);	
 		}
 
 		else if(status == 2) StatusLabel.setText("Next Level.");
 
 		else if (status==1){
 			StatusLabel.setText("You win.");
-			enableDisableMoves(false, Buttons, stopGame);	
+			enableDisableMoves(false, Buttons);	
 		}
 	}
 
@@ -208,10 +208,10 @@ public class GameWindow {
 		Buttons[BT_LVLEDIT] = new JButton("Level Editor");
 	}
 
-	private void setBT_UP(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+	private void setBT_UP(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
 		Buttons[BT_UP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setMapAndStatusLabel("Up.", StatusLabel, Buttons,stopGame);			
+				setMapAndStatusLabel("Up.", StatusLabel, Buttons);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -221,10 +221,10 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_UP]);
 	}
 
-	private void setBT_LEFT(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+	private void setBT_LEFT(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
 		Buttons[BT_LEFT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Left.", StatusLabel, Buttons,stopGame);			
+				setMapAndStatusLabel("Left.", StatusLabel, Buttons);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -234,10 +234,10 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_LEFT]);
 	}
 
-	private void setBT_RIGHT(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+	private void setBT_RIGHT(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
 		Buttons[BT_RIGHT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Right.", StatusLabel, Buttons, stopGame);			
+				setMapAndStatusLabel("Right.", StatusLabel, Buttons);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -247,10 +247,10 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_RIGHT]);
 	}
 
-	private void setBT_DOWN(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+	private void setBT_DOWN(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
 		Buttons[BT_DOWN].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setMapAndStatusLabel("Down.", StatusLabel, Buttons, stopGame);			
+				setMapAndStatusLabel("Down.", StatusLabel, Buttons);			
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 			}
@@ -279,7 +279,7 @@ public class GameWindow {
 		return nOgres;
 	}
 
-	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
+	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
 		Buttons[BT_NEWGAME].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres=scanNumberOgres(StatusLabel);
@@ -291,7 +291,7 @@ public class GameWindow {
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
 				play = new Play(nOgres, guardType);
 				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, Buttons, stopGame);
+				enableDisableMoves(true, Buttons);
 				frmDungeonKeep.requestFocus();
 			}
 		});
@@ -314,18 +314,18 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_SAVE]);
 	}
 
-	private void setBT_LOAD(JButton [] Buttons,JLabel StatusLabel, Boolean stopGame[],CustomPanel gameArea){
+	private void setBT_LOAD(JButton [] Buttons,JLabel StatusLabel,CustomPanel gameArea){
 		Buttons[BT_LOAD].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				play=SLPlay.load();
 				if(play==null){
 					StatusLabel.setText("Some erro occurred, make sure you already saved a game once!");
-					enableDisableMoves(false, Buttons, stopGame);
+					enableDisableMoves(false, Buttons);
 					return;
 				}
 				StatusLabel.setText("Game Loaded with success.");
 				gameArea.updateMap(play.getMap());
-				enableDisableMoves(true, Buttons, stopGame);
+				enableDisableMoves(true, Buttons);
 				frmDungeonKeep.requestFocus();
 			}
 		});
@@ -353,17 +353,17 @@ public class GameWindow {
 		toolBar.add(Buttons[BT_LVLEDIT]);
 	}
 
-	private void setAddKeyListener(JButton [] Buttons,JLabel StatusLabel, Boolean stopGame[],CustomPanel gameArea){
+	private void setAddKeyListener(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
 		frmDungeonKeep.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {		
-				if(stopGame[0])	
+				if(stopGame)	
 					return;
 				String move=keysToType.get(e.getKeyCode());	
 				if(move==null)
 					return;
 
-				setMapAndStatusLabel(move, StatusLabel, Buttons, stopGame);	
+				setMapAndStatusLabel(move, StatusLabel, Buttons);	
 				gameArea.updateMap(play.getMap());
 				frmDungeonKeep.requestFocus();
 				return;
@@ -378,14 +378,14 @@ public class GameWindow {
 		setlblGuardPersonality();
 	}
 
-	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
-		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
-		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
-		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
-		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
+	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+		setBT_UP(Buttons,StatusLabel,gameArea);
+		setBT_LEFT(Buttons,StatusLabel,gameArea);
+		setBT_RIGHT(Buttons,StatusLabel,gameArea);
+		setBT_DOWN(Buttons,StatusLabel,gameArea);
 		setBT_SAVE(Buttons,StatusLabel);
-		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_LOAD(Buttons,StatusLabel,gameArea);
 		setBT_EXIT(Buttons);
-		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
+		setAddKeyListener(Buttons,StatusLabel,gameArea);
 	}
 }
