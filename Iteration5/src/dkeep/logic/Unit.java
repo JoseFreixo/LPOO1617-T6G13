@@ -8,8 +8,8 @@ public abstract class Unit implements java.io.Serializable {
 	CellPosition posicao;
 	char representation;
 
-	public Unit(int y, int x, char rep){
-		posicao = new CellPosition(y, x);
+	public Unit(int [] pos, char rep){
+		posicao = new CellPosition(pos[0], pos[1]);
 		representation = rep;
 	}
 

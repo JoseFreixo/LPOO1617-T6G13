@@ -25,13 +25,14 @@ public class Game implements java.io.Serializable {
 		int x = 0, y = 0;
 		for (int i=0;i<map.getMap().length;i++){
 			for (int j=0; j<map.getMap()[i].length;j++){
+				int [] pos = { i, j };
 				switch(map.getMap()[i][j]){
-				case 'H': heroi = new Hero(i, j, 'H');
+				case 'H': heroi = new Hero(pos, 'H');
 				break;
-				case 'A': heroi = new Hero(i, j, 'A');
+				case 'A': heroi = new Hero(pos, 'A');
 				break;
 				case 'G': 
-					guarda = new Guard(i, j, 'G', guardPersonalaty);
+					guarda = new Guard(pos, 'G', guardPersonalaty);
 					isKey = false;
 					break;
 				case 'O':
@@ -39,15 +40,16 @@ public class Game implements java.io.Serializable {
 					y = i;
 					isKey = true;
 					break;
-				case 'k': lever = new Lever(i, j, 'k');
+				case 'k': lever = new Lever(pos, 'k');
 				break;
 				}
 			}
 		}
 		if(isKey){
 			heroi.setRepresentation('A');
+			int [] pos = { y, x };
 			for (int i = 0; i < numberOfOgres; i++){
-				ogres.add(new Ogre(y, x, 'O'));
+				ogres.add(new Ogre(pos, 'O'));
 			}
 		}
 	}
@@ -283,7 +285,7 @@ public class Game implements java.io.Serializable {
 			i[0] = 0;
 	}
 
-	private void moveRookie(int [] n){
+	private int moveRookie(int [] n){
 		if (guarda.getMovement()[n[0]] == 'W')
 			n[1] -= 1;
 		else if (guarda.getMovement()[n[0]] == 'S')
@@ -295,9 +297,10 @@ public class Game implements java.io.Serializable {
 		n[0]++;
 		map.setUnitPosMap(new CellPosition(n[1], n[2]), guarda.getPosition(), guarda.getRepresentation());
 		guarda.setPosition(n[1], n[2]);
+		return n[0];
 	}
 
-	private void moveDrunkenMechanics(int [] n){
+	private int moveDrunkenMechanics(int [] n){
 		Random rand = new Random();
 		int r = rand.nextInt(5);
 		if (r == 0){
@@ -305,19 +308,19 @@ public class Game implements java.io.Serializable {
 			guarda.setRepresentation('g');
 			guarda.setGuardDirection();
 			map.setUnitPosMap(new CellPosition(n[1], n[2]), guarda.getPosition(), guarda.getRepresentation());
-			return;
+			return n[0];
 		}
-		moveDrunkenSuspicious(n);
+		return moveDrunkenSuspicious(n);
 	}
 
-	private void moveSuspiciousMechanics(int [] n){
+	private int moveSuspiciousMechanics(int [] n){
 		guarda.setGuardDirection();
-		moveDrunkenSuspicious(n);
+		return moveDrunkenSuspicious(n);
 	}
 
-	private void moveDrunkenSuspicious(int [] n){
+	private int moveDrunkenSuspicious(int [] n){
 		if(guarda.isFront()){
-			moveRookie(n);
+			return moveRookie(n);
 		}
 		else{
 			n[0]--;
@@ -328,6 +331,7 @@ public class Game implements java.io.Serializable {
 			else if (guarda.getMovement()[n[0]] == 'D') n[2] -= 1;
 			map.setUnitPosMap(new CellPosition(n[1], n[2]), guarda.getPosition(), guarda.getRepresentation());
 			guarda.setPosition(n[1], n[2]);
+			return n[0];
 		}
 	}
 
@@ -344,9 +348,9 @@ public class Game implements java.io.Serializable {
 		int y = guarda.getPosition().getY();
 		int x = guarda.getPosition().getX();
 		int [] n = { i[0], y, x };
-		if (guarda.getType() == 0) moveRookie(n);
-		else if (guarda.getType() == 1) moveDrunkenMechanics(n);
-		else moveSuspiciousMechanics(n); }
+		if (guarda.getType() == 0) i[0] = moveRookie(n);
+		else if (guarda.getType() == 1) i[0] = moveDrunkenMechanics(n);
+		else i[0] = moveSuspiciousMechanics(n); }
 
 	public void stunOgres(){
 		for (Ogre ogre: ogres){

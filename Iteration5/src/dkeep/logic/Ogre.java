@@ -35,9 +35,9 @@ public class Ogre extends Unit implements java.io.Serializable{
 		this.attack = attack;
 	}
 
-	public Ogre(int y, int x, char rep) {
-		super(y, x, rep);
-		attack= new CellPosition(y, x);
+	public Ogre(int [] pos, char rep) {
+		super(pos, rep);
+		attack= new CellPosition(pos[0], pos[1]);
 		OgreOnKey=false;
 		swingedOnKey=false;
 		stunTimeout = 0;

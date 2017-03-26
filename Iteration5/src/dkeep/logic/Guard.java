@@ -15,8 +15,8 @@ public class Guard extends Unit implements java.io.Serializable {
 			'D', 'D', 'D', 'D', 'D', 'D', 'D', 
 			'W', 'W', 'W', 'W', 'W'};
 
-	public Guard(int y, int x, char rep, int personalaty) {
-		super(y, x, rep);
+	public Guard(int [] pos, char rep, int personalaty) {
+		super(pos, rep);
 		type=personalaty;
 		timeOut = 0;
 		front = true;
