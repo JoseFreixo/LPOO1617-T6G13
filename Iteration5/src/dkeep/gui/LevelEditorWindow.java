@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.Random;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
@@ -65,15 +64,10 @@ public class LevelEditorWindow {
 
 
 
-		JButton btnWall = new JButton("Wall");
-		JButton btnFloor = new JButton("Floor");
-		JButton btnHero = new JButton("Hero");
-		JButton btnOgre = new JButton("Ogre");
-		JButton btnKey = new JButton("Key");
-		JButton btnDoor = new JButton("Door");
-
-		JButton btnNewMap = new JButton("New Map");
-		btnNewMap.addActionListener(new ActionListener() {
+		JButton[] Buttons= new JButton[NUMBER_OF_BUTTONS];
+		initializeAllButtons(Buttons);
+		
+		Buttons[BT_NEWMAP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				int lines, columns;
 				Scanner scan;
@@ -93,85 +87,78 @@ public class LevelEditorWindow {
 					return;
 				}
 				Labels[LBL_MAPSTATUS].setText("");
-				btnWall.setEnabled(true);
-				btnFloor.setEnabled(true);
-				btnHero.setEnabled(true);
-				btnOgre.setEnabled(true);
-				btnKey.setEnabled(true);
-				btnDoor.setEnabled(true);
+				enableDisableButtons(true,Buttons);
 				scan.close();
 				panel.newMap(lines, columns);
 			}
 		});
-		btnNewMap.setBounds(472, 11, 89, 23);
-		frame.getContentPane().add(btnNewMap);
+		Buttons[BT_NEWMAP].setBounds(472, 11, 89, 23);
+		frame.getContentPane().add(Buttons[BT_NEWMAP]);
 
-		btnWall.setEnabled(false);
-		btnWall.setBounds(472, 90, 89, 23);
-		btnWall.addActionListener(new ActionListener() {
+		Buttons[BT_WALL].setEnabled(false);
+		Buttons[BT_WALL].setBounds(472, 90, 89, 23);
+		Buttons[BT_WALL].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panel.updateChar('X');
 			}
 		});
-		frame.getContentPane().add(btnWall);
+		frame.getContentPane().add(Buttons[BT_WALL]);
 
-		btnFloor.setEnabled(false);
-		btnFloor.setBounds(472, 124, 89, 23);
-		btnFloor.addActionListener(new ActionListener() {
+		Buttons[BT_FLOOR].setEnabled(false);
+		Buttons[BT_FLOOR].setBounds(472, 124, 89, 23);
+		Buttons[BT_FLOOR].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.updateChar(' ');
 			}
 		});
-		frame.getContentPane().add(btnFloor);
+		frame.getContentPane().add(Buttons[BT_FLOOR]);
 
-		btnHero.setEnabled(false);
-		btnHero.setBounds(472, 158, 89, 23);
-		btnHero.addActionListener(new ActionListener() {
+		Buttons[BT_HERO].setEnabled(false);
+		Buttons[BT_HERO].setBounds(472, 158, 89, 23);
+		Buttons[BT_HERO].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.updateChar('A');
 			}
 		});
-		frame.getContentPane().add(btnHero);
+		frame.getContentPane().add(Buttons[BT_HERO]);
 
-		btnOgre.setEnabled(false);
-		btnOgre.setBounds(472, 192, 89, 23);
-		btnOgre.addActionListener(new ActionListener() {
+		Buttons[BT_OGRE].setEnabled(false);
+		Buttons[BT_OGRE].setBounds(472, 192, 89, 23);
+		Buttons[BT_OGRE].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.updateChar('O');
 			}
 		});
-		frame.getContentPane().add(btnOgre);
+		frame.getContentPane().add(Buttons[BT_OGRE]);
 
-		btnKey.setEnabled(false);
-		btnKey.setBounds(472, 226, 89, 23);
-		btnKey.addActionListener(new ActionListener() {
+		Buttons[BT_KEY].setEnabled(false);
+		Buttons[BT_KEY].setBounds(472, 226, 89, 23);
+		Buttons[BT_KEY].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.updateChar('k');
 			}
 		});
-		frame.getContentPane().add(btnKey);
+		frame.getContentPane().add(Buttons[BT_KEY]);
 
-		btnDoor.setEnabled(false);
-		btnDoor.setBounds(472, 260, 89, 23);
-		btnDoor.addActionListener(new ActionListener() {
+		Buttons[BT_DOOR].setEnabled(false);
+		Buttons[BT_DOOR].setBounds(472, 260, 89, 23);
+		Buttons[BT_DOOR].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.updateChar('I');
 			}
 		});
-		frame.getContentPane().add(btnDoor);
+		frame.getContentPane().add(Buttons[BT_DOOR]);
 
-		JButton btnDone = new JButton("Done");
-		btnDone.addActionListener(new ActionListener() {
+		Buttons[BT_DONE].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.dispose();
 				gameWindow.getFrame().setVisible(true);
 			}
 		});
-		btnDone.setBounds(472, 433, 89, 23);
-		frame.getContentPane().add(btnDone);
+		Buttons[BT_DONE].setBounds(472, 433, 89, 23);
+		frame.getContentPane().add(Buttons[BT_DONE]);
 
-		JButton btnAddMap = new JButton("Add Map");
-		btnAddMap.addActionListener(new ActionListener() {
+		Buttons[BT_ADDMAP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
 					ArrayList<GameMap> maps = SLMaps.getMaps();
@@ -186,24 +173,14 @@ public class LevelEditorWindow {
 					SLMaps.setMaps(maps);
 					Labels[LBL_MAPSTATUS].setText("Map added successfuly!");
 				}
-				else{
-					Random rand = new Random();
-					int r = rand.nextInt(3);
-					if (r == 0)
-						Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you forgot the walls/door around the map?");
-					if (r == 1)
-						Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one ogre/hero sprite.");
-					if (r == 2)
-						Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key sprite.");
-				}
+				else Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key/Ogre/Hero sprite!");	
 			}
 		});
-		btnAddMap.setBounds(472, 312, 89, 23);
-		frame.getContentPane().add(btnAddMap);
+		Buttons[BT_ADDMAP].setBounds(472, 312, 89, 23);
+		frame.getContentPane().add(Buttons[BT_ADDMAP]);
 
 
-		JButton btnReplaceWithLevel = new JButton("Replace");
-		btnReplaceWithLevel.addActionListener(new ActionListener() {
+		Buttons[BT_REPLACELVL].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
 					try {
@@ -226,30 +203,20 @@ public class LevelEditorWindow {
 						Labels[LBL_MAPSTATUS].setText("Not a number or the level you want to replace does not exist!");
 					}
 				}
-				else{
-					Random rand = new Random();
-					int r = rand.nextInt(3);
-					if (r == 0)
-						Labels[LBL_MAPSTATUS].setText("Map not replaced. Perhaps you forgot the walls/door around the map?");
-					if (r == 1)
-						Labels[LBL_MAPSTATUS].setText("Map not replaced. Perhaps you added more than one ogre/hero sprite.");
-					if (r == 2)
-						Labels[LBL_MAPSTATUS].setText("Map not replaced. Perhaps you added more than one key sprite.");
-				}
+				else Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key/Ogre/Hero sprite, or you forgot the Walls/Door around the map!");	
 			}
 		});
-		btnReplaceWithLevel.setBounds(472, 345, 89, 23);
-		frame.getContentPane().add(btnReplaceWithLevel);
+		Buttons[BT_REPLACELVL].setBounds(472, 345, 89, 23);
+		frame.getContentPane().add(Buttons[BT_REPLACELVL]);
 
-		JButton btnResetMap = new JButton("Reset Maps");
-		btnResetMap.addActionListener(new ActionListener() {
+		Buttons[BT_RESET].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SLMaps.resetMaps();
 				Labels[LBL_MAPSTATUS].setText("Maps reseted to the original ones successfully!!");
 			}
 		});
-		btnResetMap.setBounds(472, 45, 89, 23);
-		frame.getContentPane().add(btnResetMap);
+		Buttons[BT_RESET].setBounds(472, 45, 89, 23);
+		frame.getContentPane().add(Buttons[BT_RESET]);
 
 	}
 
@@ -308,5 +275,28 @@ public class LevelEditorWindow {
 		panel.setBounds(20, 60, 418, 418);
 		frame.getContentPane().add(panel);
 		return panel;
+	}
+	
+	private void initializeAllButtons(JButton [] Buttons){
+		Buttons[BT_WALL] = new JButton("Wall");
+		Buttons[BT_FLOOR] = new JButton("Floor");
+		Buttons[BT_HERO] = new JButton("Hero");
+		Buttons[BT_OGRE] = new JButton("Ogre");
+		Buttons[BT_KEY] = new JButton("Key");
+		Buttons[BT_DOOR] = new JButton("Door");
+		Buttons[BT_NEWMAP] = new JButton("New Map");
+		Buttons[BT_ADDMAP] = new JButton("Add Map");
+		Buttons[BT_REPLACELVL] = new JButton("Replace");
+		Buttons[BT_RESET] = new JButton("Reset Maps");
+		Buttons[BT_DONE] = new JButton("Done");
+	}
+	
+	private void enableDisableButtons(boolean isEnabled, JButton []Buttons){
+		Buttons[BT_WALL].setEnabled(isEnabled);
+		Buttons[BT_FLOOR].setEnabled(isEnabled);
+		Buttons[BT_HERO].setEnabled(isEnabled);
+		Buttons[BT_OGRE].setEnabled(isEnabled);
+		Buttons[BT_KEY].setEnabled(isEnabled);
+		Buttons[BT_DOOR].setEnabled(isEnabled);
 	}
 }
