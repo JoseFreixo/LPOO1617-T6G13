@@ -152,8 +152,11 @@ public class LevelEditorWindow {
 		Buttons[BT_OGRE].setEnabled(isEnabled);
 		Buttons[BT_KEY].setEnabled(isEnabled);
 		Buttons[BT_DOOR].setEnabled(isEnabled);
+	}	
+	
+	private boolean isCorrectLinesColumns(int lines, int columns){
+		return (lines < 5 || columns < 5 || lines > 15 || columns > 15);
 	}
-
 	private void setBT_NEWMAP(JButton []Buttons,JLabel[] Labels){
 		Buttons[BT_NEWMAP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
@@ -165,9 +168,9 @@ public class LevelEditorWindow {
 					scan.close();
 					scan = new Scanner(textColumns.getText());
 					columns = scan.nextInt();
-					if (lines < 5 || columns < 5 || lines > 15 || columns > 15){
+					if (isCorrectLinesColumns(lines,columns)){
 						scan.close();
-						throw new NoSuchElementException();
+						Labels[LBL_MAPSTATUS].setText("The number of lines and columns must be between 5 and 15 (included).");
 					}
 				}
 				catch (NoSuchElementException Excp){
@@ -293,30 +296,34 @@ public class LevelEditorWindow {
 		Buttons[BT_ADDMAP].setBounds(472, 312, 89, 23);
 		frame.getContentPane().add(Buttons[BT_ADDMAP]);
 	}
-
+	
+	private void ReplaceLvl(JLabel[] Labels){
+		try {
+			Scanner scan = new Scanner(textField.getText());
+			int index = scan.nextInt() - 1;
+			scan.close();
+			ArrayList<GameMap> maps = SLMaps.getMaps();
+			if (maps == null){
+				JOptionPane.showMessageDialog(null, "Maps file corruped! Reseting maps file to the original one and replace the level you choose!");
+				SLMaps.resetMaps();
+				maps = SLMaps.getMaps();
+			}
+			if (index > maps.size() || index < 1)
+				throw new NoSuchElementException();
+			maps.set(index, panel.returnMap());
+			SLMaps.setMaps(maps);
+			Labels[LBL_MAPSTATUS].setText("Map replaced successfuly!");
+		}
+		catch (NoSuchElementException exception){
+			Labels[LBL_MAPSTATUS].setText("Not a number or the level you want to replace does not exist!");
+		}
+	}
+	
 	private void setBT_REPLACELVL(JButton []Buttons,JLabel[] Labels){
 		Buttons[BT_REPLACELVL].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
-					try {
-						Scanner scan = new Scanner(textField.getText());
-						int index = scan.nextInt() - 1;
-						scan.close();
-						ArrayList<GameMap> maps = SLMaps.getMaps();
-						if (maps == null){
-							JOptionPane.showMessageDialog(null, "Maps file corruped! Reseting maps file to the original one and replace the level you choose!");
-							SLMaps.resetMaps();
-							maps = SLMaps.getMaps();
-						}
-						if (index > maps.size() || index < 1)
-							throw new NoSuchElementException();
-						maps.set(index, panel.returnMap());
-						SLMaps.setMaps(maps);
-						Labels[LBL_MAPSTATUS].setText("Map replaced successfuly!");
-					}
-					catch (NoSuchElementException exception){
-						Labels[LBL_MAPSTATUS].setText("Not a number or the level you want to replace does not exist!");
-					}
+					 ReplaceLvl(Labels);
 				}
 				else Labels[LBL_MAPSTATUS].setText("Map not added. Perhaps you added more than one key/Ogre/Hero sprite, or you forgot the Walls/Door around the map!");	
 			}
