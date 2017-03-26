@@ -129,26 +129,50 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 	}
 
 	public boolean verifyMap(){
-		int heroCounter = 0, ogreCounter = 0, keyCounter = 0;
+		int heroCounter = 0, ogreCounter = 0, keyCounter = 0, doorCounter = 0;
+		int y = 0, x = 0;
 		for (int i = 0; i < map.getMap().length; i++){
 			for (int j = 0; j < map.getMap()[1].length; j++){
 				if (mapVerificationCondition(i, j))
 					return false;
-				if (map.getMap()[i][j] == 'A')
+				if (map.getMap()[i][j] == 'A'){
 					heroCounter++;
+					y = i; x = j;
+				}
 				else if(map.getMap()[i][j] == 'O')
 					ogreCounter++;
 				else if (map.getMap()[i][j] == 'k')
 					keyCounter++;
+				else if (map.getMap()[i][j] == 'I')
+					doorCounter++;
 			}
 		}
-		if (heroCounter != 1 || ogreCounter != 1 || keyCounter != 1)
+		if (heroCounter != 1 || ogreCounter != 1 || keyCounter != 1 || doorCounter == 0)
 			return false;
-		return true;
+		char [][] visited = map.copyMap(map.getMap()), visited2 = map.copyMap(visited);
+		return findExit(visited, y, x, 'I') && findExit(visited2, y, x, 'k');
 	}
 	
 	public boolean mapVerificationCondition(int i, int j){
 		return (i == 0 || j == 0 || i == map.getMap().length - 1 || j == map.getMap()[i].length - 1) && (map.getMap()[i][j] != 'X' && map.getMap()[i][j] != 'I');
+	}
+	
+	public boolean findExit(char [][] visited, int y, int x, char goal){
+		try {
+			if (map.getMap()[y][x] != 'X' && visited[y][x] != 'V'){
+				if (map.getMap()[y][x] == goal)
+					return true;
+				else {
+					visited[y][x] = 'V';
+					return findExit(visited, y + 1, x, goal) || findExit(visited, y - 1, x, goal)
+							|| findExit(visited, y, x + 1, goal) || findExit(visited, y, x - 1, goal);
+				}
+			}
+			return false;
+		}
+		catch (ArrayIndexOutOfBoundsException excp){
+			return false;
+		}
 	}
 
 	public GameMap returnMap(){
