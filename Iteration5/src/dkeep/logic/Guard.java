@@ -2,6 +2,11 @@ package dkeep.logic;
 
 import java.util.Random;
 
+/**
+ * 
+ * @author José Freixo and Ruben Torres
+ *
+ */
 public class Guard extends Unit implements java.io.Serializable {
 
 	private static final long serialVersionUID = 6L;

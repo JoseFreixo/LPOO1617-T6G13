@@ -1,5 +1,10 @@
 package dkeep.logic;
 
+/**
+ * 
+ * @author José Freixo and Ruben Torres
+ *
+ */
 public abstract class Unit implements java.io.Serializable {
 	/**
 	 * 

@@ -1,5 +1,10 @@
 package dkeep.logic;
 
+/**
+ * 
+ * @author José Freixo and Ruben Torres
+ *
+ */
 public class Ogre extends Unit implements java.io.Serializable{
 	/**
 	 * 

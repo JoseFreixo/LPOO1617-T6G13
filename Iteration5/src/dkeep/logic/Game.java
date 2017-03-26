@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * 
+ * @author José Freixo and Ruben Torres
+ *
+ */
 public class Game implements java.io.Serializable {
 
 	private static final long serialVersionUID = 8L;
