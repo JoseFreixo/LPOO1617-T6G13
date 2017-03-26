@@ -16,7 +16,7 @@ public class SLMaps {
 
 	public static void setMaps(ArrayList<GameMap> maps) {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("maps.ser");
+			FileOutputStream fileOut = new FileOutputStream("src/resources/maps.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(maps);
 			out.close();
@@ -32,7 +32,7 @@ public class SLMaps {
 			ArrayList<GameMap> maps= new ArrayList<GameMap>();
 			maps.add(DungeonMap.getDungeonMap());
 			maps.add(KeepMap.getKeepMap());
-			FileOutputStream fileOut = new FileOutputStream("maps.ser");
+			FileOutputStream fileOut = new FileOutputStream("src/resources/maps.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(maps);
 			out.close();
@@ -46,7 +46,7 @@ public class SLMaps {
 	public static ArrayList<GameMap> getMaps() {
 
 		try {
-			FileInputStream fis = new FileInputStream("maps.ser");
+			FileInputStream fis = new FileInputStream("src/resources/maps.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			@SuppressWarnings("unchecked")
 			ArrayList<GameMap> maps = (ArrayList<GameMap>) ois.readObject();

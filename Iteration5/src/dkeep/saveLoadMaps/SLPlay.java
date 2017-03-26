@@ -11,7 +11,7 @@ import dkeep.cli.Play;
 public class SLPlay {
 	public static boolean save(Play play) {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("play.ser");
+			FileOutputStream fileOut = new FileOutputStream("src/resources/play.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(play);
 			out.close();
@@ -27,7 +27,7 @@ public class SLPlay {
 	public static Play load() {
 
 		try {
-			FileInputStream fis = new FileInputStream("play.ser");
+			FileInputStream fis = new FileInputStream("src/resources/play.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Play play = (Play) ois.readObject();
 			ois.close();
