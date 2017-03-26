@@ -49,6 +49,7 @@ public class LevelEditorWindow {
 		initialize();
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
