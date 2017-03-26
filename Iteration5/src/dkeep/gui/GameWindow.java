@@ -38,6 +38,7 @@ public class GameWindow {
 
 	private JFrame frmDungeonKeep;
 	private JTextField numberOgresField;
+	private JComboBox<String> guardTypeCombo;
 	private Play play;
 
 
@@ -88,8 +89,7 @@ public class GameWindow {
 
 		setBasicWindow();
 
-		JComboBox<String> guardTypeCombo = new JComboBox<String>(); 
-		setGuardTypeCombo(guardTypeCombo);
+		setGuardTypeCombo();
 
 		CustomPanel gameArea = new CustomPanel(); setGameArea(gameArea);
 
@@ -101,18 +101,9 @@ public class GameWindow {
 		JButton []Buttons= new JButton[NUMBER_OF_BUTTONS]; 
 		initializeAllButtons(Buttons);
 
-		setAllButtonsAndKeys(Buttons, StatusLabel, stopGame, gameArea,guardTypeCombo, toolBar);
-
-		//		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
-		//		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
-		//		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
-		//		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
-		//		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea,guardTypeCombo);
-		//		setBT_SAVE(Buttons,StatusLabel);
-		//		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
-		//		setBT_EXIT(Buttons);
-		//		setBT_LVLEDIT(toolBar,Buttons);
-		//		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
+		setAllButtonsAndKeys(Buttons, StatusLabel, stopGame, gameArea);
+		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea);
+		setBT_LVLEDIT(toolBar,Buttons);
 	}
 
 
@@ -186,7 +177,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
 	}
 
-	private void setGuardTypeCombo(JComboBox<String> guardTypeCombo){
+	private void setGuardTypeCombo(){
 		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		guardTypeCombo.setToolTipText("Choose the Guard Personality");
 		guardTypeCombo.setMaximumRowCount(3);
@@ -288,7 +279,7 @@ public class GameWindow {
 		return nOgres;
 	}
 
-	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo){
+	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
 		Buttons[BT_NEWGAME].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres=scanNumberOgres(StatusLabel);
@@ -387,16 +378,14 @@ public class GameWindow {
 		setlblGuardPersonality();
 	}
 
-	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo,JToolBar toolBar){
+	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
 		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
 		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
 		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
 		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
-		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea,guardTypeCombo);
 		setBT_SAVE(Buttons,StatusLabel);
 		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
 		setBT_EXIT(Buttons);
-		setBT_LVLEDIT(toolBar,Buttons);
 		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
 	}
 }
