@@ -38,7 +38,7 @@ public class GameWindow {
 
 	private JFrame frmDungeonKeep;
 	private JTextField numberOgresField;
-	private JComboBox<String> guardTypeCombo;
+	private JComboBox<String> guardTypeCombo = new JComboBox<String>();
 	private Play play;
 
 
