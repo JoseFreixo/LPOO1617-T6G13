@@ -14,14 +14,14 @@ public class Guard extends Unit implements java.io.Serializable {
 			'S', 
 			'D', 'D', 'D', 'D', 'D', 'D', 'D', 
 			'W', 'W', 'W', 'W', 'W'};
-		
+
 	public Guard(int y, int x, char rep, int personalaty) {
 		super(y, x, rep);
 		type=personalaty;
 		timeOut = 0;
 		front = true;
 	}
-	
+
 	public boolean isFront() {
 		return front;
 	}
@@ -29,7 +29,7 @@ public class Guard extends Unit implements java.io.Serializable {
 	public void setFront(boolean front) {
 		this.front = front;
 	}
-	
+
 	public void setType(int i){
 		type = i;
 	}
@@ -45,11 +45,11 @@ public class Guard extends Unit implements java.io.Serializable {
 	public int getType() {
 		return type;
 	}
-	
+
 	public char [] getMovement(){
 		return movement;
 	}
-	
+
 	public void setGuardDirection(){
 		Random random = new Random();
 		int dir = random.nextInt(2);

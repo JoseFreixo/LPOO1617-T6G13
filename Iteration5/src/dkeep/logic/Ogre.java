@@ -9,7 +9,7 @@ public class Ogre extends Unit implements java.io.Serializable{
 	Boolean OgreOnKey;
 	Boolean swingedOnKey;
 	CellPosition attack;
-	
+
 	public Boolean getOgreOnKey() {
 		return OgreOnKey;
 	}

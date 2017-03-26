@@ -85,9 +85,9 @@ public class GameWindow {
 	 */
 	private void initialize() {
 		Boolean[] stopGame={true};
-		
+
 		setBasicWindow();
-		
+
 		JComboBox<String> guardTypeCombo = new JComboBox<String>(); 
 		setGuardTypeCombo(guardTypeCombo);
 
@@ -95,24 +95,24 @@ public class GameWindow {
 
 		JLabel StatusLabel = new JLabel("You can start a new game."); 
 		setStatusLabel(StatusLabel);
-		
+
 		JToolBar toolBar = new JToolBar();setToolBar(toolBar);
 
 		JButton []Buttons= new JButton[NUMBER_OF_BUTTONS]; 
 		initializeAllButtons(Buttons);
-		
+
 		setAllButtonsAndKeys(Buttons, StatusLabel, stopGame, gameArea,guardTypeCombo, toolBar);
 
-//		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
-//		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
-//		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
-//		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
-//		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea,guardTypeCombo);
-//		setBT_SAVE(Buttons,StatusLabel);
-//		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
-//		setBT_EXIT(Buttons);
-//		setBT_LVLEDIT(toolBar,Buttons);
-//		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
+		//		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
+		//		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);
+		//		setBT_RIGHT(Buttons,StatusLabel,stopGame,gameArea);
+		//		setBT_DOWN(Buttons,StatusLabel,stopGame,gameArea);
+		//		setBT_NEWGAME(Buttons,StatusLabel,stopGame,gameArea,guardTypeCombo);
+		//		setBT_SAVE(Buttons,StatusLabel);
+		//		setBT_LOAD(Buttons,StatusLabel,stopGame,gameArea);
+		//		setBT_EXIT(Buttons);
+		//		setBT_LVLEDIT(toolBar,Buttons);
+		//		setAddKeyListener(Buttons,StatusLabel,stopGame,gameArea);
 	}
 
 
@@ -138,12 +138,12 @@ public class GameWindow {
 		status=play.moveHeroWindow(keyTyped);
 
 		if (status == 0) StatusLabel.setText("Hero moved " + move);
-	
+
 		else if(status == -1){
 			StatusLabel.setText("You lost.");
 			enableDisableMoves(false, Buttons, stopGame);	
 		}
-		
+
 		else if(status == 2) StatusLabel.setText("Next Level.");
 
 		else if (status==1){
@@ -198,7 +198,7 @@ public class GameWindow {
 		gameArea.setBounds(22, 95, 440, 440);
 		frmDungeonKeep.getContentPane().add(gameArea);
 	}
-	
+
 	private void setToolBar(JToolBar toolBar) {
 		toolBar.setFloatable(false);
 		toolBar.setBounds(0, 0, 644, 30);
@@ -242,7 +242,7 @@ public class GameWindow {
 		Buttons[BT_LEFT].setBounds(472, 307, 76, 23);
 		frmDungeonKeep.getContentPane().add(Buttons[BT_LEFT]);
 	}
-	
+
 	private void setBT_RIGHT(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea){
 		Buttons[BT_RIGHT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -268,7 +268,7 @@ public class GameWindow {
 		Buttons[BT_DOWN].setBounds(513, 341, 76, 23);
 		frmDungeonKeep.getContentPane().add(Buttons[BT_DOWN]);
 	}
-	
+
 	private int scanNumberOgres(JLabel StatusLabel){
 		int nOgres;
 		Scanner scan;
@@ -287,14 +287,14 @@ public class GameWindow {
 		scan.close();
 		return nOgres;
 	}
-	
+
 	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo){
 		Buttons[BT_NEWGAME].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres=scanNumberOgres(StatusLabel);
 				if(nOgres==-1)
 					return;
-				
+
 				String guardType = ((String)guardTypeCombo.getSelectedItem());
 
 				StatusLabel.setText("Push the Lever (k) and escape the Dungeon while avoiding the guard.");
@@ -307,22 +307,22 @@ public class GameWindow {
 		Buttons[BT_NEWGAME].setBounds(502, 56, 95, 23);
 		frmDungeonKeep.getContentPane().add(Buttons[BT_NEWGAME]);
 	}
-	
+
 	private void setBT_SAVE(JButton [] Buttons,JLabel StatusLabel){
-	Buttons[BT_SAVE].addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent arg0) {
-			if(SLPlay.save(play))
-				StatusLabel.setText("Game Saved with success.");
-			else 
-				StatusLabel.setText("Some error occurred game didn't save.");
-			frmDungeonKeep.requestFocus();
-		}
-	});
-	Buttons[BT_SAVE].setEnabled(false);
-	Buttons[BT_SAVE].setBounds(502, 95, 95, 23);
-	frmDungeonKeep.getContentPane().add(Buttons[BT_SAVE]);
+		Buttons[BT_SAVE].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(SLPlay.save(play))
+					StatusLabel.setText("Game Saved with success.");
+				else 
+					StatusLabel.setText("Some error occurred game didn't save.");
+				frmDungeonKeep.requestFocus();
+			}
+		});
+		Buttons[BT_SAVE].setEnabled(false);
+		Buttons[BT_SAVE].setBounds(502, 95, 95, 23);
+		frmDungeonKeep.getContentPane().add(Buttons[BT_SAVE]);
 	}
-	
+
 	private void setBT_LOAD(JButton [] Buttons,JLabel StatusLabel, Boolean stopGame[],CustomPanel gameArea){
 		Buttons[BT_LOAD].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -341,7 +341,7 @@ public class GameWindow {
 		Buttons[BT_LOAD].setBounds(502, 132, 95, 23);
 		frmDungeonKeep.getContentPane().add(Buttons[BT_LOAD]);
 	}
-	
+
 	private void setBT_EXIT(JButton [] Buttons){
 		Buttons[BT_EXIT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -351,7 +351,7 @@ public class GameWindow {
 		Buttons[BT_EXIT].setBounds(502, 535, 95, 23);
 		frmDungeonKeep.getContentPane().add(Buttons[BT_EXIT]);
 	}
-	
+
 	private void setBT_LVLEDIT(JToolBar toolBar,JButton [] Buttons){
 		Buttons[BT_LVLEDIT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -361,7 +361,7 @@ public class GameWindow {
 		});
 		toolBar.add(Buttons[BT_LVLEDIT]);
 	}
-	
+
 	private void setAddKeyListener(JButton [] Buttons,JLabel StatusLabel, Boolean stopGame[],CustomPanel gameArea){
 		frmDungeonKeep.addKeyListener(new KeyAdapter() {
 			@Override
@@ -379,14 +379,14 @@ public class GameWindow {
 			}
 		});
 	}
-	
+
 	private void setBasicWindow(){
 		setFrmDungeonKeep();
 		setlblNumberOfOgres();
 		setNumberOgresField();
 		setlblGuardPersonality();
 	}
-	
+
 	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, Boolean[] stopGame, CustomPanel gameArea, JComboBox<String> guardTypeCombo,JToolBar toolBar){
 		setBT_UP(Buttons,StatusLabel,stopGame,gameArea);
 		setBT_LEFT(Buttons,StatusLabel,stopGame,gameArea);

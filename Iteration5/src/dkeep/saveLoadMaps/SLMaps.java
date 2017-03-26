@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import dkeep.logic.GameMap;
 
 public class SLMaps {
-	
-	
+
+
 	public static void setMaps(ArrayList<GameMap> maps) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream("maps.ser");

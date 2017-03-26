@@ -25,6 +25,18 @@ public class LevelEditorWindow {
 	private GameWindow gameWindow;
 	private JTextField textField;
 
+	private static final int NUMBER_OF_BUTTONS= 11;
+	private static final int BT_WALL= 0;
+	private static final int BT_FLOOR= 1;
+	private static final int BT_HERO= 2;
+	private static final int BT_OGRE= 3;
+	private static final int BT_KEY= 4;
+	private static final int BT_DOOR= 5;
+	private static final int BT_NEWMAP= 6;
+	private static final int BT_DONE= 7;
+	private static final int BT_ADDMAP= 8;
+	private static final int BT_REPLACELVL= 9;
+	private static final int BT_RESET= 10;
 	/**
 	 * Create the application.
 	 */
@@ -36,15 +48,46 @@ public class LevelEditorWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		gameWindow = new GameWindow();
-		gameWindow.getFrame().setVisible(false);
-		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 615, 528);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
+
+		setGameWindowAndJFrame();
 		LevelEditorPanel panel = new LevelEditorPanel();
+		panel.setBounds(20, 60, 418, 418);
+		frame.getContentPane().add(panel);
+
+		textLines = new JTextField();
+		textLines.setBounds(110, 12, 86, 20);
+		frame.getContentPane().add(textLines);
+		textLines.setColumns(10);
+		textLines.setText("5");
+
+		JLabel lblLines = new JLabel("Lines:");
+		lblLines.setBounds(65, 15, 35, 14);
+		frame.getContentPane().add(lblLines);
+
+		JLabel lblColumns = new JLabel("Columns:");
+		lblColumns.setBounds(237, 15, 46, 14);
+		frame.getContentPane().add(lblColumns);
+
+		textColumns = new JTextField();
+		textColumns.setColumns(10);
+		textColumns.setBounds(296, 12, 86, 20);
+		frame.getContentPane().add(textColumns);
+		textColumns.setText("5");
+
+		JLabel lblWithLevel = new JLabel("With level:");
+		lblWithLevel.setBounds(472, 370, 58, 14);
+		frame.getContentPane().add(lblWithLevel);
+
+		JLabel lblMapStatus = new JLabel("");
+		lblMapStatus.setBounds(20, 34, 418, 25);
+		frame.getContentPane().add(lblMapStatus);
+
+
+		textField = new JTextField();
+		textField.setText("2");
+		textField.setColumns(10);
+		textField.setBounds(538, 367, 23, 20);
+		frame.getContentPane().add(textField);
 
 		JButton btnWall = new JButton("Wall");
 		JButton btnFloor = new JButton("Floor");
@@ -52,10 +95,7 @@ public class LevelEditorWindow {
 		JButton btnOgre = new JButton("Ogre");
 		JButton btnKey = new JButton("Key");
 		JButton btnDoor = new JButton("Door");
-		textField = new JTextField();
-		
-		JLabel lblMapStatus = new JLabel("");
-		
+
 		JButton btnNewMap = new JButton("New Map");
 		btnNewMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
@@ -89,27 +129,7 @@ public class LevelEditorWindow {
 		});
 		btnNewMap.setBounds(472, 11, 89, 23);
 		frame.getContentPane().add(btnNewMap);
-		
-		textLines = new JTextField();
-		textLines.setBounds(110, 12, 86, 20);
-		frame.getContentPane().add(textLines);
-		textLines.setColumns(10);
-		textLines.setText("5");
-		
-		JLabel lblLines = new JLabel("Lines:");
-		lblLines.setBounds(65, 15, 35, 14);
-		frame.getContentPane().add(lblLines);
-		
-		JLabel lblColumns = new JLabel("Columns:");
-		lblColumns.setBounds(237, 15, 46, 14);
-		frame.getContentPane().add(lblColumns);
-		
-		textColumns = new JTextField();
-		textColumns.setColumns(10);
-		textColumns.setBounds(296, 12, 86, 20);
-		frame.getContentPane().add(textColumns);
-		textColumns.setText("5");
-		
+
 		btnWall.setEnabled(false);
 		btnWall.setBounds(472, 90, 89, 23);
 		btnWall.addActionListener(new ActionListener() {
@@ -118,7 +138,7 @@ public class LevelEditorWindow {
 			}
 		});
 		frame.getContentPane().add(btnWall);
-		
+
 		btnFloor.setEnabled(false);
 		btnFloor.setBounds(472, 124, 89, 23);
 		btnFloor.addActionListener(new ActionListener() {
@@ -127,7 +147,7 @@ public class LevelEditorWindow {
 			}
 		});
 		frame.getContentPane().add(btnFloor);
-		
+
 		btnHero.setEnabled(false);
 		btnHero.setBounds(472, 158, 89, 23);
 		btnHero.addActionListener(new ActionListener() {
@@ -154,7 +174,7 @@ public class LevelEditorWindow {
 			}
 		});
 		frame.getContentPane().add(btnKey);
-		
+
 		btnDoor.setEnabled(false);
 		btnDoor.setBounds(472, 260, 89, 23);
 		btnDoor.addActionListener(new ActionListener() {
@@ -164,9 +184,6 @@ public class LevelEditorWindow {
 		});
 		frame.getContentPane().add(btnDoor);
 
-		panel.setBounds(20, 60, 418, 418);
-		frame.getContentPane().add(panel);
-		
 		JButton btnDone = new JButton("Done");
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -176,19 +193,19 @@ public class LevelEditorWindow {
 		});
 		btnDone.setBounds(472, 433, 89, 23);
 		frame.getContentPane().add(btnDone);
-		
+
 		JButton btnAddMap = new JButton("Add Map");
 		btnAddMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
 					ArrayList<GameMap> maps = SLMaps.getMaps();
-					
+
 					if(maps==null){
 						JOptionPane.showMessageDialog(null, "Maps file corruped! \nReseting maps file to the original one\nand adding the one you created!");
 						SLMaps.resetMaps();
 						maps = SLMaps.getMaps();
 					}
-					
+
 					maps.add(panel.returnMap());
 					SLMaps.setMaps(maps);
 					lblMapStatus.setText("Map added successfuly!");
@@ -207,10 +224,8 @@ public class LevelEditorWindow {
 		});
 		btnAddMap.setBounds(472, 312, 89, 23);
 		frame.getContentPane().add(btnAddMap);
-		
-		lblMapStatus.setBounds(20, 34, 418, 25);
-		frame.getContentPane().add(lblMapStatus);
-		
+
+
 		JButton btnReplaceWithLevel = new JButton("Replace");
 		btnReplaceWithLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -249,16 +264,7 @@ public class LevelEditorWindow {
 		});
 		btnReplaceWithLevel.setBounds(472, 345, 89, 23);
 		frame.getContentPane().add(btnReplaceWithLevel);
-		
-		textField.setText("2");
-		textField.setColumns(10);
-		textField.setBounds(538, 367, 23, 20);
-		frame.getContentPane().add(textField);
-		
-		JLabel lblWithLevel = new JLabel("With level:");
-		lblWithLevel.setBounds(472, 370, 58, 14);
-		frame.getContentPane().add(lblWithLevel);
-		
+
 		JButton btnResetMap = new JButton("Reset Maps");
 		btnResetMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -268,8 +274,19 @@ public class LevelEditorWindow {
 		});
 		btnResetMap.setBounds(472, 45, 89, 23);
 		frame.getContentPane().add(btnResetMap);
-		
+
+	}
+
+
+	private void setGameWindowAndJFrame(){
+		gameWindow = new GameWindow();
+		gameWindow.getFrame().setVisible(false);
+
+		frame = new JFrame();
+		frame.setBounds(100, 100, 615, 528);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
-		
 	}
 }
+

@@ -28,7 +28,7 @@ public class CustomPanel extends JPanel{
 	private BufferedImage clubImage;
 	private BufferedImage cifraoImage;
 	private GameMap map;
-	
+
 	public CustomPanel(){
 		super();
 		try {
@@ -50,7 +50,7 @@ public class CustomPanel extends JPanel{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics arg0) {
 		super.paintComponent(arg0);
@@ -69,12 +69,12 @@ public class CustomPanel extends JPanel{
 			}
 		}
 	}
-	
+
 	public void updateMap(GameMap map){
 		this.map = map;
 		repaint();
 	}
-	
+
 	public BufferedImage getImage(int y, int x){
 		if(map.getMap()[y][x] == ' ')
 			return floorImage;

@@ -23,7 +23,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 	private BufferedImage doorImage;
 	private char toPaintChar;
 	private GameMap map;
-	
+
 	public LevelEditorPanel(){
 		super();
 		try {
@@ -40,7 +40,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics arg0) {
 		super.paintComponent(arg0);
@@ -59,7 +59,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			}
 		}
 	}
-	
+
 	public void newMap(int lines, int columns){		
 		char [][] mapa = new char [lines][columns];
 		for (int i = 0; i < mapa.length; i++){
@@ -68,9 +68,9 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 		map = new GameMap(mapa);
 		repaint();
 	}
-	
+
 	public BufferedImage getImage(int y, int x){
-		
+
 		if(map.getMap()[y][x] == ' ')
 			return floorImage;
 		if(map.getMap()[y][x] == 'I')
@@ -102,7 +102,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		updateStuff(arg0);
@@ -110,12 +110,12 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {}
-	
-	
+
+
 	public void updateChar(char carater){
 		toPaintChar = carater;
 	}
-	
+
 	public void updateStuff(MouseEvent arg0){
 		try{
 			int x_size = this.getWidth() / map.getMap()[0].length;
@@ -127,7 +127,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 		}
 		catch (ArrayIndexOutOfBoundsException e){}
 	}
-	
+
 	public boolean verifyMap(){
 		int heroCounter = 0, ogreCounter = 0, keyCounter = 0;
 		for (int i = 0; i < map.getMap().length; i++){
@@ -146,7 +146,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 			return false;
 		return true;
 	}
-	
+
 	public GameMap returnMap(){
 		return map;
 	}

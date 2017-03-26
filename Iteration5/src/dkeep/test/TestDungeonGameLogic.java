@@ -11,20 +11,20 @@ import dkeep.logic.Ogre;
 import dkeep.saveLoadMaps.DungeonMap;
 import dkeep.saveLoadMaps.KeepMap;
 import dkeep.logic.CellPosition;
-	
+
 public class TestDungeonGameLogic {
-	
+
 	char[][] map = {{'X','X','X','X','X'},
-					{'X','H',' ','G','X'},
-					{'I',' ',' ',' ','X'},
-					{'I','k',' ',' ','X'},
-					{'X','X','X','X','X'}};
-	
+			{'X','H',' ','G','X'},
+			{'I',' ',' ',' ','X'},
+			{'I','k',' ',' ','X'},
+			{'X','X','X','X','X'}};
+
 	char[][] map_for_task2 = {{'X','X','X','X','X'},
-							  {'X','H',' ','O','X'},
-							  {'I',' ',' ',' ','X'},
-							  {'I','k',' ',' ','X'},
-							  {'X','X','X','X','X'}};
+			{'X','H',' ','O','X'},
+			{'I',' ',' ',' ','X'},
+			{'I','k',' ',' ','X'},
+			{'X','X','X','X','X'}};
 	@Test
 	public void testMoveHeroIntoToFreeCell(){
 		GameMap gameMap = new GameMap(map);
@@ -35,7 +35,7 @@ public class TestDungeonGameLogic {
 		assertEquals('H', game.getMap().getMap()[2][1]);
 		assertEquals(' ', game.getMap().getMap()[1][1]);
 	}
-	
+
 	@Test
 	public void testMoveHeroIntoToWall(){
 		GameMap gameMap = new GameMap(map);
@@ -44,7 +44,7 @@ public class TestDungeonGameLogic {
 		game.moveHero('a'); // try to move hero to the right.
 		assertEquals(new CellPosition(1,1), game.getHeroPosition());
 	}
-	
+
 	@Test
 	public void testHeroIsCapturedByGuard(){
 		GameMap gameMap = new GameMap(map);
@@ -54,7 +54,7 @@ public class TestDungeonGameLogic {
 		assertTrue(game.isGameOver());
 		assertEquals(Game.DEFEAT, game.EndStatus());
 	}
-	
+
 	@Test
 	public void testHeroTriesToLeaveDoorsClosed(){
 		GameMap gameMap = new GameMap(map);
@@ -65,7 +65,7 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
 	}
-	
+
 	@Test
 	public void testHeroIntoLeverAndDoorsOpen(){
 		GameMap gameMap = new GameMap(map);
@@ -77,7 +77,7 @@ public class TestDungeonGameLogic {
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		assertEquals(true, game.areDoorsOpen());
 	}
-	
+
 	@Test
 	public void testHeroIsCapturedByOgre(){
 		GameMap gameMap = new GameMap(map_for_task2);
@@ -110,7 +110,7 @@ public class TestDungeonGameLogic {
 		assertEquals('A', game.getHeroRepresentation());
 		assertEquals(new CellPosition(2,1), game.getHeroPosition());
 	}
-	
+
 	@Test
 	public void testeHeroIntoDoorsWithKey(){
 		GameMap gameMap = new GameMap(map_for_task2);
@@ -129,7 +129,7 @@ public class TestDungeonGameLogic {
 		assertEquals(true, game.areDoorsOpen());
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 	}
-	
+
 	@Test
 	public void testHeroWinGame(){
 		GameMap gameMap = KeepMap.getKeepMap();
@@ -191,7 +191,7 @@ public class TestDungeonGameLogic {
 		game.moveHero('a');
 		assertEquals(false, game.EndStatus());
 	}
-	
+
 	@Test
 	public void testOgreMoviment() {
 		GameMap gameMap = new GameMap(map_for_task2);
@@ -235,7 +235,7 @@ public class TestDungeonGameLogic {
 		game.moveGuard(i);
 		assertEquals(new CellPosition(5, 4), game.getGuardPosition());
 	}
-	
+
 	@Test
 	public void testMoveGuardDrunken(){
 		Game game = new Game (DungeonMap.getDungeonMap(), 1, 1);
@@ -269,7 +269,7 @@ public class TestDungeonGameLogic {
 				game.moveGuard(j);
 				if (game.getGuard().isFront() == false)
 					break;
-				
+
 			}
 			m++;
 		}
@@ -281,13 +281,13 @@ public class TestDungeonGameLogic {
 				game.moveGuard(j);
 				if (game.getGuard().isFront() == true)
 					break;
-				
+
 			}
 			m++;
 		}
 		assertEquals(game.getGuard().isFront(), true);
 	}
-	
+
 	@Test
 	public void testMoveGuardSuspicious(){
 		Game game = new Game (DungeonMap.getDungeonMap(), 2, 1);
@@ -307,7 +307,7 @@ public class TestDungeonGameLogic {
 			m++;
 		}
 	}
-	
+
 	@Test
 	public void testStunOgre(){
 		GameMap map = new GameMap(map_for_task2);

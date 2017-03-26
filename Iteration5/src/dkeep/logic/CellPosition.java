@@ -5,21 +5,21 @@ public class CellPosition implements java.io.Serializable {
 	private static final long serialVersionUID = 7L;
 	int x;
 	int y;
-	
+
 	public CellPosition(int y, int x){
 		this.y = y;
 		this.x = x;
 	}
-	
+
 	public void setCellPosition(int y, int x){
 		this.y = y;
 		this.x = x;
 	}
-	
+
 	public int getX(){
 		return x;
 	}
-	
+
 	public int getY(){
 		return y;
 	}

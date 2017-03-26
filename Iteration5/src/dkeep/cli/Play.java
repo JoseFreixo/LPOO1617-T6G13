@@ -15,7 +15,7 @@ public class Play implements java.io.Serializable{
 	private ArrayList<GameMap> maps = new ArrayList<GameMap>();
 	private int i, numberOgres, guardType;
 	int [] nextGuardMove = { 0 };
-	
+
 	public Play(ArrayList<GameMap> maps) {
 		this.maps = maps;
 		i = 0;
@@ -23,15 +23,15 @@ public class Play implements java.io.Serializable{
 		guardType=ThreadLocalRandom.current().nextInt(0, 3); 
 		game = new Game(maps.get(i), guardType, numberOgres);
 	}
-	
+
 	public Play(int numberOgres, String guardTypeStr){
 		maps = SLMaps.getMaps();
-		
+
 		if(maps==null){
 			SLMaps.resetMaps();
 			maps = SLMaps.getMaps();
-			}
-		
+		}
+
 		i = 0;
 		switch(guardTypeStr){
 		case "Rookie":
@@ -47,22 +47,22 @@ public class Play implements java.io.Serializable{
 		this.numberOgres=numberOgres;
 		game = new Game(maps.get(i), this.guardType, this.numberOgres);
 	}
-	
+
 	public int getMapsSize(){
 		return maps.size();
 	}
-	
+
 	public GameMap getMap(){
 		return game.getMap();
 	}
-	
+
 	public Game getGame(){
 		return game;
 	}
-	
+
 	public int moveHeroWindow(char c){
 		game.moveHero(c);
-		
+
 		if (game.EndStatus() != null && game.EndStatus() == false){
 			i++;
 			if (i >= maps.size()){
@@ -71,20 +71,20 @@ public class Play implements java.io.Serializable{
 			game = new Game(maps.get(i),guardType,numberOgres);
 			return 2; // Next Level
 		}
-		
+
 		if (game.isGameOver()) return -1;
-		
+
 		game.stunOgres();
 		game.MoveAllTheOgres();
 		game.moveGuard(nextGuardMove);
-		
+
 		if (game.isGameOver()) return -1;
-		
+
 		return 0; // Keep Playing
 	}
-	
+
 	//CONSOLE FUNCTIONS!!!!
-	
+
 	public void playGame(){
 		char c;
 		boolean []gameIsOver = {false};
@@ -96,12 +96,12 @@ public class Play implements java.io.Serializable{
 			c = scan.next().charAt(0);
 			c = Character.toUpperCase(c);
 			game.moveHero(c);
-			
-           if(getAndUpdateStatus(gameIsOver))
-        	   continue;
-			
+
+			if(getAndUpdateStatus(gameIsOver))
+				continue;
+
 			callOgreFunctions();
-			
+
 			updateGameIsOver(gameIsOver);
 		}
 		if (i < maps.size())
@@ -109,7 +109,7 @@ public class Play implements java.io.Serializable{
 		else
 			System.out.println("You win!");
 	}
-	
+
 	public boolean getAndUpdateStatus(boolean []gameIsOver){
 		if (game.EndStatus() != null && game.EndStatus() == false){
 			i++;
@@ -124,7 +124,7 @@ public class Play implements java.io.Serializable{
 		updateGameIsOver(gameIsOver);
 		return false;
 	}
-	
+
 	public void updateGameIsOver(boolean []gameIsOver){
 		if (game.isGameOver()){
 			printMap();
@@ -132,8 +132,8 @@ public class Play implements java.io.Serializable{
 		}
 		return;
 	}
-	
-	
+
+
 	public void callOgreFunctions(){
 		game.stunOgres();
 		game.MoveAllTheOgres();
