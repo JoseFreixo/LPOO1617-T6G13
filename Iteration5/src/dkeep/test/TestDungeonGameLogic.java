@@ -232,6 +232,10 @@ public class TestDungeonGameLogic {
 		if (!ogre.getAttack().equals(new CellPosition(1, 2)) && !ogre.getAttack().equals(new CellPosition(2, 3))) {
 			fail("Ogre didn't swing correctly");
 		}
+		if (ogre.getAttack().equals(new CellPosition(1, 2)))
+			assertEquals('*', game.getMapChar(new CellPosition(1, 2)));
+		else
+			assertEquals('*', game.getMapChar(new CellPosition(2, 3)));
 	}
 
 	@Test
@@ -331,6 +335,9 @@ public class TestDungeonGameLogic {
 			}
 			m++;
 		}
+		if (m >= 1000){
+			assertTrue(false);
+		}
 	}
 
 	@Test
@@ -345,6 +352,7 @@ public class TestDungeonGameLogic {
 		assertEquals(game.getHeroPosition(), new CellPosition(1, 2));
 		game.stunOgres();
 		assertEquals(game.getOgres().get(0).getRepresentation(), 'o');
+		assertEquals(game.getOgres().get(0).getStunTimeout(), 3);
 		while(game.getOgres().get(0).getRepresentation() == 'o'){
 			game.moveOgre(game.getOgres().get(0));
 		}
