@@ -1,18 +1,18 @@
 package dkeep.logic;
 
 /**
- * 
- * @author José Freixo and Ruben Torres
+ * This class stores the position of all units.
+ * @author Jose Freixo and Ruben Torres
  *
  */
 public class CellPosition implements java.io.Serializable {
 
 	private static final long serialVersionUID = 7L;
-	int x;
-	int y;
+	private int x;
+	private int y;
 
 	/**
-	 * 
+	 * Constructor of the class CellPosition.
 	 * @param y The coordinate of the position in the y axis.
 	 * @param x The coordinate of the position in the x axis.
 	 */
@@ -22,7 +22,7 @@ public class CellPosition implements java.io.Serializable {
 	}
 
 	/**
-	 * 
+	 * This method changes the coordinates of the position.
 	 * @param y The new coordinate in the y axis.
 	 * @param x The new coordinate in the x axis.
 	 */
@@ -32,7 +32,7 @@ public class CellPosition implements java.io.Serializable {
 	}
 
 	/**
-	 * 
+	 * This method returns the coordinate x of the position.
 	 * @return int Returns the coordinate x of the position.
 	 */
 	public int getX(){
@@ -40,7 +40,7 @@ public class CellPosition implements java.io.Serializable {
 	}
 
 	/**
-	 * 
+	 * This method returns the coordinate y of the position.
 	 * @return int Returns the coordinate y of the position.
 	 */
 	public int getY(){
@@ -49,6 +49,11 @@ public class CellPosition implements java.io.Serializable {
 
 	
 	@Override
+	/**
+	 * This method compares the current CellPosition with it's argument.
+	 * @param obj The position that needs to be compared.
+	 * @return boolean Returns true if the current CellPosition is the same as the argument's, false if otherwise.
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
