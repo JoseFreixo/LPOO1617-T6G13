@@ -15,25 +15,47 @@ public class Guard extends Unit implements java.io.Serializable {
 			'D', 'D', 'D', 'D', 'D', 'D', 'D', 
 			'W', 'W', 'W', 'W', 'W'};
 
-	public Guard(int [] pos, char rep, int personalaty) {
+	/**
+	 * 
+	 * @param pos The guard's starting position.
+	 * @param rep The guard's initial representation.
+	 * @param personality The guard's personality.
+	 */
+	public Guard(int [] pos, char rep, int personality) {
 		super(pos, rep);
-		type=personalaty;
+		type=personality;
 		timeOut = 0;
 		front = true;
 	}
 
+	/**
+	 * 
+	 * @return boolean Returns true if the Guard is following his path on it's initial direction, false if otherwise.
+	 */
 	public boolean isFront() {
 		return front;
 	}
 
+	/**
+	 * 
+	 * @param front The new direction that the guard is going to take from that point on.
+	 */
 	public void setFront(boolean front) {
 		this.front = front;
 	}
 
+	/**
+	 * 
+	 * @param i The new guard's personality.
+	 */
 	public void setType(int i){
 		type = i;
 	}
 
+	/**
+	 * 
+	 * @return int Returns the turns that the guard has to wait to wake up.
+	 */
 	public int getTimeOut() {
 		return timeOut;
 	}
