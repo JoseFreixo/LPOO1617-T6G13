@@ -3,8 +3,8 @@ package dkeep.logic;
 import java.util.Arrays;
 
 /**
- * 
- * @author José Freixo and Ruben Torres
+ * Class used to store the map of the game
+ * @author Jose Freixo and Ruben Torres
  *
  */
 public class GameMap implements java.io.Serializable {
@@ -12,33 +12,56 @@ public class GameMap implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	char[][] map;
-
+/**
+ * Constructor of class GameMap, that stores a char[][] with the information of the map
+ * @param map char[][] with the information
+ */
 	public GameMap(char[][] map){
 		this.map = copyMap(map);
 	}
-
+	
+/**
+ * 
+ * @return char[][] with the informations of the map
+ */
 	public char[][] getMap(){
 		return map;
 	}
 
+	/**
+	 * returns char that contains the information on a given position (as a parameter) of the map
+	 * @param Pos Position you want on the map
+	 * @return char that contains the information on a given position of the map
+	 */
 	public char getCharOnPos(CellPosition Pos){
 		return map[Pos.getY()][Pos.getX()];
 	}
-
+/**
+ * Set a given char on a given position of the map
+ * @param Pos Position on the map
+ * @param Representation Which Char u want to put on given position of the map
+ */
 	public void setCharOnPos(CellPosition Pos,char Representation){
 		map[Pos.getY()][Pos.getX()]=Representation;
 	}
-
-	public void setMap(char [][] map){
-		this.map = map;
-	}
-
+	
+/**
+ * Checks if a given position on the map is a Wall or a closed door (which means you can't move to there)
+ * @param y coordinate Y of a position of the map
+ * @param x coordinate X of a position of the map
+ * @return boolean as true if the positions is valid, false if not
+ */
 	public boolean validPosition(int y, int x){
 		if (map[y][x] == 'X' || map[y][x] == 'I')
 			return false;
 		return true;
 	}
 
+	/**
+	 * Copy a given char[][] to another in different memory position
+	 * @param mapa map to copy
+	 * @return char[][] that contains the map copied 
+	 */
 	public char [][] copyMap(char[][] mapa){
 		char[][] copy = new char[mapa.length][mapa[0].length];
 		for(int i=0;i<mapa.length;i++){
@@ -48,13 +71,25 @@ public class GameMap implements java.io.Serializable {
 		}
 		return copy;
 	}
-
+	
+/**
+ * Set a char on a given position of the map(position_to_set) and 
+ * erases a char (substitutes to ' ') also on a given position of the map (position_to_erase)
+ * @param position_to_set position of the you want to set a char on
+ * @param position_to_erase position of the map you want to erase
+ * @param representation char to set on given position of the map
+ */
 	public void setUnitPosMap(CellPosition position_to_set , CellPosition position_to_erase, char representation){
 		map[position_to_erase.getY()][position_to_erase.getX()] = ' ';
 		map[position_to_set.getY()][position_to_set.getX()] = representation;
 	}
 
-
+/**
+ * If the hero try to move against a closed the door with the key, 
+ * this function opens that door and all the doors adjacent to it and themselves recursively
+ * @param isKey is used to know if the map is a lever or a key map, if it's a lever this functions do nothing
+ * @param heroiPos position of the Hero
+ */
 	public void openDoors(boolean isKey, CellPosition heroiPos) {
 
 		if (isKey){
@@ -89,6 +124,9 @@ public class GameMap implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * Functions used to see if a GameMap is equal to another
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
