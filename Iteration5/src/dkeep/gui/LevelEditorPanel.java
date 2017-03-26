@@ -132,7 +132,7 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 		int heroCounter = 0, ogreCounter = 0, keyCounter = 0;
 		for (int i = 0; i < map.getMap().length; i++){
 			for (int j = 0; j < map.getMap()[1].length; j++){
-				if ((i == 0 || j == 0 || i == map.getMap().length - 1 || j == map.getMap()[i].length - 1) && (map.getMap()[i][j] != 'X' && map.getMap()[i][j] != 'I'))
+				if (mapVerificationCondition(i, j))
 					return false;
 				if (map.getMap()[i][j] == 'A')
 					heroCounter++;
@@ -145,6 +145,10 @@ public class LevelEditorPanel extends JPanel implements MouseListener, MouseMoti
 		if (heroCounter != 1 || ogreCounter != 1 || keyCounter != 1)
 			return false;
 		return true;
+	}
+	
+	public boolean mapVerificationCondition(int i, int j){
+		return (i == 0 || j == 0 || i == map.getMap().length - 1 || j == map.getMap()[i].length - 1) && (map.getMap()[i][j] != 'X' && map.getMap()[i][j] != 'I');
 	}
 
 	public GameMap returnMap(){
