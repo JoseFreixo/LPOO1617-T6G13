@@ -346,18 +346,30 @@ public class Game implements java.io.Serializable {
 
 	public void stunOgres(){
 		for (Ogre ogre: ogres){
-			if (ogre.getRepresentation() == 'O'){
-				if((ogre.getPosition().getX()==heroi.getPosition().getX()-1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
-						(ogre.getPosition().getX()==heroi.getPosition().getX()+1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
-						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()-1) ||
-						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()+1)){
+
+			if (ogre.getRepresentation() != 'O')
+				continue;
+			if(ogre.getPosition().getY()==heroi.getPosition().getY()){
+				if((ogre.getPosition().getX()==heroi.getPosition().getX()-1)||(ogre.getPosition().getX()==heroi.getPosition().getX()+1)){
 					ogre.setRepresentation('o');
 					ogre.setStunTimeout(3);
 				}
 			}
+			if(ogre.getPosition().getX()==heroi.getPosition().getX()){
+				if((ogre.getPosition().getY()==heroi.getPosition().getY()-1)||ogre.getPosition().getY()==heroi.getPosition().getY()+1){
+					ogre.setRepresentation('o');
+					ogre.setStunTimeout(3);
+				}
+			}
+
 		}
 	}
-
+//	if((ogre.getPosition().getX()==heroi.getPosition().getX()-1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
+	//						(ogre.getPosition().getX()==heroi.getPosition().getX()+1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
+	//						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()-1) ||
+	//						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()+1)){
+	//					ogre.setRepresentation('o');
+	//					ogre.setStunTimeout(3);
 	public Boolean EndStatus() {
 		return Status;
 	}
