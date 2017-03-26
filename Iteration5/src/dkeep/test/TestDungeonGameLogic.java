@@ -81,6 +81,14 @@ public class TestDungeonGameLogic {
 		game.moveHero('s');
 		assertEquals(new CellPosition(3,1), game.getHeroPosition());
 		assertEquals(true, game.areDoorsOpen());
+		assertEquals('S', game.getMapChar(new CellPosition(3,0)));
+		assertEquals('S', game.getMapChar(new CellPosition(2,0)));
+		assertEquals('H', game.getMap().getMap()[3][1]);
+		game.moveHero('s');
+		assertEquals('H', game.getMap().getMap()[3][1]);
+		game.moveHero('w');
+		assertEquals('H', game.getMap().getMap()[2][1]);
+		assertEquals('k', game.getMap().getMap()[3][1]);
 	}
 
 	@Test
@@ -233,6 +241,7 @@ public class TestDungeonGameLogic {
 		int i[] = { 0 };
 		game.moveGuard(i);
 		assertEquals(new CellPosition(1, 7), game.getGuardPosition());
+		assertEquals(game.getMap().getMap()[1][7], 'G');
 		game.moveGuard(i);
 		assertEquals(new CellPosition(2, 7), game.getGuardPosition());
 		game.moveGuard(i);
@@ -309,15 +318,16 @@ public class TestDungeonGameLogic {
 		int i[] = { 0 };
 		boolean cond1 = false, cond2 = false;
 		int m = 0;
-		while (!cond1 || !cond2 || m > 100){
+		while ((!cond1 || !cond2) && m < 1000){
 			game.moveGuard(i);
 			if (game.getGuard().isFront()){
 				cond1 = true;
 				assertEquals(game.getGuard().isFront(), true);
 			}
-			else{
+			else {
 				cond2 = true;
 				assertEquals(game.getGuard().isFront(), false);
+				assertEquals(game.getMapChar(game.getGuardPosition()), 'G');
 			}
 			m++;
 		}

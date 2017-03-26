@@ -253,7 +253,8 @@ public class Game implements java.io.Serializable {
 			}
 			map.setCharOnPos(new CellPosition(y, x), heroi.getRepresentation());
 			heroi.setPosition(y, x);
-		} else { map.setCharOnPos(heroi.getPosition(), heroi.getRepresentation()); }
+		} else { map.setCharOnPos(heroi.getPosition(), heroi.getRepresentation()); 
+			printKey = true; }
 
 		if (isKey && map.getMap()[y][x] == 'I' && heroi.getRepresentation() == 'K') {
 			map.openDoors(isKey, heroi.getPosition());
