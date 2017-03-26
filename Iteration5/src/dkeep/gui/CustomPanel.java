@@ -100,32 +100,5 @@ public class CustomPanel extends JPanel{
 
 	public BufferedImage getImage(int y, int x){
 		return CharToImage.get(map.getMap()[y][x]);
-//		if(map.getMap()[y][x] == ' ')
-//			return floorImage;
-//		if(map.getMap()[y][x] == 'I')
-//			return doorImage;
-//		if(map.getMap()[y][x] == 'S')
-//			return doorOpenImage;
-//		if(map.getMap()[y][x] == 'H')
-//			return heroImage;
-//		if(map.getMap()[y][x] == 'A')
-//			return heroArmedImage;
-//		if(map.getMap()[y][x] == 'K')
-//			return heroArmedKeyImage;
-//		if(map.getMap()[y][x] == 'k')
-//			return keyImage;
-//		if(map.getMap()[y][x] == 'O')
-//			return ogreImage;
-//		if(map.getMap()[y][x] == 'o')
-//			return ogreStunnedImage;
-//		if(map.getMap()[y][x] == '*')
-//			return clubImage;
-//		if(map.getMap()[y][x] == 'G')
-//			return guardImage;
-//		if(map.getMap()[y][x] == 'g')
-//			return guardSleepingImage;
-//		if(map.getMap()[y][x] == '$')
-//			return cifraoImage;
-//		return wallImage;
 	}
 }
