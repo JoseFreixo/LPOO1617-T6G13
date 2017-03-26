@@ -182,6 +182,10 @@ public class Game implements java.io.Serializable {
 
 			ogre.setPosition(y, x);
 		}
+		else if (ogre.getPosition().equals(lever.getPosition())){
+			ogre.setRepresentation('$');
+			ogre.setOgreOnKey(true);
+		}
 
 	}
 
