@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 public class LevelEditorWindow {
 
 	private JFrame frame;
+	LevelEditorPanel panel;
 	private JTextField textLines;
 	private JTextField textColumns;
 	private GameWindow gameWindow;
@@ -58,18 +59,18 @@ public class LevelEditorWindow {
 		setGameWindowAndJFrame();
 		setTextLinesAFieldAndColumns();
 
-		LevelEditorPanel panel = setLvlEditPanel();
+		setLvlEditPanel();
 
 		JLabel [] Labels=new JLabel[NUMBER_OF_LABELS];
 		setAllLabels(Labels);
 
 		JButton[] Buttons= new JButton[NUMBER_OF_BUTTONS];
 		initializeAllButtons(Buttons);
-		setBT_NEWMAP(Buttons,Labels,panel);
-		setDrawButtonsAndDone(Buttons,panel);
+		setBT_NEWMAP(Buttons,Labels);
+		setDrawButtonsAndDone(Buttons);
 		setBT_RESET(Buttons,Labels);
-		setBT_ADDMAP(Buttons,Labels,panel);
-		setBT_REPLACELVL(Buttons,Labels,panel);
+		setBT_ADDMAP(Buttons,Labels);
+		setBT_REPLACELVL(Buttons,Labels);
 
 	}
 
@@ -123,11 +124,11 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Labels[LBL_MAPSTATUS]);
 	}
 
-	private LevelEditorPanel setLvlEditPanel(){
-		LevelEditorPanel panel=new LevelEditorPanel();
+	private void setLvlEditPanel(){
+		panel=new LevelEditorPanel();
 		panel.setBounds(20, 60, 418, 418);
 		frame.getContentPane().add(panel);
-		return panel;
+		return;
 	}
 
 	private void initializeAllButtons(JButton [] Buttons){
@@ -153,7 +154,7 @@ public class LevelEditorWindow {
 		Buttons[BT_DOOR].setEnabled(isEnabled);
 	}
 
-	private void setBT_NEWMAP(JButton []Buttons,JLabel[] Labels,LevelEditorPanel panel){
+	private void setBT_NEWMAP(JButton []Buttons,JLabel[] Labels){
 		Buttons[BT_NEWMAP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				int lines, columns;
@@ -183,7 +184,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_NEWMAP]);
 	}
 
-	private void setBT_WALL(JButton []Buttons,LevelEditorPanel panel){
+	private void setBT_WALL(JButton []Buttons){
 		Buttons[BT_WALL].setEnabled(false);
 		Buttons[BT_WALL].setBounds(472, 90, 89, 23);
 		Buttons[BT_WALL].addActionListener(new ActionListener() {
@@ -194,7 +195,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_WALL]);
 	}
 
-	private void setBT_FLOOR(JButton []Buttons,LevelEditorPanel panel){
+	private void setBT_FLOOR(JButton []Buttons){
 		Buttons[BT_FLOOR].setEnabled(false);
 		Buttons[BT_FLOOR].setBounds(472, 124, 89, 23);
 		Buttons[BT_FLOOR].addActionListener(new ActionListener() {
@@ -205,7 +206,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_FLOOR]);
 	}
 
-	private void setBT_HERO(JButton []Buttons,LevelEditorPanel panel){
+	private void setBT_HERO(JButton []Buttons){
 		Buttons[BT_HERO].setEnabled(false);
 		Buttons[BT_HERO].setBounds(472, 158, 89, 23);
 		Buttons[BT_HERO].addActionListener(new ActionListener() {
@@ -216,7 +217,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_HERO]);
 	}
 
-	private void setBT_OGRE(JButton []Buttons,LevelEditorPanel panel){
+	private void setBT_OGRE(JButton []Buttons){
 		Buttons[BT_OGRE].setEnabled(false);
 		Buttons[BT_OGRE].setBounds(472, 192, 89, 23);
 		Buttons[BT_OGRE].addActionListener(new ActionListener() {
@@ -227,7 +228,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_OGRE]);
 	}
 
-	private void setBT_KEY(JButton []Buttons,LevelEditorPanel panel){
+	private void setBT_KEY(JButton []Buttons){
 		Buttons[BT_KEY].setEnabled(false);
 		Buttons[BT_KEY].setBounds(472, 226, 89, 23);
 		Buttons[BT_KEY].addActionListener(new ActionListener() {
@@ -238,7 +239,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_KEY]);
 	}
 
-	private void setBT_DOOR(JButton []Buttons,LevelEditorPanel panel){
+	private void setBT_DOOR(JButton []Buttons){
 		Buttons[BT_DOOR].setEnabled(false);
 		Buttons[BT_DOOR].setBounds(472, 260, 89, 23);
 		Buttons[BT_DOOR].addActionListener(new ActionListener() {
@@ -270,7 +271,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_RESET]);
 	}
 
-	private void setBT_ADDMAP(JButton []Buttons,JLabel[] Labels, LevelEditorPanel panel){
+	private void setBT_ADDMAP(JButton []Buttons,JLabel[] Labels){
 		Buttons[BT_ADDMAP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
@@ -293,7 +294,7 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_ADDMAP]);
 	}
 
-	private void setBT_REPLACELVL(JButton []Buttons,JLabel[] Labels, LevelEditorPanel panel){
+	private void setBT_REPLACELVL(JButton []Buttons,JLabel[] Labels){
 		Buttons[BT_REPLACELVL].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (panel.verifyMap()){
@@ -324,13 +325,13 @@ public class LevelEditorWindow {
 		frame.getContentPane().add(Buttons[BT_REPLACELVL]);
 	}
 	
-	private void setDrawButtonsAndDone(JButton[] Buttons, LevelEditorPanel panel){
-		setBT_WALL(Buttons,panel);
-		setBT_FLOOR(Buttons,panel);
-		setBT_HERO(Buttons,panel);
-		setBT_OGRE(Buttons,panel);
-		setBT_KEY(Buttons,panel);
-		setBT_DOOR(Buttons,panel);
+	private void setDrawButtonsAndDone(JButton[] Buttons){
+		setBT_WALL(Buttons);
+		setBT_FLOOR(Buttons);
+		setBT_HERO(Buttons);
+		setBT_OGRE(Buttons);
+		setBT_KEY(Buttons);
+		setBT_DOOR(Buttons);
 		setBT_DONE(Buttons);
 	}
 }

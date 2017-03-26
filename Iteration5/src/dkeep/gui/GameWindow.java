@@ -37,8 +37,8 @@ public class GameWindow {
 	private static final int BT_LVLEDIT= 8;
 
 	private JFrame frmDungeonKeep;
+	CustomPanel gameArea;
 	private JTextField numberOgresField;
-	private JComboBox<String> guardTypeCombo = new JComboBox<String>();
 	private Play play;
 	private Boolean stopGame=true;
 
@@ -88,10 +88,9 @@ public class GameWindow {
 	private void initialize() {
 
 		setBasicWindow();
-
-		setGuardTypeCombo();
-
-		CustomPanel gameArea = new CustomPanel(); setGameArea(gameArea);
+		JComboBox<String> guardTypeCombo = new JComboBox<String>();
+		setGuardTypeCombo(guardTypeCombo);
+		setGameArea();
 
 		JLabel StatusLabel = new JLabel("You can start a new game."); 
 		setStatusLabel(StatusLabel);
@@ -101,8 +100,8 @@ public class GameWindow {
 		JButton []Buttons= new JButton[NUMBER_OF_BUTTONS]; 
 		initializeAllButtons(Buttons);
 
-		setAllButtonsAndKeys(Buttons, StatusLabel, gameArea);
-		setBT_NEWGAME(Buttons,StatusLabel,gameArea);
+		setAllButtonsAndKeys(Buttons, StatusLabel);
+		setBT_NEWGAME(Buttons,StatusLabel,guardTypeCombo);
 		setBT_LVLEDIT(toolBar,Buttons);
 	}
 
@@ -177,7 +176,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(lblGuardPersonality);
 	}
 
-	private void setGuardTypeCombo(){
+	private void setGuardTypeCombo(JComboBox<String> guardTypeCombo){
 		guardTypeCombo.setModel(new DefaultComboBoxModel<String>(new String[] {"Rookie", "Drunken", "Suspicious"}));
 		guardTypeCombo.setToolTipText("Choose the Guard Personality");
 		guardTypeCombo.setMaximumRowCount(3);
@@ -185,7 +184,8 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(guardTypeCombo);
 	}
 
-	private void setGameArea(CustomPanel gameArea){
+	private void setGameArea(){
+		gameArea = new CustomPanel();
 		gameArea.setBounds(22, 95, 440, 440);
 		frmDungeonKeep.getContentPane().add(gameArea);
 	}
@@ -208,7 +208,7 @@ public class GameWindow {
 		Buttons[BT_LVLEDIT] = new JButton("Level Editor");
 	}
 
-	private void setBT_UP(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+	private void setBT_UP(JButton [] Buttons,JLabel StatusLabel){
 		Buttons[BT_UP].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setMapAndStatusLabel("Up.", StatusLabel, Buttons);			
@@ -221,7 +221,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_UP]);
 	}
 
-	private void setBT_LEFT(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+	private void setBT_LEFT(JButton [] Buttons,JLabel StatusLabel){
 		Buttons[BT_LEFT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMapAndStatusLabel("Left.", StatusLabel, Buttons);			
@@ -234,7 +234,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_LEFT]);
 	}
 
-	private void setBT_RIGHT(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+	private void setBT_RIGHT(JButton [] Buttons,JLabel StatusLabel){
 		Buttons[BT_RIGHT].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMapAndStatusLabel("Right.", StatusLabel, Buttons);			
@@ -247,7 +247,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_RIGHT]);
 	}
 
-	private void setBT_DOWN(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+	private void setBT_DOWN(JButton [] Buttons,JLabel StatusLabel){
 		Buttons[BT_DOWN].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setMapAndStatusLabel("Down.", StatusLabel, Buttons);			
@@ -279,7 +279,7 @@ public class GameWindow {
 		return nOgres;
 	}
 
-	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+	private void setBT_NEWGAME(JButton [] Buttons,JLabel StatusLabel, JComboBox<String> guardTypeCombo){
 		Buttons[BT_NEWGAME].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int nOgres=scanNumberOgres(StatusLabel);
@@ -314,7 +314,7 @@ public class GameWindow {
 		frmDungeonKeep.getContentPane().add(Buttons[BT_SAVE]);
 	}
 
-	private void setBT_LOAD(JButton [] Buttons,JLabel StatusLabel,CustomPanel gameArea){
+	private void setBT_LOAD(JButton [] Buttons,JLabel StatusLabel){
 		Buttons[BT_LOAD].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				play=SLPlay.load();
@@ -353,7 +353,7 @@ public class GameWindow {
 		toolBar.add(Buttons[BT_LVLEDIT]);
 	}
 
-	private void setAddKeyListener(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
+	private void setAddKeyListener(JButton [] Buttons,JLabel StatusLabel){
 		frmDungeonKeep.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {		
@@ -378,14 +378,14 @@ public class GameWindow {
 		setlblGuardPersonality();
 	}
 
-	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel, CustomPanel gameArea){
-		setBT_UP(Buttons,StatusLabel,gameArea);
-		setBT_LEFT(Buttons,StatusLabel,gameArea);
-		setBT_RIGHT(Buttons,StatusLabel,gameArea);
-		setBT_DOWN(Buttons,StatusLabel,gameArea);
+	private void setAllButtonsAndKeys(JButton [] Buttons,JLabel StatusLabel){
+		setBT_UP(Buttons,StatusLabel);
+		setBT_LEFT(Buttons,StatusLabel);
+		setBT_RIGHT(Buttons,StatusLabel);
+		setBT_DOWN(Buttons,StatusLabel);
 		setBT_SAVE(Buttons,StatusLabel);
-		setBT_LOAD(Buttons,StatusLabel,gameArea);
+		setBT_LOAD(Buttons,StatusLabel);
 		setBT_EXIT(Buttons);
-		setAddKeyListener(Buttons,StatusLabel,gameArea);
+		setAddKeyListener(Buttons,StatusLabel);
 	}
 }
