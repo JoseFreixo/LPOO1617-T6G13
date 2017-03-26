@@ -104,17 +104,21 @@ public class Game implements java.io.Serializable {
 
 	public boolean HeroCaught(CellPosition Guard_or_OgrePos, CellPosition HeroPos){
 
-		if(Guard_or_OgrePos.getX()==HeroPos.getX()-1&& Guard_or_OgrePos.getY()==HeroPos.getY())
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()-1&& Guard_or_OgrePos.getY()==HeroPos.getY()){
 			return true;
-		else if(Guard_or_OgrePos.getX()==HeroPos.getX()+1&& Guard_or_OgrePos.getY()==HeroPos.getY())
+		}
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()+1&& Guard_or_OgrePos.getY()==HeroPos.getY()){	
 			return true;
-		else if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()+1)
+		}
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()+1){
 			return true;
-		else if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()-1)
-			return true;		
-		else if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY())
+		}
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()-1){
 			return true;
-		
+		}		
+		if(Guard_or_OgrePos.getX()==HeroPos.getX()&& Guard_or_OgrePos.getY()==HeroPos.getY()){
+			return true;
+		}
 		return false;
 	}
 
@@ -350,14 +354,14 @@ public class Game implements java.io.Serializable {
 
 	public void stunOgres(){
 		for (Ogre ogre: ogres){
-			if (ogre.getRepresentation() != 'O')
-				continue;
-			else if((ogre.getPosition().getX()==heroi.getPosition().getX()-1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
-					(ogre.getPosition().getX()==heroi.getPosition().getX()+1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
-					(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()-1) ||
-					(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()+1)){
-				ogre.setRepresentation('o');
-				ogre.setStunTimeout(3);
+			if (ogre.getRepresentation() == 'O'){
+				if((ogre.getPosition().getX()==heroi.getPosition().getX()-1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
+						(ogre.getPosition().getX()==heroi.getPosition().getX()+1 && ogre.getPosition().getY()==heroi.getPosition().getY()) ||
+						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()-1) ||
+						(ogre.getPosition().getX()==heroi.getPosition().getX() && ogre.getPosition().getY()==heroi.getPosition().getY()+1)){
+					ogre.setRepresentation('o');
+					ogre.setStunTimeout(3);
+				}
 			}
 		}
 	}
