@@ -371,7 +371,6 @@ public class Game implements java.io.Serializable {
 					ogre.setStunTimeout(3);
 				}
 			}
-
 		}
 	}
 
