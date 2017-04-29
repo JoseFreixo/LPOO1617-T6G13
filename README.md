@@ -4,7 +4,29 @@
 
 ![bulletborne](https://cloud.githubusercontent.com/assets/25772341/25558804/32f774e8-2d26-11e7-8c59-497d9ca3e623.png)
 
-/* Design Patterns */
+
+Design Patterns
+
+Flyweight Pattern (informação repetida para objetos com várias instâncias por ex.: naves inimigas);
+
+Observer (usado para o achievement unlocking);
+
+State (para definir o estado do jogo);
+
+Strategy (utilizado para definir os vários tipos de comportamento caso existam vários tipos de naves inimigas ou mesmo vários tipos de naves do jogador);
+
+Decorator ( utilizado caso powerup's sejam implementados);
+
+Factory (Para criação de inimigos, ou até mesmo Powerup's);
+
+Game Loop (Loop do jogo);
+
+Singleton( apenas 1 jogo a decorrer e uma nave por jogador);
+
+Proxy (usado caso networking seja implementado);
+
+Object Pool (reutilização de objetos já criados como por ex.: naves inimigas e balas);
+
 
 Main Menu
 
@@ -29,6 +51,7 @@ Achievements
 High Scores
 
 ![bulletborne_highscores](https://cloud.githubusercontent.com/assets/25772341/25525922/2bbb3386-2c09-11e7-825d-32999c8e8109.png)
+
 
 Tests
 
