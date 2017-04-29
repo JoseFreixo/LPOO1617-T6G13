@@ -1,5 +1,11 @@
 # LPOO1617-T6G13
 
+![bulletborne_class _diagram](https://cloud.githubusercontent.com/assets/25772341/25558803/32c7263a-2d26-11e7-9e8c-a767a2e41d6a.png)
+
+![bulletborne](https://cloud.githubusercontent.com/assets/25772341/25558804/32f774e8-2d26-11e7-8c59-497d9ca3e623.png)
+
+/* Design Patterns */
+
 Main Menu
 
 ![bulletborne_main_menu](https://cloud.githubusercontent.com/assets/25772341/25525924/2bd058c4-2c09-11e7-96b0-4851bfcd485d.png)
@@ -23,3 +29,5 @@ Achievements
 High Scores
 
 ![bulletborne_highscores](https://cloud.githubusercontent.com/assets/25772341/25525922/2bbb3386-2c09-11e7-825d-32999c8e8109.png)
+
+/* Tests */
