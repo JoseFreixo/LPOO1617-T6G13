@@ -78,6 +78,7 @@ public void shipCaracteristics(){
 }
 
 /**************************************************************************/
+
 funções repetidas caso haja mais que 1 tipo de naves inimigas:
 
 public void creationOfEnemyShip(){
