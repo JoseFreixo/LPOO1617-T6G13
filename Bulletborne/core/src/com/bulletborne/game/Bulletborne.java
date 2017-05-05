@@ -8,13 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
 
 public class Bulletborne extends Game {
-	SpriteBatch batch;
-	Texture img;
+	private SpriteBatch batch;
+	private Texture img;
+	private AssetManager assetManager;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		assetManager = new AssetManager();
 	}
 
 	@Override
@@ -30,5 +32,24 @@ public class Bulletborne extends Game {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		assetManager.dispose();
+	}
+
+	/**
+	 * Returns the asset manager used to load all textures and sounds.
+	 *
+	 * @return the asset manager
+	 */
+	public AssetManager getAssetManager() {
+		return assetManager;
+	}
+
+	/**
+	 * Returns the sprite batch used to improve drawing performance.
+	 *
+	 * @return the sprite batch
+	 */
+	public SpriteBatch getBatch() {
+		return batch;
 	}
 }
