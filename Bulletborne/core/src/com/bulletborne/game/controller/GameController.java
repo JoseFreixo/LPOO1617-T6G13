@@ -1,8 +1,13 @@
 package com.bulletborne.game.controller;
 
 import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.controller.entities.PlayerBody;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -15,16 +20,21 @@ import static java.lang.Math.sin;
  * Created by Zé on 05/05/2017.
  */
 
-public class GameController {
+public class GameController implements ContactListener{
+    /**
+     * The singleton instance of this controller
+     */
+    private static GameController instance;
+
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 100;
+    public static final int ARENA_WIDTH = 96;
 
     /**
      * The arena height in meters.
      */
-    public static final int ARENA_HEIGHT = 50;
+    public static final int ARENA_HEIGHT = 54;
 
     /**
      * The rotation speed in radians per second.
@@ -44,7 +54,7 @@ public class GameController {
     /**
      * The spaceship body.
      */
-    //private final ShipBody shipBody;
+    private final PlayerBody playerBody;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -52,21 +62,30 @@ public class GameController {
     private float accumulator;
 
     /**
-     * Creates a new GameController that controls the physics of a certain GameModel.
-     *
-     * @param model The model controlled by this controller.
+     * Time left until gun cools down
      */
-    public GameController(GameModel model) {
+    private float timeToNextShoot;
+
+    /**
+     * Creates a new GameController that controls the physics of a certain GameModel.
+     */
+    public GameController() {
         world = new World(new Vector2(0, 0), true);
 
-    /*    shipBody = new ShipBody(world, model.getShip());
-
+        playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
+        /*
         List<AsteroidModel> asteroids = model.getAsteroids();
         for (AsteroidModel asteroid : asteroids)
             if (asteroid.getSize() == AsteroidModel.AsteroidSize.BIG)
                 new BigAsteroidBody(world, asteroid);
             else if (asteroid.getSize() == AsteroidModel.AsteroidSize.MEDIUM)
-                new MediumAsteroidBody(world, asteroid); */
+                new MediumAsteroidBody(world, asteroid);*/
+    }
+
+    public static GameController getInstance() {
+        if (instance == null)
+            instance = new GameController();
+        return instance;
     }
 
     /**
@@ -155,5 +174,42 @@ public class GameController {
     public void accelerate(float delta) {
     /*  shipBody.applyForceToCenter(-(float) sin(shipBody.getAngle()) * ACCELERATION_FORCE * delta, (float) cos(shipBody.getAngle()) * ACCELERATION_FORCE * delta, true);
         ((ShipModel)shipBody.getUserData()).setAccelerating(true); */
+    }
+
+    /**
+     * A contact between two objects was detected
+     *
+     * @param contact the detected contact
+     */
+    @Override
+    public void beginContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
+        /*
+        if (bodyA.getUserData() instanceof BulletModel)
+            bulletCollision(bodyA);
+        if (bodyB.getUserData() instanceof BulletModel)
+            bulletCollision(bodyB);
+
+        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof AsteroidModel)
+            bulletAsteroidCollision(bodyA, bodyB);
+        if (bodyA.getUserData() instanceof AsteroidModel && bodyB.getUserData() instanceof BulletModel)
+            bulletAsteroidCollision(bodyB, bodyA);
+        */
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
     }
 }

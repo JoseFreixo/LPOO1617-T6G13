@@ -2,6 +2,7 @@ package com.bulletborne.game.view;
 
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.Bulletborne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -29,7 +30,7 @@ public class GameView extends ScreenAdapter {
     /**
      * How much meters does a pixel represent.
      */
-    public final static float PIXEL_TO_METER = 0.04f;
+    public final static float PIXEL_TO_METER = 0.05f;
 
     /**
      * The width of the viewport in meters. The height is
@@ -43,34 +44,9 @@ public class GameView extends ScreenAdapter {
     private final Bulletborne game;
 
     /**
-     * The model drawn by this screen.
-     */
-    private final GameModel model;
-
-    /**
-     * The physics controller for this game.
-     */
-    private final GameController controller;
-
-    /**
      * The camera used to show the viewport.
      */
     private final OrthographicCamera camera;
-
-    /**
-     * A ship view used to draw ships.
-     */
-    //private final ShipView shipView;
-
-    /**
-     * A big asteroid view used to draw big asteroids.
-     */
-    //private final BigAsteroidView bigAsteroidView;
-
-    /**
-     * A medium asteroid view used to draw medium asteroids.
-     */
-    //private final MediumAsteroidView mediumAsteroidView;
 
     /**
      * A renderer used to debug the physical fixtures.
@@ -83,10 +59,8 @@ public class GameView extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    public GameView(Bulletborne game, GameModel model, GameController controller) {
+    public GameView(Bulletborne game) {
         this.game = game;
-        this.model = model;
-        this.controller = controller;
 
         loadAssets();
 
@@ -121,17 +95,17 @@ public class GameView extends ScreenAdapter {
      * Loads the assets needed by this screen.
      */
     private void loadAssets() {
-        this.game.getAssetManager().load( "spaceship-no-thrust.png" , Texture.class);
-        this.game.getAssetManager().load( "spaceship-thrust.png" , Texture.class);
+        this.game.getAssetManager().load( "Player_ship.png" , Texture.class);
+        this.game.getAssetManager().load( "Player_ship2.png" , Texture.class);
 
-        this.game.getAssetManager().load( "asteroid-big.png" , Texture.class);
-        this.game.getAssetManager().load( "asteroid-medium.png" , Texture.class);
+        this.game.getAssetManager().load( "bullet.png" , Texture.class);
+        this.game.getAssetManager().load( "bullet_ally.png" , Texture.class);
 
-        this.game.getAssetManager().load( "background.png" , Texture.class);
+        this.game.getAssetManager().load( "Empty_background.png" , Texture.class);
 
-        this.game.getAssetManager().load( "health-bar.png" , Texture.class);
-        this.game.getAssetManager().load( "controller-back.png" , Texture.class);
-        this.game.getAssetManager().load( "controller-knob.png" , Texture.class);
+        this.game.getAssetManager().load( "Enemy_ship.png" , Texture.class);
+        this.game.getAssetManager().load( "Enemy_ship2.png" , Texture.class);
+        this.game.getAssetManager().load( "Enemy_ship3.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
@@ -145,7 +119,7 @@ public class GameView extends ScreenAdapter {
     public void render(float delta) {
         handleInputs(delta);
 
-        controller.update(delta);
+        GameController.getInstance().update(delta);
 
     //  camera.position.set(model.getShip().getX() / PIXEL_TO_METER, model.getShip().getY() / PIXEL_TO_METER, 0);
         camera.update();
@@ -162,7 +136,7 @@ public class GameView extends ScreenAdapter {
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
-            debugRenderer.render(controller.getWorld(), debugCamera);
+            debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
     }
 
@@ -173,13 +147,13 @@ public class GameView extends ScreenAdapter {
      */
     private void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            controller.rotateLeft(delta);
+            GameController.getInstance().rotateLeft(delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            controller.rotateRight(delta);
+            GameController.getInstance().rotateRight(delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            controller.accelerate(delta);
+            GameController.getInstance().accelerate(delta);
         }
     }
 
@@ -197,9 +171,11 @@ public class GameView extends ScreenAdapter {
                 mediumAsteroidView.draw(game.getBatch());
             }
         }
-
-        shipView.update(model.getShip());
-        shipView.draw(game.getBatch()); */
+        */
+        PlayerModel player = GameModel.getInstance().getPlayer();/*
+        EntityView view =
+        playerView.update(model.getShip());
+        playerView.draw(game.getBatch()); */
     }
 
     /**
