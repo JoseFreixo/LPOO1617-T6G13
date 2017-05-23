@@ -1,6 +1,7 @@
 package com.bulletborne.game.controller;
 
 import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.PlayerBody;
 import com.badlogic.gdx.math.Vector2;
@@ -45,7 +46,7 @@ public class GameController implements ContactListener{
     /**
      * The acceleration impulse in newtons.
      */
-    private static final float ACCELERATION_FORCE = 1000f;
+    private static final float ACCELERATION_FORCE = 10000f;
 
     /**
      * The physics world controlled by this controller.
@@ -71,7 +72,7 @@ public class GameController implements ContactListener{
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
     public GameController() {
-        world = new World(new Vector2(0, 0), true);
+        world = new World(new Vector2(0, -9.8f), true);
 
         playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
         /*
@@ -142,39 +143,16 @@ public class GameController implements ContactListener{
     }
 
     /**
-     * Rotates the spaceship left. The rotation takes into consideration the
-     * constant rotation speed and the delta for this simulation step.
-     *
-     * @param delta Duration of the rotation in seconds.
-     */
-    public void rotateLeft(float delta) {
-    /*  shipBody.setTransform(shipBody.getX(), shipBody.getY(), shipBody.getAngle() + ROTATION_SPEED * delta);
-        shipBody.setAngularVelocity(0); */
-    }
-
-    /**
-     * Rotates the spaceship right. The rotation takes into consideration the
-     * constant rotation speed and the delta for this simulation step.
-     *
-     * @param delta Duration of the rotation in seconds.
-     */
-    public void rotateRight(float delta) {
-    /*  shipBody.getX();
-
-        shipBody.setTransform(shipBody.getX(), shipBody.getY(), shipBody.getAngle() - ROTATION_SPEED * delta);
-        shipBody.setAngularVelocity(0); */
-    }
-
-    /**
-     * Accelerates the spaceship. The acceleration takes into consideration the
+     * Accelerates the spaceship upward. The acceleration takes into consideration the
      * constant acceleration force and the delta for this simulation step.
+     * Also rotates the ship to it's left.
      *
      * @param delta Duration of the rotation in seconds.
      */
-
-    public void accelerate(float delta) {
-    /*  shipBody.applyForceToCenter(-(float) sin(shipBody.getAngle()) * ACCELERATION_FORCE * delta, (float) cos(shipBody.getAngle()) * ACCELERATION_FORCE * delta, true);
-        ((ShipModel)shipBody.getUserData()).setAccelerating(true); */
+    public void goUp(float delta) {
+        playerBody.applyForceToCenter(0, ACCELERATION_FORCE * delta, true);
+        //playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() + ROTATION_SPEED * delta);
+        playerBody.setAngularVelocity(0);
     }
 
     /**

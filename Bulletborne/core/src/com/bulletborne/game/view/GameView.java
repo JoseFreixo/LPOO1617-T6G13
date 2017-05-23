@@ -155,14 +155,11 @@ public class GameView extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            GameController.getInstance().rotateLeft(delta);
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            GameController.getInstance().goUp(delta);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            GameController.getInstance().rotateRight(delta);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            GameController.getInstance().accelerate(delta);
+        if (Gdx.input.isTouched()) {
+            GameController.getInstance().goUp(delta);
         }
     }
 
