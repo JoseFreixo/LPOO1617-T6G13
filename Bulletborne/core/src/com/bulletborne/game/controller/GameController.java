@@ -1,6 +1,7 @@
 package com.bulletborne.game.controller;
 
 import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.PlayerBody;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -104,11 +105,11 @@ public class GameController implements ContactListener{
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
-    /*  for (Body body : bodies) {
+        for (Body body : bodies) {
             verifyBounds(body);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
-        } */
+        }
     }
 
     /**
