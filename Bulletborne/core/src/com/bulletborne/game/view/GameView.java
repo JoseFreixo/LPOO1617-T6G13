@@ -38,7 +38,13 @@ public class GameView extends ScreenAdapter {
      * The width of the viewport in meters. The height is
      * automatically calculated using the screen ratio.
      */
-    private static final float VIEWPORT_WIDTH = 20;
+    private static final float VIEWPORT_WIDTH = 100;
+
+    /**
+     * The width of the viewport in meters. The height is
+     * automatically calculated using the screen ratio.
+     */
+    private static final float VIEWPORT_HEIGHT = 50;
 
     /**
      * The game this screen belongs to.
@@ -80,7 +86,7 @@ public class GameView extends ScreenAdapter {
      * @return the camera
      */
     private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_HEIGHT / PIXEL_TO_METER/* * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth())*/);
 
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
@@ -124,7 +130,7 @@ public class GameView extends ScreenAdapter {
 
         GameController.getInstance().update(delta);
 
-        camera.position.set(GameModel.getInstance().getPlayer().getX() / PIXEL_TO_METER, GameModel.getInstance().getPlayer().getY() / PIXEL_TO_METER, 0);
+        camera.position.set((ARENA_WIDTH/2) / PIXEL_TO_METER, (ARENA_HEIGHT/2) / PIXEL_TO_METER, 0);
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -187,6 +193,7 @@ public class GameView extends ScreenAdapter {
     private void drawBackground() {
         Texture background = game.getAssetManager().get("Empty_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
+        //game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
+        game.getBatch().draw(background, 0, 0, 2500, 1250);
     }
 }

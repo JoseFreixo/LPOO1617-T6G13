@@ -38,7 +38,7 @@ public class GameModel {
     private GameModel() {
         //asteroids = new ArrayList<AsteroidModel>();
         //bullets = new ArrayList<BulletModel>();
-        player = new PlayerModel(GameController.ARENA_WIDTH / 2, GameController.ARENA_HEIGHT / 2, 0);
+        player = new PlayerModel(GameController.ARENA_WIDTH / 10, GameController.ARENA_HEIGHT / 2, 0);
         /*
         for (int i = 0; i < ASTEROID_COUNT; i++)
             asteroids.add(new AsteroidModel(
