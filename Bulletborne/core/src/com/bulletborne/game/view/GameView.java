@@ -3,6 +3,8 @@ package com.bulletborne.game.view;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
+import com.bulletborne.game.view.entities.EntityView;
+import com.bulletborne.game.view.entities.ViewFactory;
 import com.bulletborne.game.Bulletborne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -30,7 +32,7 @@ public class GameView extends ScreenAdapter {
     /**
      * How much meters does a pixel represent.
      */
-    public final static float PIXEL_TO_METER = 0.05f;
+    public final static float PIXEL_TO_METER = 0.04f;
 
     /**
      * The width of the viewport in meters. The height is
@@ -59,14 +61,15 @@ public class GameView extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
+    /**
+     * Creates this screen.
+     *
+     * @param game The game this screen belongs to
+     */
     public GameView(Bulletborne game) {
         this.game = game;
 
         loadAssets();
-
-     /* shipView = new ShipView(game);
-        bigAsteroidView = new BigAsteroidView(game);
-        mediumAsteroidView = new MediumAsteroidView(game); */
 
         camera = createCamera();
     }
@@ -121,7 +124,7 @@ public class GameView extends ScreenAdapter {
 
         GameController.getInstance().update(delta);
 
-    //  camera.position.set(model.getShip().getX() / PIXEL_TO_METER, model.getShip().getY() / PIXEL_TO_METER, 0);
+        camera.position.set(GameModel.getInstance().getPlayer().getX() / PIXEL_TO_METER, GameModel.getInstance().getPlayer().getY() / PIXEL_TO_METER, 0);
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -172,17 +175,17 @@ public class GameView extends ScreenAdapter {
             }
         }
         */
-        PlayerModel player = GameModel.getInstance().getPlayer();/*
-        EntityView view =
-        playerView.update(model.getShip());
-        playerView.draw(game.getBatch()); */
+        PlayerModel player = GameModel.getInstance().getPlayer();
+        EntityView view = ViewFactory.makeView(game, player);
+        view.update(player);
+        view.draw(game.getBatch());
     }
 
     /**
      * Draws the background
      */
     private void drawBackground() {
-        Texture background = game.getAssetManager().get("background.png", Texture.class);
+        Texture background = game.getAssetManager().get("Empty_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
     }

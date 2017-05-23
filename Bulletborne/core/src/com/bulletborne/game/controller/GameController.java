@@ -29,12 +29,12 @@ public class GameController implements ContactListener{
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 96;
+    public static final int ARENA_WIDTH = 100;
 
     /**
      * The arena height in meters.
      */
-    public static final int ARENA_HEIGHT = 54;
+    public static final int ARENA_HEIGHT = 50;
 
     /**
      * The rotation speed in radians per second.

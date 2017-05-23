@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.bulletborne.game.view.GameView.PIXEL_TO_METER;
 
-/**
- * Created by Zé on 05/05/2017.
- */
-abstract class EntityView {
+public abstract class EntityView {
     /**
      * The sprite representing this entity view.
      */
