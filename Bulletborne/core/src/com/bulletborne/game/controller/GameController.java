@@ -49,7 +49,9 @@ public class GameController implements ContactListener{
     /**
      * The acceleration impulse in newtons.
      */
-    private static final float ACCELERATION_FORCE = 400000f;
+    private static final float ACCELERATION_FORCE = 350000f;
+
+    private static final float ROTATION_DOWN_RATIO = 2.280f;
 
     /**
      * The physics world controlled by this controller.
@@ -121,7 +123,7 @@ public class GameController implements ContactListener{
         for (Body body : bodies) {
             verifyBounds(body);
             if (body.getUserData() instanceof PlayerModel)
-                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / 2.6f * delta);
+                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / ROTATION_DOWN_RATIO * delta);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
