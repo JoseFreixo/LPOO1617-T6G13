@@ -4,6 +4,7 @@ import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.PlayerBody;
+import com.bulletborne.game.controller.entities.BarrierBody;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -46,7 +47,7 @@ public class GameController implements ContactListener{
     /**
      * The acceleration impulse in newtons.
      */
-    private static final float ACCELERATION_FORCE = 10000f;
+    private static final float ACCELERATION_FORCE = 400000f;
 
     /**
      * The physics world controlled by this controller.
@@ -57,6 +58,10 @@ public class GameController implements ContactListener{
      * The spaceship body.
      */
     private final PlayerBody playerBody;
+
+    private final BarrierBody upperBarrierBody;
+
+    private final BarrierBody lowerBarrierBody;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -72,9 +77,11 @@ public class GameController implements ContactListener{
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
     public GameController() {
-        world = new World(new Vector2(0, -9.8f), true);
+        world = new World(new Vector2(0, -200f), true);
 
         playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
+        upperBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[0]);
+        lowerBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[1]);
         /*
         List<AsteroidModel> asteroids = model.getAsteroids();
         for (AsteroidModel asteroid : asteroids)
@@ -169,12 +176,12 @@ public class GameController implements ContactListener{
             bulletCollision(bodyA);
         if (bodyB.getUserData() instanceof BulletModel)
             bulletCollision(bodyB);
-
+*//*
         if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof AsteroidModel)
             bulletAsteroidCollision(bodyA, bodyB);
         if (bodyA.getUserData() instanceof AsteroidModel && bodyB.getUserData() instanceof BulletModel)
-            bulletAsteroidCollision(bodyB, bodyA);
-        */
+            bulletAsteroidCollision(bodyB, bodyA);*/
+
     }
 
     @Override

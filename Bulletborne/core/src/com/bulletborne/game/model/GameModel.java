@@ -3,6 +3,7 @@ package com.bulletborne.game.model;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.model.entities.PlayerModel;
+import com.bulletborne.game.model.entities.BarrierModel;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class GameModel {
     private static GameModel instance;
 
     private PlayerModel player;
-
+    private BarrierModel barriers [] = {new BarrierModel(1,-1,0), new BarrierModel(1,1250,0)};
     /**
      * Returns a singleton instance of the game model
      *
@@ -52,4 +53,6 @@ public class GameModel {
     public PlayerModel getPlayer() {
         return player;
     }
+
+    public BarrierModel [] getBarriers() { return barriers; }
 }
