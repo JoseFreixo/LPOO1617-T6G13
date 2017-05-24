@@ -44,7 +44,7 @@ public class GameController implements ContactListener{
     /**
      * The rotation speed in radians per second.
      */
-    private static final float ROTATION_SPEED = 5f;
+    private static final float ROTATION_SPEED = 2f;
 
     /**
      * The acceleration impulse in newtons.
@@ -114,11 +114,14 @@ public class GameController implements ContactListener{
             accumulator -= 1/60f;
         }
 
+
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
         for (Body body : bodies) {
             verifyBounds(body);
+            if (body.getUserData() instanceof PlayerModel)
+                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / 2.6f * delta);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
@@ -162,7 +165,7 @@ public class GameController implements ContactListener{
      */
     public void goUp(float delta) {
         playerBody.applyForceToCenter(0, ACCELERATION_FORCE * delta, true);
-        //playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() + ROTATION_SPEED * delta);
+        playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() + ROTATION_SPEED * delta);
         playerBody.setAngularVelocity(0);
     }
 
@@ -173,8 +176,6 @@ public class GameController implements ContactListener{
      */
     @Override
     public void beginContact(Contact contact) {
-        System.out.print("WTF?");
-
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
