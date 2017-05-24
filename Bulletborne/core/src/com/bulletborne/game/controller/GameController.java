@@ -1,6 +1,8 @@
 package com.bulletborne.game.controller;
 
+import com.badlogic.gdx.graphics.Cursor;
 import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.PlayerBody;
@@ -89,6 +91,8 @@ public class GameController implements ContactListener{
                 new BigAsteroidBody(world, asteroid);
             else if (asteroid.getSize() == AsteroidModel.AsteroidSize.MEDIUM)
                 new MediumAsteroidBody(world, asteroid);*/
+
+        world.setContactListener(this);
     }
 
     public static GameController getInstance() {
@@ -169,8 +173,16 @@ public class GameController implements ContactListener{
      */
     @Override
     public void beginContact(Contact contact) {
+        System.out.print("WTF?");
+
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
+
+        if (bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof BarrierModel)
+            borderShipCollision();
+        if (bodyA.getUserData() instanceof BarrierModel && bodyB.getUserData() instanceof PlayerModel)
+            borderShipCollision();
+
         /*
         if (bodyA.getUserData() instanceof BulletModel)
             bulletCollision(bodyA);
@@ -186,7 +198,7 @@ public class GameController implements ContactListener{
 
     @Override
     public void endContact(Contact contact) {
-
+        System.out.print("WTF?");
     }
 
     @Override
@@ -197,5 +209,10 @@ public class GameController implements ContactListener{
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public void borderShipCollision() {
+        System.out.print("You Idiot!");
+        System.exit(0);
     }
 }

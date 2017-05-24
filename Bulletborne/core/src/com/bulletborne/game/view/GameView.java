@@ -191,6 +191,6 @@ public class GameView extends ScreenAdapter {
         Texture background = game.getAssetManager().get("Empty_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         //game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
-        game.getBatch().draw(background, 0, 0, 2500, 1250);
+        game.getBatch().draw(background, 0, 0, ARENA_WIDTH / PIXEL_TO_METER, ARENA_HEIGHT / PIXEL_TO_METER);
     }
 }
