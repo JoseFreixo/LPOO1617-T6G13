@@ -23,7 +23,7 @@ public class GameModel {
     private static GameModel instance;
 
     private PlayerModel player;
-    private BarrierModel barriers [] = {new BarrierModel(1,-1,0), new BarrierModel(1,1250,0)};
+    private BarrierModel barriers [] = {new BarrierModel(0,0,0), new BarrierModel(0,50,0)};
 
     /**
      * The bullets currently flying through space.
@@ -96,7 +96,7 @@ public class GameModel {
         bullet.setFlaggedForRemoval(false);
         bullet.setPosition(ship.getX() + (float)(Math.cos(ship.getRotation()) * 6), ship.getY() + (float)(Math.sin(ship.getRotation()) * 6));
         bullet.setRotation(ship.getRotation() - (float)Math.PI/2);
-        bullet.setTimeToLive(0.8f);
+        bullet.setTimeToLive(0.9f);
 
         bullets.add(bullet);
 

@@ -136,7 +136,7 @@ public class GameController implements ContactListener{
         world.getBodies(bodies);
 
         for (Body body : bodies) {
-            verifyBounds(body);
+            //verifyBounds(body);
             if (body.getUserData() instanceof PlayerModel) {
                 playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / 2.1f * delta);
                 playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / 2.1f * delta, true);
@@ -215,6 +215,11 @@ public class GameController implements ContactListener{
         if (bodyA.getUserData() instanceof BarrierModel && bodyB.getUserData() instanceof PlayerModel)
             borderShipCollision();
 
+        if (bodyA.getUserData() instanceof BulletPlayerModel)
+            ((BulletPlayerModel)bodyA.getUserData()).setFlaggedForRemoval(true);
+        if (bodyB.getUserData() instanceof BulletPlayerModel)
+            ((BulletPlayerModel)bodyB.getUserData()).setFlaggedForRemoval(true);
+
         /*
         if (bodyA.getUserData() instanceof BulletModel)
             bulletCollision(bodyA);
@@ -230,7 +235,7 @@ public class GameController implements ContactListener{
 
     @Override
     public void endContact(Contact contact) {
-        System.out.print("WTF?");
+
     }
 
     @Override
