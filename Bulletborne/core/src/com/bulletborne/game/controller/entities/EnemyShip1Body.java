@@ -13,7 +13,7 @@ public class EnemyShip1Body extends EntityBody {
         super(world, model, true);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
-        int width = 256, height = 114;
+        int width = 202, height = 144;
 
         createFixture(body, new float[]{
                 0,9, 14,10, 17,0, 39,2, 40,12, 47,18, 99,24, 113,39, 137,42,
@@ -22,6 +22,6 @@ public class EnemyShip1Body extends EntityBody {
                 168,97, 160,99, 160,67, 141,110, 138,103, 113,105, 100,121,
                 46,128, 41,132, 40,142, 17,144, 13,135, 0,135
         }, width, height, density, friction, restitution);
-             
+
     }
 }
