@@ -81,7 +81,7 @@ public class GameController implements ContactListener{
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
     public GameController() {
-        world = new World(new Vector2(0, -200f), true);
+        world = new World(new Vector2(0, 0), true);
 
         playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
         upperBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[0]);
@@ -122,8 +122,10 @@ public class GameController implements ContactListener{
 
         for (Body body : bodies) {
             verifyBounds(body);
-            if (body.getUserData() instanceof PlayerModel)
-                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / ROTATION_DOWN_RATIO * delta);
+            if (body.getUserData() instanceof PlayerModel) {
+                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / 2.1f * delta);
+                playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / 2.1f * delta, true);
+            }
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
