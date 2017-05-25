@@ -3,6 +3,7 @@ package com.bulletborne.game.view;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
+import com.bulletborne.game.model.entities.BulletPlayerModel;
 import com.bulletborne.game.view.entities.EntityView;
 import com.bulletborne.game.view.entities.ViewFactory;
 import com.bulletborne.game.Bulletborne;
@@ -27,7 +28,7 @@ public class GameView extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = false;
+    private static final boolean DEBUG_PHYSICS = true;
 
     /**
      * How much meters does a pixel represent.
@@ -126,6 +127,8 @@ public class GameView extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+        GameController.getInstance().removeFlagged();
+
         handleInputs(delta);
 
         GameController.getInstance().update(delta);
@@ -178,6 +181,14 @@ public class GameView extends ScreenAdapter {
             }
         }
         */
+
+        List<BulletPlayerModel> bullets = GameModel.getInstance().getBullets();
+        for (BulletPlayerModel bullet : bullets) {
+            EntityView view = ViewFactory.makeView(game, bullet);
+            view.update(bullet);
+            view.draw(game.getBatch());
+        }
+
         PlayerModel player = GameModel.getInstance().getPlayer();
         EntityView view = ViewFactory.makeView(game, player);
         view.update(player);

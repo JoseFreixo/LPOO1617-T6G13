@@ -2,9 +2,11 @@ package com.bulletborne.game.controller;
 
 import com.badlogic.gdx.graphics.Cursor;
 import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.model.entities.BulletPlayerModel;
 import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
+import com.bulletborne.game.controller.entities.BulletPlayerBody;
 import com.bulletborne.game.controller.entities.PlayerBody;
 import com.bulletborne.game.controller.entities.BarrierBody;
 import com.badlogic.gdx.math.Vector2;
@@ -51,7 +53,15 @@ public class GameController implements ContactListener{
      */
     private static final float ACCELERATION_FORCE = 350000f;
 
-    private static final float ROTATION_DOWN_RATIO = 2.280f;
+    /**
+     * The speed of bullets
+     */
+    private static final float BULLET_SPEED = 100f;
+
+    /**
+     * Minimum time between consecutive shots in seconds
+     */
+    private static final float TIME_BETWEEN_SHOTS = .2f;
 
     /**
      * The physics world controlled by this controller.
@@ -109,13 +119,18 @@ public class GameController implements ContactListener{
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+        GameModel.getInstance().update(delta);
+
+        shoot();
+
+        timeToNextShoot -= delta;
+
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1/60f) {
             world.step(1/60f, 6, 2);
             accumulator -= 1/60f;
         }
-
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -174,6 +189,18 @@ public class GameController implements ContactListener{
     }
 
     /**
+     * Shoots a bullet from the spaceship
+     */
+    public void shoot() {
+        if (timeToNextShoot < 0) {
+            BulletPlayerModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
+            BulletPlayerBody body = new BulletPlayerBody(world, bullet);
+            body.setLinearVelocity(BULLET_SPEED);
+            timeToNextShoot = TIME_BETWEEN_SHOTS;
+        }
+    }
+
+    /**
      * A contact between two objects was detected
      *
      * @param contact the detected contact
@@ -219,5 +246,20 @@ public class GameController implements ContactListener{
     public void borderShipCollision() {
         System.out.print("You Idiot!");
         System.exit(0);
+    }
+
+    /**
+     * Removes objects that have been flagged for removal on the
+     * previous step.
+     */
+    public void removeFlagged() {
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for (Body body : bodies) {
+            if (((EntityModel)body.getUserData()).isFlaggedToBeRemoved()) {
+                GameModel.getInstance().remove((EntityModel) body.getUserData());
+                world.destroyBody(body);
+            }
+        }
     }
 }
