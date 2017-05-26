@@ -29,7 +29,7 @@ public class GameView extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
 
     /**
      * How much meters does a pixel represent.
@@ -37,14 +37,12 @@ public class GameView extends ScreenAdapter {
     public final static float PIXEL_TO_METER = 0.04f;
 
     /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
+     * The width of the viewport in meters.
      */
     private static final float VIEWPORT_WIDTH = 100;
 
     /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
+     * The height of the viewport in meters.
      */
     private static final float VIEWPORT_HEIGHT = 50;
 
