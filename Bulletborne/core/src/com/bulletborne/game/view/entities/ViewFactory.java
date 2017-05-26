@@ -6,11 +6,7 @@ import com.bulletborne.game.model.entities.EntityModel;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.bulletborne.game.model.entities.EntityModel.ModelType.PLAYER;
-import static com.bulletborne.game.model.entities.EntityModel.ModelType.PLAYER_BULLET;
-import static com.bulletborne.game.model.entities.EntityModel.ModelType.ENEMY;
-import static com.bulletborne.game.model.entities.EntityModel.ModelType.ENEMY_BULLET;
-import static com.bulletborne.game.model.entities.EntityModel.ModelType.BORDER;
+import static com.bulletborne.game.model.entities.EntityModel.ModelType.*;
 
 /**
  * A factory for EntityView objects with cache

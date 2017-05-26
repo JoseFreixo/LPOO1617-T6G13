@@ -5,7 +5,7 @@ import com.bulletborne.game.model.entities.BulletModel;
 import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
-import com.bulletborne.game.controller.entities.BulletPlayerBody;
+import com.bulletborne.game.controller.entities.BulletBody;
 import com.bulletborne.game.controller.entities.PlayerBody;
 import com.bulletborne.game.controller.entities.BarrierBody;
 import com.badlogic.gdx.math.Vector2;
@@ -188,7 +188,7 @@ public class GameController implements ContactListener{
     public void shoot() {
         if (timeToNextShoot < 0) {
             BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
-            BulletPlayerBody body = new BulletPlayerBody(world, bullet);
+            BulletBody body = new BulletBody(world, bullet);
             body.setLinearVelocity(BULLET_SPEED);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
