@@ -21,7 +21,7 @@ public class EnemyShip1Body extends EntityBody {
                 201,69, 128,69, 127,75, 201,74, 201,82, 188,83, 188,87, 174,89,
                 168,97, 160,99, 160,67, 141,110, 138,103, 113,105, 100,121,
                 46,128, 41,132, 40,142, 17,144, 13,135, 0,135
-        }, width, height, density, friction, restitution);
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
 
     }
 }

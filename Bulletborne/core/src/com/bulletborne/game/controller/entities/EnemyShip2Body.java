@@ -18,7 +18,7 @@ public class EnemyShip2Body extends EntityBody {
                 26,8, 71,3, 79,17, 186,24, 197,35, 219,38, 243,77, 188,78,
                 188,92, 244,92, 218,133, 196,134, 185,147, 77,153, 71,168,
                 24,163, 1,119, 1,50
-        }, width, height, density, friction, restitution);
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
 
     }
 }

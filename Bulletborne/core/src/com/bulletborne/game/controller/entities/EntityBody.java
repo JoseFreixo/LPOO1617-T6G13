@@ -14,6 +14,11 @@ import static com.bulletborne.game.view.GameView.PIXEL_TO_METER;
  * body supported by a Box2D body.
  */
 public abstract class EntityBody {
+    final static short PLAYER_BODY = 0x0001;
+    final static short ENEMY_BODY = 0x0002;
+    final static short BULLET_BODY = 0x0004;
+    final static short BORDER_BODY = 0x0008;
+
     /**
      * The Box2D body that supports this body.
      */
@@ -50,7 +55,7 @@ public abstract class EntityBody {
      * @param friction The friction of the fixture. How slippery it is.
      * @param restitution The restitution of the fixture. How much it bounces.
      */
-    final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution) {
+    final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask) {
         // Transform pixels into meters, center and invert the y-coordinate
         for (int i = 0; i < vertexes.length; i++) {
             if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
@@ -70,6 +75,8 @@ public abstract class EntityBody {
         fixtureDef.density = density;
         fixtureDef.friction = friction;
         fixtureDef.restitution = restitution;
+        fixtureDef.filter.categoryBits = category;
+        fixtureDef.filter.maskBits = mask;
 
         body.createFixture(fixtureDef);
 
