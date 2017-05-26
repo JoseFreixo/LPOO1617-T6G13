@@ -3,6 +3,7 @@ package com.bulletborne.game.view;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
+import com.bulletborne.game.model.entities.EnemyShipModel;
 import com.bulletborne.game.model.entities.BulletModel;
 import com.bulletborne.game.view.entities.EntityView;
 import com.bulletborne.game.view.entities.ViewFactory;
@@ -181,6 +182,13 @@ public class GameView extends ScreenAdapter {
             }
         }
         */
+
+        List<EnemyShipModel> enemies = GameModel.getInstance().getEnemies();
+        for (EnemyShipModel enemy : enemies){
+            EntityView view = ViewFactory.makeView(game, enemy);
+            view.update(enemy);
+            view.draw(game.getBatch());
+        }
 
         List<BulletModel> bullets = GameModel.getInstance().getBullets();
         for (BulletModel bullet : bullets) {

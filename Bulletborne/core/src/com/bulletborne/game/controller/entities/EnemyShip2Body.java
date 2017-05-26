@@ -1,14 +1,14 @@
 package com.bulletborne.game.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.bulletborne.game.model.entities.PlayerModel;
+import com.bulletborne.game.model.entities.EnemyShipModel;
 
 /**
  * Created by Ruben Torres on 26/05/2017.
  */
 
 public class EnemyShip2Body extends EntityBody {
-    public EnemyShip2Body(World world, PlayerModel model){
+    public EnemyShip2Body(World world, EnemyShipModel model){
         super(world, model, true);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;

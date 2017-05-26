@@ -6,6 +6,7 @@ import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.BulletModel;
+import com.bulletborne.game.model.entities.EnemyShipModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ import static com.badlogic.gdx.math.MathUtils.random;
  */
 
 public class GameModel {
+    public static final float Y_MIN = 3.5f;
+    public static final float Y_MAX = 46.5f;
+    public static final float X_START = 110f;
     /**
      * The singleton instance of the game model
      */
@@ -40,6 +44,28 @@ public class GameModel {
         }
     };
 
+    private List<EnemyShipModel> enemies;
+
+    /**
+     * A pool of bullets
+     */
+    Pool<EnemyShipModel> enemyPool = new Pool<EnemyShipModel>() {
+        @Override
+        protected EnemyShipModel newObject() {
+            int i = random(4);
+            switch(i){
+                case 0:
+                case 1:
+                    return new EnemyShipModel(0, 0, 180, EnemyShipModel.EnemyShipType.NORMAL);
+                case 2:
+                    return new EnemyShipModel(0, 0, 180, EnemyShipModel.EnemyShipType.TANK);
+                case 3:
+                    return new EnemyShipModel(0, 0, 180, EnemyShipModel.EnemyShipType.GLASSCANNON);
+            }
+            return null;
+        }
+    };
+
     /**
      * Returns a singleton instance of the game model
      *
@@ -59,6 +85,7 @@ public class GameModel {
         //asteroids = new ArrayList<AsteroidModel>();
         //bullets = new ArrayList<BulletModel>();
         bullets = new ArrayList<BulletModel>();
+        enemies = new ArrayList<EnemyShipModel>();
         player = new PlayerModel(GameController.ARENA_WIDTH / 10, GameController.ARENA_HEIGHT / 2, 0);
         /*
         for (int i = 0; i < ASTEROID_COUNT; i++)
@@ -101,6 +128,19 @@ public class GameModel {
         bullets.add(bullet);
 
         return bullet;
+    }
+
+    public List<EnemyShipModel> getEnemies() { return enemies; }
+
+    public EnemyShipModel createEnemy(){
+        EnemyShipModel enemy = enemyPool.obtain();
+
+        enemy.setFlaggedForRemoval(false);
+        enemy.setPosition(X_START, random(Y_MIN, Y_MAX));
+
+        enemies.add(enemy);
+
+        return enemy;
     }
 
     /**

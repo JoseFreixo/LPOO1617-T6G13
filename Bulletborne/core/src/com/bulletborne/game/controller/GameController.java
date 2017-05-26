@@ -1,8 +1,12 @@
 package com.bulletborne.game.controller;
 
+import com.bulletborne.game.controller.entities.EnemyShip1Body;
+import com.bulletborne.game.controller.entities.EnemyShip2Body;
+import com.bulletborne.game.controller.entities.EnemyShip3Body;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.BulletModel;
 import com.bulletborne.game.model.entities.BarrierModel;
+import com.bulletborne.game.model.entities.EnemyShipModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.BulletBody;
@@ -53,9 +57,29 @@ public class GameController implements ContactListener{
     private static final float BULLET_SPEED = 100f;
 
     /**
-     * Minimum time between consecutive shots in seconds
+     * The speed of normal enemies
+     */
+    private static final float NORMAL_ENEMY_SPEED = 25f;
+
+    /**
+     * The speed of normal enemies
+     */
+    private static final float TANK_ENEMY_SPEED = 10f;
+
+    /**
+     * The speed of normal enemies
+     */
+    private static final float GLASSCANNON_ENEMY_SPEED = 50f;
+
+    /**
+     * Time between consecutive shots in seconds
      */
     private static final float TIME_BETWEEN_SHOTS = .2f;
+
+    /**
+     * Time between consecutive enemies in seconds
+     */
+    private static float timeBetweenEnemies = 3f;
 
     /**
      * The physics world controlled by this controller.
@@ -80,6 +104,11 @@ public class GameController implements ContactListener{
      * Time left until gun cools down
      */
     private float timeToNextShoot;
+
+    /**
+     * Time left until next enemy spawn
+     */
+    private float timeToNextEnemy;
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
@@ -116,8 +145,10 @@ public class GameController implements ContactListener{
         GameModel.getInstance().update(delta);
 
         shoot();
+        generateEnemy();
 
         timeToNextShoot -= delta;
+        timeToNextEnemy -= delta;
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -130,7 +161,6 @@ public class GameController implements ContactListener{
         world.getBodies(bodies);
 
         for (Body body : bodies) {
-            //verifyBounds(body);
             if (body.getUserData() instanceof PlayerModel) {
                 playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / 2.1f * delta);
                 playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / 2.1f * delta, true);
@@ -138,26 +168,6 @@ public class GameController implements ContactListener{
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
-    }
-
-    /**
-     * Verifies if the body is inside the arena bounds and if not
-     * wraps it around to the other side.
-     *
-     * @param body The body to be verified.
-     */
-    private void verifyBounds(Body body) {
-        if (body.getPosition().x < 0)
-            body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
-
-        if (body.getPosition().y < 0)
-            body.setTransform(body.getPosition().x, ARENA_HEIGHT, body.getAngle());
-
-        if (body.getPosition().x > ARENA_WIDTH)
-            body.setTransform(0, body.getPosition().y, body.getAngle());
-
-        if (body.getPosition().y > ARENA_HEIGHT)
-            body.setTransform(body.getPosition().x, 0, body.getAngle());
     }
 
     /**
@@ -185,12 +195,33 @@ public class GameController implements ContactListener{
     /**
      * Shoots a bullet from the spaceship
      */
-    public void shoot() {
+    private void shoot() {
         if (timeToNextShoot < 0) {
             BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
             BulletBody body = new BulletBody(world, bullet);
             body.setLinearVelocity(BULLET_SPEED);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
+        }
+    }
+
+    private void generateEnemy() {
+        if (timeToNextEnemy < 0){
+            EnemyShipModel enemy = GameModel.getInstance().createEnemy();
+            switch (enemy.getType()){
+                case ENEMY_1:
+                    EnemyShip1Body body = new EnemyShip1Body(world, enemy);
+                    body.setLinearVelocity(NORMAL_ENEMY_SPEED);
+                    break;
+                case ENEMY_2:
+                    EnemyShip2Body body2 = new EnemyShip2Body(world, enemy);
+                    body2.setLinearVelocity(TANK_ENEMY_SPEED);
+                    break;
+                case ENEMY_3:
+                    EnemyShip3Body body3 = new EnemyShip3Body(world, enemy);
+                    body3.setLinearVelocity(GLASSCANNON_ENEMY_SPEED);
+                    break;
+            }
+            timeToNextEnemy = timeBetweenEnemies;
         }
     }
 
@@ -213,6 +244,11 @@ public class GameController implements ContactListener{
             ((BulletModel)bodyA.getUserData()).setFlaggedForRemoval(true);
         if (bodyB.getUserData() instanceof BulletModel)
             ((BulletModel)bodyB.getUserData()).setFlaggedForRemoval(true);
+
+        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof EnemyShipModel)
+            bulletEnemyCollision();
+        if (bodyA.getUserData() instanceof EnemyShipModel && bodyB.getUserData() instanceof BulletModel)
+            bulletEnemyCollision();
 
         /*
         if (bodyA.getUserData() instanceof BulletModel)
@@ -239,6 +275,10 @@ public class GameController implements ContactListener{
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+
+    }
+
+    public void bulletEnemyCollision(){
 
     }
 

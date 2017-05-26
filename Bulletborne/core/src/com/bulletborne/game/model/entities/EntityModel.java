@@ -4,7 +4,7 @@ package com.bulletborne.game.model.entities;
  * An abstract model representing an entity belonging to a game model.
  */
 public abstract class EntityModel {
-    public enum ModelType {PLAYER, ENEMY_1,ENEMY_2,ENEMY_3, BORDER, PLAYER_BULLET, ENEMY_BULLET};
+    public enum ModelType {PLAYER, ENEMY_1, ENEMY_2, ENEMY_3, BORDER, PLAYER_BULLET, ENEMY_BULLET};
     /**
      * The x-coordinate of this model in meters.
      */

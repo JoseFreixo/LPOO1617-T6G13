@@ -22,12 +22,12 @@ public class ViewFactory {
                 cache.put(model.getType(), new PlayerView(game));
             if (model.getType() == PLAYER_BULLET)
                 cache.put(model.getType(), new BulletPlayerView(game));
-        /*  if (model.getType() == ENEMY)
-                cache.put(model.getType(), new ShipView(game));
-            if (model.getType() == ENEMY_BULLET)
-                cache.put(model.getType(), new BulletView(game));
-            if (model.getType() == BORDER)
-                cache.put(model.getType(), new FuckFaceView(game));*/
+            if (model.getType() == ENEMY_1)
+                cache.put(model.getType(), new EnemyShip1View(game));
+            if (model.getType() == ENEMY_2)
+                cache.put(model.getType(), new EnemyShip2View(game));
+            if (model.getType() == ENEMY_3)
+                cache.put(model.getType(), new EnemyShip3View(game));
         }
         return cache.get(model.getType());
     }
