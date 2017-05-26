@@ -61,27 +61,30 @@ public class GameController implements ContactListener{
     /**
      * The speed of normal enemies
      */
-    private static final float NORMAL_ENEMY_SPEED = -25f;
+    private static final float NORMAL_ENEMY_SPEED = -15f;
 
     /**
      * The speed of normal enemies
      */
-    private static final float TANK_ENEMY_SPEED = -10f;
+    private static final float TANK_ENEMY_SPEED = -5f;
 
     /**
      * The speed of normal enemies
      */
-    private static final float GLASSCANNON_ENEMY_SPEED = -50f;
+    private static final float GLASSCANNON_ENEMY_SPEED = -30f;
 
     /**
      * Time between consecutive shots in seconds
      */
     private static final float TIME_BETWEEN_SHOTS = .2f;
-
+    /**
+     * Time between consecutive shots in seconds
+     */
+    private static final float TIME_BETWEEN_ENEMIES_CHANGER = 1.01f;
     /**
      * Time between consecutive enemies in seconds
      */
-    private static float timeBetweenEnemies = 3f;
+    private static float timeBetweenEnemies = 2.5f;
 
     /**
      * The physics world controlled by this controller.
@@ -224,6 +227,7 @@ public class GameController implements ContactListener{
                     break;
             }
             timeToNextEnemy = timeBetweenEnemies;
+            timeBetweenEnemies = timeBetweenEnemies/TIME_BETWEEN_ENEMIES_CHANGER;
         }
     }
 

@@ -52,10 +52,11 @@ public class GameModel {
     Pool<EnemyShipModel> enemyPool = new Pool<EnemyShipModel>() {
         @Override
         protected EnemyShipModel newObject() {
-            int i = random(3);
+            int i = random(4);
             switch(i){
                 case 0:
                 case 1:
+                case 4:
                     return new EnemyShipModel(0, 0, (float)Math.PI, EnemyShipModel.EnemyShipType.NORMAL);
                 case 2:
                     return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.TANK);
