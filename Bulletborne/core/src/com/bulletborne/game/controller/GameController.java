@@ -46,6 +46,8 @@ public class GameController implements ContactListener{
      */
     private static final float ROTATION_SPEED = 2f;
 
+    private static final float FORCE_UP_DOWN_RATIO = 2.1f;
+
     /**
      * The acceleration impulse in newtons.
      */
@@ -59,17 +61,17 @@ public class GameController implements ContactListener{
     /**
      * The speed of normal enemies
      */
-    private static final float NORMAL_ENEMY_SPEED = 25f;
+    private static final float NORMAL_ENEMY_SPEED = -25f;
 
     /**
      * The speed of normal enemies
      */
-    private static final float TANK_ENEMY_SPEED = 10f;
+    private static final float TANK_ENEMY_SPEED = -10f;
 
     /**
      * The speed of normal enemies
      */
-    private static final float GLASSCANNON_ENEMY_SPEED = 50f;
+    private static final float GLASSCANNON_ENEMY_SPEED = -50f;
 
     /**
      * Time between consecutive shots in seconds
@@ -162,8 +164,8 @@ public class GameController implements ContactListener{
 
         for (Body body : bodies) {
             if (body.getUserData() instanceof PlayerModel) {
-                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / 2.1f * delta);
-                playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / 2.1f * delta, true);
+                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / FORCE_UP_DOWN_RATIO * delta);
+                playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
             }
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
@@ -283,8 +285,8 @@ public class GameController implements ContactListener{
     }
 
     public void borderShipCollision() {
-        System.out.print("You Idiot!");
-        System.exit(0);
+        //System.out.print("You Idiot!");
+        //System.exit(0);
     }
 
     /**

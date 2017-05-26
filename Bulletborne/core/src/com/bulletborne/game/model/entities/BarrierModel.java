@@ -5,7 +5,7 @@ package com.bulletborne.game.model.entities;
  */
 
 public class BarrierModel extends EntityModel{
-    public BarrierModel(float x, float y, int rotation){
+    public BarrierModel(float x, float y, float rotation){
         super(x, y, rotation);
     }
 

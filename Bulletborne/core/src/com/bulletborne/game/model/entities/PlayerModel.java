@@ -17,7 +17,7 @@ public class PlayerModel extends EntityModel{
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public PlayerModel(float x, float y, int rotation) {
+    public PlayerModel(float x, float y, float rotation) {
         super(x, y, rotation);
     }
 

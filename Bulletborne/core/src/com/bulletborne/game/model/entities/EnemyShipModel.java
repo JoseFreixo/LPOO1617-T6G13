@@ -19,7 +19,7 @@ public class EnemyShipModel extends EntityModel {
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public EnemyShipModel(float x, float y, int rotation, EnemyShipType type) {
+    public EnemyShipModel(float x, float y, float rotation, EnemyShipType type) {
         super(x, y, rotation);
         this.type=type;
     }

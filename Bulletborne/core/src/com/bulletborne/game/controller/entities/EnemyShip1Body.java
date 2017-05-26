@@ -30,4 +30,8 @@ public class EnemyShip1Body extends EntityBody {
                 0,134, 17,143, 40,142, 160,108, 201,82, 201,75, 6, 80
         }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
     }
+    @Override
+    public void setLinearVelocity(float velocity) {
+        body.setLinearVelocity(velocity, 0);
+    }
 }

@@ -56,11 +56,11 @@ public class GameModel {
             switch(i){
                 case 0:
                 case 1:
-                    return new EnemyShipModel(0, 0, 180, EnemyShipModel.EnemyShipType.NORMAL);
+                    return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.NORMAL);
                 case 2:
-                    return new EnemyShipModel(0, 0, 180, EnemyShipModel.EnemyShipType.TANK);
+                    return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.TANK);
                 case 3:
-                    return new EnemyShipModel(0, 0, 180, EnemyShipModel.EnemyShipType.GLASSCANNON);
+                    return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.GLASSCANNON);
             }
             return null;
         }
@@ -137,7 +137,7 @@ public class GameModel {
 
         enemy.setFlaggedForRemoval(false);
         enemy.setPosition(X_START, random(Y_MIN, Y_MAX));
-
+        enemy.setRotation((float) Math.PI);
         enemies.add(enemy);
 
         return enemy;
