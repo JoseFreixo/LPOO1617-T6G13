@@ -5,10 +5,11 @@ package com.bulletborne.game.model.entities;
  */
 
 public class EnemyShipModel extends EntityModel {
-
+    public enum EnemyShipType {NORMAL, TANK, GLASSCANNON};
     /**
      * Is this ship accelerating in this update delta
      */
+    private EnemyShipType type;
     private boolean accelerating = true;
 
     /**
@@ -18,8 +19,9 @@ public class EnemyShipModel extends EntityModel {
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public EnemyShipModel(float x, float y, int rotation) {
+    public EnemyShipModel(float x, float y, int rotation, EnemyShipType type) {
         super(x, y, rotation);
+        this.type=type;
     }
 
     /**
@@ -42,6 +44,12 @@ public class EnemyShipModel extends EntityModel {
 
     @Override
     public ModelType getType() {
-        return ModelType.ENEMY;
+        if(this.type==EnemyShipType.NORMAL)
+            return ModelType.ENEMY_1;
+        if(this.type==EnemyShipType.TANK)
+            return ModelType.ENEMY_2;
+        if(this.type==EnemyShipType.GLASSCANNON)
+            return ModelType.ENEMY_3;
+        return null;
     }
 }
