@@ -15,10 +15,19 @@ public class EnemyShip3Body extends EntityBody {
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
         int width = 238, height = 89;
 
+        // UPPER WING
         createFixture(body, new float[]{
-                10,9, 49,4, 98,3, 156,10, 195,14, 221,20, 229,41, 164,41, 164,48, 228,48,
-                222,69, 193,76, 157,79, 97,85, 51,84, 10,80
+            11,8, 57,3, 156,10, 222,19, 230,41, 30,36
         }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
 
+        // CENTER
+        createFixture(body, new float[]{
+                30,36, 166,40, 166,50, 29,54
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+
+        //LEFT WING
+        createFixture(body, new float[]{
+                29,54, 228,49, 221,71, 154,79, 59,86, 11,80
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
     }
 }

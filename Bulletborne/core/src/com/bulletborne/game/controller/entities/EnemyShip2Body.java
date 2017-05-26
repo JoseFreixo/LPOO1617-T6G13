@@ -14,11 +14,29 @@ public class EnemyShip2Body extends EntityBody {
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
         int width = 258, height = 170;
 
+        //Upper Top Wing
         createFixture(body, new float[]{
-                26,8, 71,3, 79,17, 186,24, 197,35, 219,38, 243,77, 188,78,
-                188,92, 244,92, 218,133, 196,134, 185,147, 77,153, 71,168,
-                24,163, 1,119, 1,50
+             1,49, 27,7, 71,2, 78,19, 188,25, 196,36
         }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
 
+        //Upper Bottom Wing
+        createFixture(body, new float[]{
+              1,49, 218,38, 241,76, 1,79
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+
+        //Center
+        createFixture(body, new float[]{
+                241,76, 1,79, 1,98, 241,93
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+
+        //Bottom Bottom Wing
+        createFixture(body, new float[]{
+               1,79, 241,93, 219,132, 10,133
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+
+        //Bottom Bottom Wing
+        createFixture(body, new float[]{
+               10,133, 198,132, 186,145, 77,151, 71,168, 25,163
+        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
     }
 }
