@@ -5,7 +5,7 @@ import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.BarrierModel;
-import com.bulletborne.game.model.entities.BulletPlayerModel;
+import com.bulletborne.game.model.entities.BulletModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +28,15 @@ public class GameModel {
     /**
      * The bullets currently flying through space.
      */
-    private List<BulletPlayerModel> bullets;
+    private List<BulletModel> bullets;
 
     /**
      * A pool of bullets
      */
-    Pool<BulletPlayerModel> bulletPool = new Pool<BulletPlayerModel>() {
+    Pool<BulletModel> bulletPool = new Pool<BulletModel>() {
         @Override
-        protected BulletPlayerModel newObject() {
-            return new BulletPlayerModel(0, 0, 0);
+        protected BulletModel newObject() {
+            return new BulletModel(0, 0, 0, BulletModel.BulletType.PLAYER_BULLET);
         }
     };
 
@@ -58,7 +58,7 @@ public class GameModel {
     private GameModel() {
         //asteroids = new ArrayList<AsteroidModel>();
         //bullets = new ArrayList<BulletModel>();
-        bullets = new ArrayList<BulletPlayerModel>();
+        bullets = new ArrayList<BulletModel>();
         player = new PlayerModel(GameController.ARENA_WIDTH / 10, GameController.ARENA_HEIGHT / 2, 0);
         /*
         for (int i = 0; i < ASTEROID_COUNT; i++)
@@ -86,12 +86,12 @@ public class GameModel {
      *
      * @return the bullet list
      */
-    public List<BulletPlayerModel> getBullets() {
+    public List<BulletModel> getBullets() {
         return bullets;
     }
 
-    public BulletPlayerModel createBullet(PlayerModel ship) {
-        BulletPlayerModel bullet = bulletPool.obtain();
+    public BulletModel createBullet(PlayerModel ship) {
+        BulletModel bullet = bulletPool.obtain();
 
         bullet.setFlaggedForRemoval(false);
         bullet.setPosition(ship.getX() + (float)(Math.cos(ship.getRotation()) * 6), ship.getY() + (float)(Math.sin(ship.getRotation()) * 6));
@@ -109,9 +109,9 @@ public class GameModel {
      * @param model the model to be removed
      */
     public void remove(EntityModel model) {
-        if (model instanceof BulletPlayerModel) {
+        if (model instanceof BulletModel) {
             bullets.remove(model);
-            bulletPool.free((BulletPlayerModel) model);
+            bulletPool.free((BulletModel) model);
         }
         /*if (model instanceof AsteroidModel) {
             asteroids.remove(model);
@@ -119,7 +119,7 @@ public class GameModel {
     }
 
     public void update(float delta) {
-        for (BulletPlayerModel bullet : bullets)
+        for (BulletModel bullet : bullets)
             if (bullet.decreaseTimeToLive(delta))
                 bullet.setFlaggedForRemoval(true);
     }

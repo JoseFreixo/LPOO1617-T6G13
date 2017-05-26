@@ -1,6 +1,6 @@
 package com.bulletborne.game.controller.entities;
 
-import com.bulletborne.game.model.entities.BulletPlayerModel;
+import com.bulletborne.game.model.entities.BulletModel;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class BulletPlayerBody extends EntityBody{
@@ -11,7 +11,7 @@ public class BulletPlayerBody extends EntityBody{
      * @param world the physical world this asteroid belongs to.
      * @param model the model representing this bullet.
      */
-    public BulletPlayerBody(World world, BulletPlayerModel model) {
+    public BulletPlayerBody(World world, BulletModel model) {
         super(world, model, true);
 
         float density = 1f, friction = 0.4f, restitution = 0.5f;

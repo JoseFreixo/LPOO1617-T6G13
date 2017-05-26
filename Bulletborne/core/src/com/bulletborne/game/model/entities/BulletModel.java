@@ -4,7 +4,12 @@ package com.bulletborne.game.model.entities;
  * Created by Zé on 25/05/2017.
  */
 
-public class BulletPlayerModel extends EntityModel{
+public class BulletModel extends EntityModel{
+
+    public enum BulletType {PLAYER_BULLET, ENEMY_BULLET}
+
+    private BulletType type;
+
     private float timeToLive;
 
     /**
@@ -14,8 +19,9 @@ public class BulletPlayerModel extends EntityModel{
      * @param y The y-coordinate of this bullet.
      * @param rotation The rotation of this bullet.
      */
-    public BulletPlayerModel(float x, float y, float rotation) {
+    public BulletModel(float x, float y, float rotation, BulletType type) {
         super(x, y, rotation);
+        this.type = type;
     }
 
     /**
@@ -37,8 +43,14 @@ public class BulletPlayerModel extends EntityModel{
         this.timeToLive = timeToLive;
     }
 
+    public BulletType getBulletType() { return type; }
+
     @Override
     public ModelType getType() {
-        return ModelType.PLAYER_BULLET;
+        if (type == BulletType.PLAYER_BULLET)
+            return ModelType.PLAYER_BULLET;
+        if (type == BulletType.ENEMY_BULLET)
+            return ModelType.ENEMY_BULLET;
+        return null;
     }
 }

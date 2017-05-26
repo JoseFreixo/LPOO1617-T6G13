@@ -1,8 +1,7 @@
 package com.bulletborne.game.controller;
 
-import com.badlogic.gdx.graphics.Cursor;
 import com.bulletborne.game.model.GameModel;
-import com.bulletborne.game.model.entities.BulletPlayerModel;
+import com.bulletborne.game.model.entities.BulletModel;
 import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
@@ -17,11 +16,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-
-import java.util.List;
-
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * Created by Zé on 05/05/2017.
@@ -193,7 +187,7 @@ public class GameController implements ContactListener{
      */
     public void shoot() {
         if (timeToNextShoot < 0) {
-            BulletPlayerModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
+            BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
             BulletPlayerBody body = new BulletPlayerBody(world, bullet);
             body.setLinearVelocity(BULLET_SPEED);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
@@ -215,10 +209,10 @@ public class GameController implements ContactListener{
         if (bodyA.getUserData() instanceof BarrierModel && bodyB.getUserData() instanceof PlayerModel)
             borderShipCollision();
 
-        if (bodyA.getUserData() instanceof BulletPlayerModel)
-            ((BulletPlayerModel)bodyA.getUserData()).setFlaggedForRemoval(true);
-        if (bodyB.getUserData() instanceof BulletPlayerModel)
-            ((BulletPlayerModel)bodyB.getUserData()).setFlaggedForRemoval(true);
+        if (bodyA.getUserData() instanceof BulletModel)
+            ((BulletModel)bodyA.getUserData()).setFlaggedForRemoval(true);
+        if (bodyB.getUserData() instanceof BulletModel)
+            ((BulletModel)bodyB.getUserData()).setFlaggedForRemoval(true);
 
         /*
         if (bodyA.getUserData() instanceof BulletModel)
