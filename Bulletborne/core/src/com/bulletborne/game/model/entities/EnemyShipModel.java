@@ -4,7 +4,7 @@ package com.bulletborne.game.model.entities;
  * Created by r_tor on 26/05/2017.
  */
 
-public class EnemyShip1Model extends EntityModel {
+public class EnemyShipModel extends EntityModel {
 
     /**
      * Is this ship accelerating in this update delta
@@ -18,7 +18,7 @@ public class EnemyShip1Model extends EntityModel {
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public EnemyShip1Model(float x, float y, int rotation) {
+    public EnemyShipModel(float x, float y, int rotation) {
         super(x, y, rotation);
     }
 
