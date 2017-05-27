@@ -8,13 +8,11 @@ import com.bulletborne.game.model.entities.EnemyShipModel;
  */
 
 public class EnemyShip2Body extends EntityBody {
-    private int healthPoints;
-
     public EnemyShip2Body(World world, EnemyShipModel model){
         super(world, model, true);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
-        int width = 258, height = 170, healthPoints=5;
+        int width = 258, height = 170;
 
         //Upper Top Wing
         createFixture(body, new float[]{
@@ -45,15 +43,5 @@ public class EnemyShip2Body extends EntityBody {
     @Override
     public void setLinearVelocity(float velocity) {
         body.setLinearVelocity(velocity, 0);
-    }
-
-    @Override
-    public void hit(int damage) {
-        healthPoints-=damage;
-    }
-
-    @Override
-    public int getHP() {
-        return healthPoints;
     }
 }

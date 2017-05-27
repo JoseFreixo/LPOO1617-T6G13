@@ -158,10 +158,4 @@ public abstract class EntityBody {
     public Object getUserData() {
         return body.getUserData();
     }
-
-    public void hit(int damage){};
-
-    public int getHP(){
-        return Integer.MAX_VALUE;
-    };
 }

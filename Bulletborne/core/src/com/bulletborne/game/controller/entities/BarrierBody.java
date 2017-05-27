@@ -19,5 +19,4 @@ public class BarrierBody extends EntityBody{
                 0,0, 5000,0, 0,1, 5000,1
         }, width, height, density, friction, restitution, BORDER_BODY, (short) (PLAYER_BODY | BULLET_BODY));
     }
-
 }
