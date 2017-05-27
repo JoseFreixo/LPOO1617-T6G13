@@ -21,4 +21,6 @@ public class BulletBody extends EntityBody{
                 0,12, 6,0, 11,0, 17,12, 17,47, 11,59, 6,59, 0,47
         }, width, height, density, friction, restitution, BULLET_BODY, (short) (PLAYER_BODY | ENEMY_BODY | BORDER_BODY));
     }
+
+
 }
