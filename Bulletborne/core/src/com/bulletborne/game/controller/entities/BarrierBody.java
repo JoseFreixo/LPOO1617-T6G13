@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class BarrierBody extends EntityBody{
     public BarrierBody(World world, BarrierModel model){
-        super(world, model, false);
+        super(world, model, BodyTypeDef.STATIC);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
         int width = 5000, height = 1;

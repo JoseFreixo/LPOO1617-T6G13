@@ -10,7 +10,7 @@ import com.bulletborne.game.model.entities.EnemyShipModel;
 public class EnemyShip3Body extends EntityBody {
 
     public EnemyShip3Body(World world, EnemyShipModel model){
-        super(world, model, true);
+        super(world, model, BodyTypeDef.KINEMATIC);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
         int width = 238, height = 89;

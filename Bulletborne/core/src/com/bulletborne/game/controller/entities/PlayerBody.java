@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayerBody extends EntityBody{
 
     public PlayerBody(World world, PlayerModel model){
-        super(world, model, true);
+        super(world, model, BodyTypeDef.DYNAMIC);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;
         int width = 256, height = 114;

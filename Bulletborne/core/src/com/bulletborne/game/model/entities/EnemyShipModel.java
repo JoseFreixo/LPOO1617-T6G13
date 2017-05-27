@@ -75,6 +75,9 @@ public class EnemyShipModel extends EntityModel {
 
     public void DamageTaken(int damage){
         healthPoints-=damage;
+        if(healthPoints<=0)
+            this.setFlaggedForRemoval(true);
+
     }
 
     public int getHP() {

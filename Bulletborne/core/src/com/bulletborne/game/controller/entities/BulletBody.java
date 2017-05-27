@@ -12,7 +12,7 @@ public class BulletBody extends EntityBody{
      * @param model the model representing this bullet.
      */
     public BulletBody(World world, BulletModel model) {
-        super(world, model, true);
+        super(world, model, BodyTypeDef.DYNAMIC);
 
         float density = 1f, friction = 0.4f, restitution = 0.5f;
         int width = 18, height = 60;

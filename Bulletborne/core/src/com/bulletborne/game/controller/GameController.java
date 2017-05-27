@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.Array;
  */
 
 public class GameController implements ContactListener{
+    private static final int BULLET_DAMAGE = 1;
     /**
      * The singleton instance of this controller
      */
@@ -162,9 +163,9 @@ public class GameController implements ContactListener{
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
-        while (accumulator >= 1/60f) {
-            world.step(1/60f, 6, 2);
-            accumulator -= 1/60f;
+        while (accumulator >= 1 /60f) {
+            world.step(1 /60f, 6, 2);
+            accumulator -= 1 /60f;
         }
 
         Array<Body> bodies = new Array<Body>();
@@ -261,9 +262,12 @@ public class GameController implements ContactListener{
             ((BulletModel)bodyB.getUserData()).setFlaggedForRemoval(true);
 
         if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof EnemyShipModel)
-            bulletEnemyCollision();
+            ((EnemyShipModel) bodyB.getUserData()).DamageTaken(BULLET_DAMAGE);
+
         if (bodyA.getUserData() instanceof EnemyShipModel && bodyB.getUserData() instanceof BulletModel)
-            bulletEnemyCollision();
+            ((EnemyShipModel) bodyA.getUserData()).DamageTaken(BULLET_DAMAGE);
+
+
 
         /*
         if (bodyA.getUserData() instanceof BulletModel)
@@ -277,6 +281,7 @@ public class GameController implements ContactListener{
             bulletAsteroidCollision(bodyB, bodyA);*/
 
     }
+
 
     @Override
     public void endContact(Contact contact) {
@@ -293,9 +298,6 @@ public class GameController implements ContactListener{
 
     }
 
-    public void bulletEnemyCollision(){
-
-    }
 
     public void borderShipCollision() {
         //System.out.print("You Idiot!");

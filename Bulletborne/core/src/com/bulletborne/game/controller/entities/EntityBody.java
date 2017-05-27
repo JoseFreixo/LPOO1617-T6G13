@@ -18,7 +18,7 @@ public abstract class EntityBody {
     final static short ENEMY_BODY = 0x0002;
     final static short BULLET_BODY = 0x0004;
     final static short BORDER_BODY = 0x0008;
-
+    public enum BodyTypeDef {DYNAMIC, STATIC, KINEMATIC};
     /**
      * The Box2D body that supports this body.
      */
@@ -30,12 +30,14 @@ public abstract class EntityBody {
      * @param world The world this body lives on.
      * @param model The model representing the body.
      */
-    EntityBody(World world, EntityModel model, boolean dynamic) {
+    EntityBody(World world, EntityModel model, BodyTypeDef dynamic) {
         BodyDef bodyDef = new BodyDef();
-        if (dynamic)
+        if (dynamic==BodyTypeDef.DYNAMIC)
             bodyDef.type = BodyDef.BodyType.DynamicBody;
-        else
+        else if(dynamic==BodyTypeDef.STATIC)
             bodyDef.type = BodyDef.BodyType.StaticBody;
+        else if(dynamic==BodyTypeDef.KINEMATIC)
+            bodyDef.type = BodyDef.BodyType.KinematicBody;
         bodyDef.position.set(model.getX(), model.getY());
         bodyDef.angle = model.getRotation();
 
