@@ -117,7 +117,7 @@ public class GameController implements ContactListener{
      */
     private float timeToNextEnemy;
 
-    private float timeToNextQuantatyChange;
+    private float timeToNextQuantityChange;
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
@@ -158,7 +158,7 @@ public class GameController implements ContactListener{
 
         timeToNextShoot -= delta;
         timeToNextEnemy -= delta;
-        timeToNextQuantatyChange-= delta;
+        timeToNextQuantityChange-= delta;
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -196,6 +196,7 @@ public class GameController implements ContactListener{
      *
      * @param delta Duration of the rotation in seconds.
      */
+    
     public void goUp(float delta) {
         playerBody.applyForceToCenter(0, ACCELERATION_FORCE * delta, true);
         playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() + ROTATION_SPEED * delta);
@@ -233,8 +234,8 @@ public class GameController implements ContactListener{
             }
             timeToNextEnemy = timeBetweenEnemies;
         }
-        if(timeToNextQuantatyChange<0){
-            timeToNextQuantatyChange=ENEMIES_QUANTITY_TIME_CHANGER;
+        if(timeToNextQuantityChange<0){
+            timeToNextQuantityChange=ENEMIES_QUANTITY_TIME_CHANGER;
             timeBetweenEnemies=timeBetweenEnemies/TIME_BETWEEN_ENEMIES_CHANGER;
         }
     }
