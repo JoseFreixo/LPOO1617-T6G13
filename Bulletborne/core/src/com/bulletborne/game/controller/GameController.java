@@ -80,11 +80,13 @@ public class GameController implements ContactListener{
     /**
      * Time between consecutive shots in seconds
      */
-    private static final float TIME_BETWEEN_ENEMIES_CHANGER = 1.01f;
+    private static final float TIME_BETWEEN_ENEMIES_CHANGER = 1.025f;
+
+    private static final float ENEMIES_QUANTITY_TIME_CHANGER = 3f;
     /**
      * Time between consecutive enemies in seconds
      */
-    private static float timeBetweenEnemies = 2.5f;
+    private static float timeBetweenEnemies = 3f;
 
     /**
      * The physics world controlled by this controller.
@@ -114,6 +116,8 @@ public class GameController implements ContactListener{
      * Time left until next enemy spawn
      */
     private float timeToNextEnemy;
+
+    private float timeToNextQuantatyChange;
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
@@ -154,6 +158,7 @@ public class GameController implements ContactListener{
 
         timeToNextShoot -= delta;
         timeToNextEnemy -= delta;
+        timeToNextQuantatyChange-= delta;
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -227,7 +232,10 @@ public class GameController implements ContactListener{
                     break;
             }
             timeToNextEnemy = timeBetweenEnemies;
-            timeBetweenEnemies = timeBetweenEnemies/TIME_BETWEEN_ENEMIES_CHANGER;
+        }
+        if(timeToNextQuantatyChange<0){
+            timeToNextQuantatyChange=ENEMIES_QUANTITY_TIME_CHANGER;
+            timeBetweenEnemies=timeBetweenEnemies/TIME_BETWEEN_ENEMIES_CHANGER;
         }
     }
 
