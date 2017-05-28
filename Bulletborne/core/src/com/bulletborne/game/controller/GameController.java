@@ -176,6 +176,11 @@ public class GameController implements ContactListener{
                 playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / FORCE_UP_DOWN_RATIO * delta);
                 playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
             }
+
+            if (body.getPosition().x<0 && body.getUserData() instanceof EnemyShipModel) {
+                ((EnemyShipModel) body.getUserData()).setFlaggedForRemoval(true);
+            }
+
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }

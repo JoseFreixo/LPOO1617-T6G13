@@ -139,6 +139,7 @@ public class GameModel {
         enemy.setFlaggedForRemoval(false);
         enemy.setPosition(X_START, random(Y_MIN, Y_MAX));
         enemy.setRotation((float) Math.PI);
+        enemy.setHP();
         enemies.add(enemy);
 
         return enemy;

@@ -29,19 +29,7 @@ public class EnemyShipModel extends EntityModel {
     public EnemyShipModel(float x, float y, float rotation, EnemyShipType type) {
         super(x, y, rotation);
         this.type=type;
-
-        switch (type) {
-            case NORMAL:
-                healthPoints= NORMAL_SHIP_HP;
-                break;
-            case TANK:
-                healthPoints= TANK_SHIP_HP;
-                break;
-            case GLASSCANNON:
-                healthPoints= GLASSCANNON_SHIP_HP;
-                break;
-        }
-
+        setHP();
     }
 
     /**
@@ -80,7 +68,18 @@ public class EnemyShipModel extends EntityModel {
 
     }
 
-    public int getHP() {
-        return healthPoints;
+    public void setHP() {
+        switch (type) {
+            case NORMAL:
+                healthPoints = NORMAL_SHIP_HP;
+                break;
+            case TANK:
+                healthPoints = TANK_SHIP_HP;
+                break;
+            case GLASSCANNON:
+                healthPoints = GLASSCANNON_SHIP_HP;
+                break;
+        }
     }
+    
 }
