@@ -81,5 +81,5 @@ public class EnemyShipModel extends EntityModel {
                 break;
         }
     }
-    
+
 }

@@ -177,8 +177,8 @@ public class GameController implements ContactListener{
                 playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
             }
 
-            if (body.getPosition().x<0 && body.getUserData() instanceof EnemyShipModel) {
-                ((EnemyShipModel) body.getUserData()).setFlaggedForRemoval(true);
+            if (body.getPosition().x<0) {//todos os corpos existentes com x negativos são eliminados
+                ((EntityModel) body.getUserData()).setFlaggedForRemoval(true);
             }
 
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
