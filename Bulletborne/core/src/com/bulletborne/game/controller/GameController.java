@@ -301,7 +301,7 @@ public class GameController implements ContactListener{
 
     public void borderShipCollision() {
         //System.out.print("You Idiot!");
-        //System.exit(0);
+        System.exit(0);
     }
 
     /**

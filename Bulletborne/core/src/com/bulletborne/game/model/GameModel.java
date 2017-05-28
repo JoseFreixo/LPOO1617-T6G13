@@ -154,9 +154,10 @@ public class GameModel {
             bullets.remove(model);
             bulletPool.free((BulletModel) model);
         }
-        /*if (model instanceof AsteroidModel) {
-            asteroids.remove(model);
-        }*/
+        if (model instanceof EnemyShipModel) {
+            enemies.remove(model);
+            enemyPool.free((EnemyShipModel) model);
+        }
     }
 
     public void update(float delta) {
