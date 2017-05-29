@@ -25,47 +25,20 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 /**
  * Created by Zé on 05/05/2017.
  */
-public class GameView extends ScreenAdapter {
-    /**
-     * Used to debug the position of the physics fixtures
-     */
-    private static final boolean DEBUG_PHYSICS = false;
+public class GameView extends View {
+
 
     /**
      * How much meters does a pixel represent.
      */
     public final static float PIXEL_TO_METER = 0.04f;
 
-    /**
-     * The width of the viewport in meters.
-     */
-    private static final float VIEWPORT_WIDTH = 100;
-
-    /**
-     * The height of the viewport in meters.
-     */
-    private static final float VIEWPORT_HEIGHT = 50;
 
     /**
      * The game this screen belongs to.
      */
     private final Bulletborne game;
 
-    /**
-     * The camera used to show the viewport.
-     */
-    private final OrthographicCamera camera;
-
-    /**
-     * A renderer used to debug the physical fixtures.
-     */
-    private Box2DDebugRenderer debugRenderer;
-
-    /**
-     * The transformation matrix used to transform meters into
-     * pixels in order to show fixtures in their correct places.
-     */
-    private Matrix4 debugCamera;
 
     /**
      * Creates this screen.
@@ -73,32 +46,12 @@ public class GameView extends ScreenAdapter {
      * @param game The game this screen belongs to
      */
     public GameView(Bulletborne game) {
+        super();
         this.game = game;
 
         loadAssets();
-
-        camera = createCamera();
     }
 
-    /**
-     * Creates the camera used to show the viewport.
-     *
-     * @return the camera
-     */
-    private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_HEIGHT / PIXEL_TO_METER/* * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth())*/);
-
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        if (DEBUG_PHYSICS) {
-            debugRenderer = new Box2DDebugRenderer();
-            debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / PIXEL_TO_METER);
-        }
-
-        return camera;
-    }
 
     /**
      * Loads the assets needed by this screen.
