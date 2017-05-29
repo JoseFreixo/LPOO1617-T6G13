@@ -114,15 +114,8 @@ public class GameModel {
         bullets = new ArrayList<BulletModel>();
         enemyBullets = new ArrayList<BulletModel>();
         enemies = new ArrayList<EnemyShipModel>();
-        player = new PlayerModel(GameController.ARENA_WIDTH / 10, GameController.ARENA_HEIGHT / 2, 0);
-        /*
-        for (int i = 0; i < ASTEROID_COUNT; i++)
-            asteroids.add(new AsteroidModel(
-                    random.nextFloat() * GameController.ARENA_WIDTH,
-                    random.nextFloat() * GameController.ARENA_HEIGHT,
-                    (float) Math.toRadians(random.nextFloat() * 360),
-                    random.nextBoolean()?AsteroidModel.AsteroidSize.BIG:AsteroidModel.AsteroidSize.MEDIUM));
-        */
+        player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0);
+
     }
 
     /**

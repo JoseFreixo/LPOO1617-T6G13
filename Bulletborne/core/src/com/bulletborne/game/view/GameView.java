@@ -157,6 +157,8 @@ public class GameView extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
+        if (GameController.getInstance().getTimePast() < 3)
+            return;
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().goUp(delta);
         }
@@ -169,18 +171,6 @@ public class GameView extends ScreenAdapter {
      * Draws the entities to the screen.
      */
     private void drawEntities() {
-    /*  List<AsteroidModel> asteroids = model.getAsteroids();
-        for (AsteroidModel asteroid : asteroids) {
-            if (asteroid.getSize() == AsteroidModel.AsteroidSize.BIG) {
-                bigAsteroidView.update(asteroid);
-                bigAsteroidView.draw(game.getBatch());
-            } else if (asteroid.getSize() == AsteroidModel.AsteroidSize.MEDIUM) {
-                mediumAsteroidView.update(asteroid);
-                mediumAsteroidView.draw(game.getBatch());
-            }
-        }
-        */
-
         List<EnemyShipModel> enemies = GameModel.getInstance().getEnemies();
         for (EnemyShipModel enemy : enemies){
             EntityView view = ViewFactory.makeView(game, enemy);

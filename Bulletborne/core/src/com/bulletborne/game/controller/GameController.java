@@ -31,10 +31,18 @@ public class GameController implements ContactListener{
     public static final float ENEMY_2_BULLET_SPEED = 40f;
     public static final float ENEMY_3_BULLET_SPEED = 120f;
     public static final double ENEMY_SPAWN_LIMIT = 1.2;
+    private static final int INITIAL_PLAYER_SPEED = 10;
     /**
      * The singleton instance of this controller
      */
     private static GameController instance;
+
+    /**
+     * The amount of time that passed after the begining of the game
+     */
+    private float timePast = 0f;
+
+    private float pointsGained = 0f;
 
     /**
      * The arena width in meters.
@@ -133,13 +141,6 @@ public class GameController implements ContactListener{
         playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
         upperBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[0]);
         lowerBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[1]);
-        /*
-        List<AsteroidModel> asteroids = model.getAsteroids();
-        for (AsteroidModel asteroid : asteroids)
-            if (asteroid.getSize() == AsteroidModel.AsteroidSize.BIG)
-                new BigAsteroidBody(world, asteroid);
-            else if (asteroid.getSize() == AsteroidModel.AsteroidSize.MEDIUM)
-                new MediumAsteroidBody(world, asteroid);*/
 
         world.setContactListener(this);
     }
@@ -156,18 +157,27 @@ public class GameController implements ContactListener{
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
-        GameModel.getInstance().update(delta);
+        timePast += delta;
+        if (timePast <= 3)
+            beginingAnimation(delta);
+        else{
+            GameModel.getInstance().update(delta);
 
-        timeToNextShoot -= delta;
-        timeToNextEnemy -= delta;
-        timeToNextQuantityChange -= delta;
+            timeToNextShoot -= delta;
+            timeToNextEnemy -= delta;
+            timeToNextQuantityChange -= delta;
 
-        for (EnemyShipModel model : GameModel.getInstance().getEnemies()){
-            enemyShoot(model, delta);
+            for (EnemyShipModel model : GameModel.getInstance().getEnemies()) {
+                enemyShoot(model, delta);
+            }
+
+            shoot();
+            generateEnemy();
+
+            playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / FORCE_UP_DOWN_RATIO * delta);
+            playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
+
         }
-
-        shoot();
-        generateEnemy();
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -178,9 +188,6 @@ public class GameController implements ContactListener{
 
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
-
-        playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / FORCE_UP_DOWN_RATIO * delta);
-        playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
 
         for (Body body : bodies) {
 
@@ -195,6 +202,13 @@ public class GameController implements ContactListener{
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
+    }
+
+    private void beginingAnimation(float delta){
+        if (timePast > 2)
+            playerBody.setTransform(ARENA_WIDTH / 10, ARENA_HEIGHT / 2, 0);
+        else if (timePast < 2)
+            playerBody.setTransform(playerBody.getX() + INITIAL_PLAYER_SPEED * delta, playerBody.getY(), 0);
     }
 
     /**
@@ -278,6 +292,22 @@ public class GameController implements ContactListener{
         }
     }
 
+    private void enemyKilled(EnemyShipModel model){
+        model.DamageTaken(BULLET_DAMAGE);
+        switch(model.getType()){
+            case ENEMY_1:
+                pointsGained += 7.5f;
+            case ENEMY_2:
+                pointsGained += 5f;
+            case ENEMY_3:
+                pointsGained += 10f;
+        }
+    }
+
+    public float getTimePast(){
+        return timePast;
+    }
+
     /**
      * A contact between two objects was detected
      *
@@ -297,23 +327,10 @@ public class GameController implements ContactListener{
             ((BulletModel)bodyB.getUserData()).setFlaggedForRemoval(true);
 
         if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof EnemyShipModel)
-            ((EnemyShipModel) bodyB.getUserData()).DamageTaken(BULLET_DAMAGE);
+            enemyKilled((EnemyShipModel) bodyB.getUserData());
 
         if (bodyA.getUserData() instanceof EnemyShipModel && bodyB.getUserData() instanceof BulletModel)
-            ((EnemyShipModel) bodyA.getUserData()).DamageTaken(BULLET_DAMAGE);
-
-
-
-        /*
-        if (bodyA.getUserData() instanceof BulletModel)
-            bulletCollision(bodyA);
-        if (bodyB.getUserData() instanceof BulletModel)
-            bulletCollision(bodyB);
-*//*
-        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof AsteroidModel)
-            bulletAsteroidCollision(bodyA, bodyB);
-        if (bodyA.getUserData() instanceof AsteroidModel && bodyB.getUserData() instanceof BulletModel)
-            bulletAsteroidCollision(bodyB, bodyA);*/
+            enemyKilled((EnemyShipModel) bodyA.getUserData());
 
     }
 
@@ -335,8 +352,9 @@ public class GameController implements ContactListener{
 
 
     public void borderShipCollision() {
-        //System.out.print("You Idiot!");
-        //System.exit(0);
+        System.out.println("Time past: " + Math.floor(timePast * 10));
+        System.out.println("Points gained: " + pointsGained);
+        System.exit(0);
     }
 
     /**
