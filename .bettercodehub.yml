@@ -1,0 +1,9 @@
+exclude:
+- /Bulletborne/android/.*
+- /Bulletborne/ios/.*
+- /Bulletborne/desktop/.*
+- /Bulletborne/html/.*
+- /Bulletborne/gradle/wrapper/.*
+component_depth: 4
+languages:
+- java
