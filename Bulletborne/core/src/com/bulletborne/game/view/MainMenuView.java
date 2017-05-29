@@ -23,6 +23,14 @@ public class MainMenuView extends View {
     private static final float HANGAR_Y_MAX=(Gdx.graphics.getHeight()/1.46f);
     private static final float EXIT_Y_MIN=(Gdx.graphics.getHeight()/1.42f);
     private static final float EXIT_Y_MAX=(Gdx.graphics.getHeight()/1.19f);
+    private static final float LOWER_BUTTONS_Y_MIN=(Gdx.graphics.getHeight()/1.15f);
+    private static final float LOWER_BUTTONS_Y_MAX= (Gdx.graphics.getHeight()/1.00f);
+    private static final float OPTIONS_X_MIN=(Gdx.graphics.getWidth()/80.00f);
+    private static final float OPTIONS_X_MAX=(Gdx.graphics.getWidth()/14.00f);
+    private static final float CREDITS_X_MIN=(Gdx.graphics.getWidth()/12.08f);
+    private static final float CREDITS_X_MAX=(Gdx.graphics.getWidth()/7.03f);
+    private static final float HIGHSCORES_X_MIN=(Gdx.graphics.getWidth()/6.42f);
+    private static final float HIGHSCORES_X_MAX=(Gdx.graphics.getWidth()/4.63f);
     /**
      * Creates this screen.
      *
@@ -70,15 +78,36 @@ public class MainMenuView extends View {
     private void handleInputs(float delta) {
 
         if (Gdx.input.isTouched()) {
-            if (Gdx.input.getX() > BUTTONS_X_MIN && Gdx.input.getX()<BUTTONS_X_MAX) {
-                if (Gdx.input.getY() > PLAY_Y_MIN && Gdx.input.getY() < PLAY_Y_MAX)
-                    game.setScreen(new GameView(game));
-                if (Gdx.input.getY() > HANGAR_Y_MIN && Gdx.input.getY() < HANGAR_Y_MAX)
-                    System.out.println("ENTREI NO HANGAR");
-                if (Gdx.input.getY() > EXIT_Y_MIN && Gdx.input.getY() < EXIT_Y_MAX)
-                    System.exit(0);
-            }
+            touchedButtons();
+            touchedLowerButtons();
+        }
+    }
 
+    private void touchedButtons(){
+        if (Gdx.input.getX() > BUTTONS_X_MIN && Gdx.input.getX()<BUTTONS_X_MAX) {
+
+            if (Gdx.input.getY() > PLAY_Y_MIN && Gdx.input.getY() < PLAY_Y_MAX)
+                game.setScreen(new GameView(game));
+
+            if (Gdx.input.getY() > HANGAR_Y_MIN && Gdx.input.getY() < HANGAR_Y_MAX)
+                System.out.println("ENTREI NO HANGAR");
+
+            if (Gdx.input.getY() > EXIT_Y_MIN && Gdx.input.getY() < EXIT_Y_MAX)
+                System.exit(0);
+        }
+    }
+
+    private void touchedLowerButtons(){
+        if (Gdx.input.getY() > LOWER_BUTTONS_Y_MIN && Gdx.input.getY() < LOWER_BUTTONS_Y_MAX){
+
+            if (Gdx.input.getX() > OPTIONS_X_MIN && Gdx.input.getX()<OPTIONS_X_MAX)
+                System.out.println("ENTREI NO OPTIONS");
+
+            if (Gdx.input.getX() > HIGHSCORES_X_MIN && Gdx.input.getX()<HIGHSCORES_X_MAX)
+                System.out.println("ENTREI NO HIGHSCORES");
+
+            if (Gdx.input.getX() > CREDITS_X_MIN && Gdx.input.getX()<CREDITS_X_MAX)
+                System.out.println("ENTREI NO CREDITS");
         }
     }
 
