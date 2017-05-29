@@ -29,26 +29,12 @@ public class GameView extends View {
 
 
     /**
-     * How much meters does a pixel represent.
-     */
-    public final static float PIXEL_TO_METER = 0.04f;
-
-
-    /**
-     * The game this screen belongs to.
-     */
-    private final Bulletborne game;
-
-
-    /**
      * Creates this screen.
      *
      * @param game The game this screen belongs to
      */
     public GameView(Bulletborne game) {
-        super();
-        this.game = game;
-
+        super(game);
         loadAssets();
     }
 

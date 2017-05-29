@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
+import com.bulletborne.game.view.MainMenuView;
 
 public class Bulletborne extends Game {
 	private SpriteBatch batch;
@@ -26,7 +27,7 @@ public class Bulletborne extends Game {
 	 * Starts the game
 	 */
 	private void startGame() {
-		setScreen(new GameView(this));
+		setScreen(new MainMenuView(this));
 	}
 	
 	@Override
