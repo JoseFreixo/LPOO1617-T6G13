@@ -29,7 +29,7 @@ public class GameView extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
 
     /**
      * How much meters does a pixel represent.
@@ -148,6 +148,11 @@ public class GameView extends ScreenAdapter {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
+        }
+
+        if (GameController.getInstance().getLost()){
+            GameController.getInstance().delete();
+            game.setScreen(new GameView(game));
         }
     }
 

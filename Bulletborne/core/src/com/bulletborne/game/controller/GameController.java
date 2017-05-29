@@ -12,6 +12,7 @@ import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.BulletBody;
 import com.bulletborne.game.controller.entities.PlayerBody;
 import com.bulletborne.game.controller.entities.BarrierBody;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -44,6 +45,8 @@ public class GameController implements ContactListener{
 
     private float pointsGained = 0f;
 
+    private boolean lost = false;
+
     /**
      * The arena width in meters.
      */
@@ -57,7 +60,7 @@ public class GameController implements ContactListener{
     /**
      * The rotation speed in radians per second.
      */
-    private static final float ROTATION_SPEED = 2f;
+    private static final float ROTATION_SPEED = 3f;
 
     private static final float FORCE_UP_DOWN_RATIO = 2.1f;
 
@@ -89,7 +92,7 @@ public class GameController implements ContactListener{
     /**
      * Time between consecutive shots in seconds
      */
-    private static final float TIME_BETWEEN_SHOTS = .2f;
+    private static final float TIME_BETWEEN_SHOTS = .15f;
     /**
      * Time between consecutive shots in seconds
      */
@@ -354,7 +357,11 @@ public class GameController implements ContactListener{
     public void borderShipCollision() {
         System.out.println("Time past: " + Math.floor(timePast * 10));
         System.out.println("Points gained: " + pointsGained);
-        System.exit(0);
+        lost = true;
+    }
+
+    public boolean getLost(){
+        return lost;
     }
 
     /**
@@ -370,5 +377,10 @@ public class GameController implements ContactListener{
                 world.destroyBody(body);
             }
         }
+    }
+
+    public void delete(){
+        instance = null;
+        GameModel.getInstance().delete();
     }
 }

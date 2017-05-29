@@ -209,4 +209,8 @@ public class GameModel {
             if (bullet.decreaseTimeToLive(delta))
                 bullet.setFlaggedForRemoval(true);
     }
+
+    public void delete() {
+        instance = null;
+    }
 }
