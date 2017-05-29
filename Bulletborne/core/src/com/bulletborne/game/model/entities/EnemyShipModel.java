@@ -10,9 +10,22 @@ public class EnemyShipModel extends EntityModel {
     private static final int TANK_SHIP_HP = 5;
     private static final int GLASSCANNON_SHIP_HP = 1;
 
+    private static final float NORMAL_SHIP_TTS = 0.5f;
+    private static final float TANK_SHIP_TTS = 0.8f;
+    private static final float GLASSCANNON_SHIP_TTS = 0.3f;
+
+    private static final float NORMAL_SHIP_TFS = 2/3f;
+    private static final float TANK_SHIP_TFS = 2f;
+    private static final float GLASSCANNON_SHIP_TFS = 1/3f;
+
     public enum EnemyShipType {NORMAL, TANK, GLASSCANNON};
 
     private EnemyShipType type;
+
+    private float timeToNextShot;
+
+    private float timeBetweenShots;
+
     /**
      * Is this ship accelerating in this update delta
      */
@@ -30,6 +43,7 @@ public class EnemyShipModel extends EntityModel {
         super(x, y, rotation);
         this.type=type;
         setHP();
+        setTTS();
     }
 
     /**
@@ -80,6 +94,32 @@ public class EnemyShipModel extends EntityModel {
                 healthPoints = GLASSCANNON_SHIP_HP;
                 break;
         }
+    }
+
+    private void setTTS() {
+        switch (type) {
+            case NORMAL:
+                timeBetweenShots = NORMAL_SHIP_TTS;
+                timeToNextShot = NORMAL_SHIP_TFS;
+                break;
+            case TANK:
+                timeBetweenShots = TANK_SHIP_TTS;
+                timeToNextShot = TANK_SHIP_TFS;
+                break;
+            case GLASSCANNON:
+                timeBetweenShots = GLASSCANNON_SHIP_TTS;
+                timeToNextShot = GLASSCANNON_SHIP_TFS;
+                break;
+        }
+    }
+
+    public boolean setTimeToNextShot(float delta){
+        timeToNextShot -= delta;
+        if (timeToNextShot < 0){
+            timeToNextShot = timeBetweenShots;
+            return true;
+        }
+        return false;
     }
 
 }

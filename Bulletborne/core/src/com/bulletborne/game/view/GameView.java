@@ -29,7 +29,7 @@ public class GameView extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = false;
+    private static final boolean DEBUG_PHYSICS = true;
 
     /**
      * How much meters does a pixel represent.
@@ -190,6 +190,13 @@ public class GameView extends ScreenAdapter {
 
         List<BulletModel> bullets = GameModel.getInstance().getBullets();
         for (BulletModel bullet : bullets) {
+            EntityView view = ViewFactory.makeView(game, bullet);
+            view.update(bullet);
+            view.draw(game.getBatch());
+        }
+
+        List<BulletModel> enemyBullets = GameModel.getInstance().getEnemyBullets();
+        for (BulletModel bullet : enemyBullets) {
             EntityView view = ViewFactory.makeView(game, bullet);
             view.update(bullet);
             view.draw(game.getBatch());

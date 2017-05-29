@@ -21,6 +21,10 @@ public class GameModel {
     public static final float Y_MIN = 3.5f;
     public static final float Y_MAX = 46.5f;
     public static final float X_START = 110f;
+
+    private int lastEnemyCreated;
+    private int lastLastEnemyCreated;
+
     /**
      * The singleton instance of the game model
      */
@@ -44,6 +48,18 @@ public class GameModel {
         }
     };
 
+    private List<BulletModel> enemyBullets;
+
+    /**
+     * A pool of bullets
+     */
+    Pool<BulletModel> enemyBulletPool = new Pool<BulletModel>() {
+        @Override
+        protected BulletModel newObject() {
+            return new BulletModel(0, 0, 0, BulletModel.BulletType.ENEMY_BULLET);
+        }
+    };
+
     private List<EnemyShipModel> enemies;
 
     /**
@@ -52,11 +68,10 @@ public class GameModel {
     Pool<EnemyShipModel> enemyPool = new Pool<EnemyShipModel>() {
         @Override
         protected EnemyShipModel newObject() {
-            int i = random(4);
+            int i = generatePseudoRandom0to4();
             switch(i){
                 case 0:
                 case 1:
-                case 4:
                     return new EnemyShipModel(0, 0, (float)Math.PI, EnemyShipModel.EnemyShipType.NORMAL);
                 case 2:
                     return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.TANK);
@@ -66,6 +81,17 @@ public class GameModel {
             return null;
         }
     };
+
+    private int generatePseudoRandom0to4(){
+        int i;
+        do {
+            i = random(3);
+        }while(i == lastEnemyCreated || i == lastLastEnemyCreated);
+
+        lastLastEnemyCreated = lastEnemyCreated;
+        lastEnemyCreated = i;
+        return i;
+    }
 
     /**
      * Returns a singleton instance of the game model
@@ -83,9 +109,10 @@ public class GameModel {
      * arena and a certain number of asteroids in different sizes.
      */
     private GameModel() {
-        //asteroids = new ArrayList<AsteroidModel>();
-        //bullets = new ArrayList<BulletModel>();
+        lastLastEnemyCreated = Integer.MAX_VALUE;
+        lastEnemyCreated = Integer.MAX_VALUE;
         bullets = new ArrayList<BulletModel>();
+        enemyBullets = new ArrayList<BulletModel>();
         enemies = new ArrayList<EnemyShipModel>();
         player = new PlayerModel(GameController.ARENA_WIDTH / 10, GameController.ARENA_HEIGHT / 2, 0);
         /*
@@ -118,6 +145,10 @@ public class GameModel {
         return bullets;
     }
 
+    public List<BulletModel> getEnemyBullets() {
+        return enemyBullets;
+    }
+
     public BulletModel createBullet(PlayerModel ship) {
         BulletModel bullet = bulletPool.obtain();
 
@@ -127,6 +158,19 @@ public class GameModel {
         bullet.setTimeToLive(0.9f);
 
         bullets.add(bullet);
+
+        return bullet;
+    }
+
+    public BulletModel createEnemyBullet(EnemyShipModel ship) {
+        BulletModel bullet = enemyBulletPool.obtain();
+
+        bullet.setFlaggedForRemoval(false);
+        bullet.setPosition(ship.getX() + (float)(Math.cos(ship.getRotation()) * 6), ship.getY() + (float)(Math.sin(ship.getRotation()) * 6));
+        bullet.setRotation(ship.getRotation() - (float)Math.PI/2);
+        bullet.setTimeToLive(10f);
+
+        enemyBullets.add(bullet);
 
         return bullet;
     }
@@ -152,8 +196,14 @@ public class GameModel {
      */
     public void remove(EntityModel model) {
         if (model instanceof BulletModel) {
-            bullets.remove(model);
-            bulletPool.free((BulletModel) model);
+            if (model.getType() == EntityModel.ModelType.ENEMY_BULLET){
+                enemyBullets.remove(model);
+                enemyBulletPool.free((BulletModel) model);
+            }
+            else {
+                bullets.remove(model);
+                bulletPool.free((BulletModel) model);
+            }
         }
         if (model instanceof EnemyShipModel) {
             enemies.remove(model);

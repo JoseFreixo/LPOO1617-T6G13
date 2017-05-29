@@ -27,6 +27,10 @@ import com.badlogic.gdx.utils.Array;
 
 public class GameController implements ContactListener{
     private static final int BULLET_DAMAGE = 1;
+    public static final float ENEMY_1_BULLET_SPEED = 60f;
+    public static final float ENEMY_2_BULLET_SPEED = 40f;
+    public static final float ENEMY_3_BULLET_SPEED = 120f;
+    public static final double ENEMY_SPAWN_LIMIT = 1.2;
     /**
      * The singleton instance of this controller
      */
@@ -81,9 +85,9 @@ public class GameController implements ContactListener{
     /**
      * Time between consecutive shots in seconds
      */
-    private static final float TIME_BETWEEN_ENEMIES_CHANGER = 1.025f;
+    private static final float TIME_BETWEEN_ENEMIES_CHANGER = 1.005f;
 
-    private static final float ENEMIES_QUANTITY_TIME_CHANGER = 3f;
+    private static final float ENEMIES_QUANTITY_TIME_CHANGER = 2f;
     /**
      * Time between consecutive enemies in seconds
      */
@@ -154,12 +158,16 @@ public class GameController implements ContactListener{
     public void update(float delta) {
         GameModel.getInstance().update(delta);
 
-        shoot();
-        generateEnemy();
-
         timeToNextShoot -= delta;
         timeToNextEnemy -= delta;
-        timeToNextQuantityChange-= delta;
+        timeToNextQuantityChange -= delta;
+
+        for (EnemyShipModel model : GameModel.getInstance().getEnemies()){
+            enemyShoot(model, delta);
+        }
+
+        shoot();
+        generateEnemy();
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -171,13 +179,16 @@ public class GameController implements ContactListener{
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
+        playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / FORCE_UP_DOWN_RATIO * delta);
+        playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
+
         for (Body body : bodies) {
-            if (body.getUserData() instanceof PlayerModel) {
-                playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() - ROTATION_SPEED / FORCE_UP_DOWN_RATIO * delta);
-                playerBody.applyForceToCenter(0, -ACCELERATION_FORCE / FORCE_UP_DOWN_RATIO * delta, true);
+
+            if (body.getPosition().x< -5 && !(body.getUserData() instanceof PlayerModel)) {//todos os corpos existentes com x negativos são eliminados
+                ((EntityModel) body.getUserData()).setFlaggedForRemoval(true);
             }
 
-            if (body.getPosition().x<0) {//todos os corpos existentes com x negativos são eliminados
+            if (body.getUserData() instanceof BulletModel && body.getPosition().x > 101){
                 ((EntityModel) body.getUserData()).setFlaggedForRemoval(true);
             }
 
@@ -215,9 +226,30 @@ public class GameController implements ContactListener{
     private void shoot() {
         if (timeToNextShoot < 0) {
             BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
-            BulletBody body = new BulletBody(world, bullet);
+            BulletBody body = new BulletBody(world, bullet, true);
             body.setLinearVelocity(BULLET_SPEED);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
+        }
+    }
+
+    private void enemyShoot(EnemyShipModel model, float delta){
+        if (model.setTimeToNextShot(delta)){
+            BulletModel bullet = GameModel.getInstance().createEnemyBullet(model);
+            BulletBody body = new BulletBody(world, bullet, false);
+            body.setLinearVelocity(getEnemyBulletSpeed(model));
+        }
+    }
+
+    private float getEnemyBulletSpeed(EnemyShipModel model){
+        switch(model.getType()){
+            case ENEMY_1:
+                return ENEMY_1_BULLET_SPEED;
+            case ENEMY_2:
+                return ENEMY_2_BULLET_SPEED;
+            case ENEMY_3:
+                return ENEMY_3_BULLET_SPEED;
+            default:
+                return BULLET_SPEED;
         }
     }
 
@@ -240,7 +272,7 @@ public class GameController implements ContactListener{
             }
             timeToNextEnemy = timeBetweenEnemies;
         }
-        if(timeToNextQuantityChange<0){
+        if(timeToNextQuantityChange<0 && timeBetweenEnemies > ENEMY_SPAWN_LIMIT){
             timeToNextQuantityChange=ENEMIES_QUANTITY_TIME_CHANGER;
             timeBetweenEnemies=timeBetweenEnemies/TIME_BETWEEN_ENEMIES_CHANGER;
         }
@@ -256,9 +288,7 @@ public class GameController implements ContactListener{
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        if (bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof BarrierModel)
-            borderShipCollision();
-        if (bodyA.getUserData() instanceof BarrierModel && bodyB.getUserData() instanceof PlayerModel)
+        if (bodyA.getUserData() instanceof PlayerModel || bodyB.getUserData() instanceof PlayerModel)
             borderShipCollision();
 
         if (bodyA.getUserData() instanceof BulletModel)
@@ -306,7 +336,7 @@ public class GameController implements ContactListener{
 
     public void borderShipCollision() {
         //System.out.print("You Idiot!");
-        System.exit(0);
+        //System.exit(0);
     }
 
     /**

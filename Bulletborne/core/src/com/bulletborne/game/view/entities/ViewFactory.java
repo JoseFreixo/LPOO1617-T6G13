@@ -22,6 +22,8 @@ public class ViewFactory {
                 cache.put(model.getType(), new PlayerView(game));
             if (model.getType() == PLAYER_BULLET)
                 cache.put(model.getType(), new BulletPlayerView(game));
+            if (model.getType() == ENEMY_BULLET)
+                cache.put(model.getType(), new BulletEnemyView(game));
             if (model.getType() == ENEMY_1)
                 cache.put(model.getType(), new EnemyShip1View(game));
             if (model.getType() == ENEMY_2)

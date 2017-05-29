@@ -11,14 +11,21 @@ public class BulletBody extends EntityBody{
      * @param world the physical world this asteroid belongs to.
      * @param model the model representing this bullet.
      */
-    public BulletBody(World world, BulletModel model) {
+    public BulletBody(World world, BulletModel model, boolean isPlayers) {
         super(world, model, BodyTypeDef.DYNAMIC);
 
         float density = 1f, friction = 0.4f, restitution = 0.5f;
         int width = 18, height = 60;
 
+        short mask;
+
+        if (isPlayers)
+            mask = (short) (ENEMY_BODY | BORDER_BODY);
+        else
+            mask = (short) (PLAYER_BODY | BORDER_BODY);
+
         createFixture(body, new float[]{
                 0,12, 6,0, 11,0, 17,12, 17,47, 11,59, 6,59, 0,47
-        }, width, height, density, friction, restitution, BULLET_BODY, (short) (PLAYER_BODY | ENEMY_BODY | BORDER_BODY));
+        }, width, height, density, friction, restitution, BULLET_BODY, mask);
     }
 }
