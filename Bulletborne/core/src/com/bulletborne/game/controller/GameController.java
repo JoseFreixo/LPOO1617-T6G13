@@ -141,6 +141,7 @@ public class GameController implements ContactListener{
     public GameController() {
         world = new World(new Vector2(0, 0), true);
 
+
         playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
         upperBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[0]);
         lowerBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[1]);

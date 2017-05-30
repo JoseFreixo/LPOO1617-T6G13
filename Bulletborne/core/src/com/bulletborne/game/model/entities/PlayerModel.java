@@ -5,11 +5,14 @@ package com.bulletborne.game.model.entities;
  */
 
 public class PlayerModel extends EntityModel{
+
+    public enum PlayerType {SHIP1, SHIP2};
     /**
      * Is this ship accelerating in this update delta
      */
     private boolean accelerating = true;
 
+    private ModelType type;
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *
@@ -17,8 +20,9 @@ public class PlayerModel extends EntityModel{
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public PlayerModel(float x, float y, float rotation) {
+    public PlayerModel(float x, float y, float rotation,ModelType type) {
         super(x, y, rotation);
+        this.type=type;
     }
 
     /**
@@ -41,6 +45,6 @@ public class PlayerModel extends EntityModel{
 
     @Override
     public ModelType getType() {
-        return ModelType.PLAYER;
+        return type;
     }
 }

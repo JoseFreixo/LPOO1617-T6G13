@@ -20,6 +20,8 @@ public class ViewFactory {
         if (!cache.containsKey(model.getType())) {
             if (model.getType() == PLAYER)
                 cache.put(model.getType(), new PlayerView(game));
+            if (model.getType() == PLAYER2)
+                cache.put(model.getType(), new PlayerView2(game));
             if (model.getType() == PLAYER_BULLET)
                 cache.put(model.getType(), new BulletPlayerView(game));
             if (model.getType() == ENEMY_BULLET)

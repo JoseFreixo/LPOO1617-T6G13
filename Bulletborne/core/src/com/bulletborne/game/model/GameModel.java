@@ -114,7 +114,8 @@ public class GameModel {
         bullets = new ArrayList<BulletModel>();
         enemyBullets = new ArrayList<BulletModel>();
         enemies = new ArrayList<EnemyShipModel>();
-        player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0);
+        player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER);
+        //player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER2);
 
     }
 
