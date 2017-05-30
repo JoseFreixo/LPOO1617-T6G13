@@ -5,14 +5,13 @@ import com.bulletborne.game.controller.entities.EnemyShip2Body;
 import com.bulletborne.game.controller.entities.EnemyShip3Body;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.BulletModel;
-import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.EnemyShipModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.BulletBody;
 import com.bulletborne.game.controller.entities.PlayerBody;
+import com.bulletborne.game.controller.entities.Player2Body;
 import com.bulletborne.game.controller.entities.BarrierBody;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -112,7 +111,8 @@ public class GameController implements ContactListener{
     /**
      * The spaceship body.
      */
-    private final PlayerBody playerBody;
+    private final Player2Body playerBody;
+    //private final PlayerBody playerBody;
 
     private final BarrierBody upperBarrierBody;
 
@@ -140,9 +140,8 @@ public class GameController implements ContactListener{
      */
     public GameController() {
         world = new World(new Vector2(0, 0), true);
-
-
-        playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
+        playerBody = new Player2Body(world, GameModel.getInstance().getPlayer());
+        //playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
         upperBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[0]);
         lowerBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[1]);
 
@@ -384,4 +383,5 @@ public class GameController implements ContactListener{
         instance = null;
         GameModel.getInstance().delete();
     }
+
 }

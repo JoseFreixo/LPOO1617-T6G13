@@ -6,7 +6,6 @@ package com.bulletborne.game.model.entities;
 
 public class PlayerModel extends EntityModel{
 
-    public enum PlayerType {SHIP1, SHIP2};
     /**
      * Is this ship accelerating in this update delta
      */
