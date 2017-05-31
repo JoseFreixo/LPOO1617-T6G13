@@ -92,7 +92,7 @@ public class GameView extends View {
 
         if (GameController.getInstance().getLost()){
             GameController.getInstance().delete();
-            game.setScreen(new GameView(game));
+            game.setScreen(new MainMenuView(game));
         }
     }
 
