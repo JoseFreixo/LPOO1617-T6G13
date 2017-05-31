@@ -35,6 +35,7 @@ public class GameView extends View {
      */
     public GameView(Bulletborne game) {
         super(game);
+        GameController.setShipNumber(shipNumber);
         loadAssets();
     }
 

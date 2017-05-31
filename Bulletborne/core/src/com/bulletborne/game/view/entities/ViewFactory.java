@@ -18,19 +18,19 @@ public class ViewFactory {
 
     public static EntityView makeView(Bulletborne game, EntityModel model) {
         if (!cache.containsKey(model.getType())) {
-            if (model.getType() == PLAYER)
+            if (model.getType() == PLAYER_SHIP1)
                 cache.put(model.getType(), new PlayerView(game));
-            if (model.getType() == PLAYER2)
+            if (model.getType() == PLAYER_SHIP2)
                 cache.put(model.getType(), new PlayerView2(game));
             if (model.getType() == PLAYER_BULLET)
                 cache.put(model.getType(), new BulletPlayerView(game));
             if (model.getType() == ENEMY_BULLET)
                 cache.put(model.getType(), new BulletEnemyView(game));
-            if (model.getType() == ENEMY_1)
+            if (model.getType() == ENEMY_SHIP1)
                 cache.put(model.getType(), new EnemyShip1View(game));
-            if (model.getType() == ENEMY_2)
+            if (model.getType() == ENEMY_SHIP2)
                 cache.put(model.getType(), new EnemyShip2View(game));
-            if (model.getType() == ENEMY_3)
+            if (model.getType() == ENEMY_SHIP3)
                 cache.put(model.getType(), new EnemyShip3View(game));
         }
         return cache.get(model.getType());

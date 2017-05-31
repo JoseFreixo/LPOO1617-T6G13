@@ -9,8 +9,9 @@ import com.bulletborne.game.model.entities.EnemyShipModel;
 import com.bulletborne.game.model.entities.PlayerModel;
 import com.bulletborne.game.model.entities.EntityModel;
 import com.bulletborne.game.controller.entities.BulletBody;
-import com.bulletborne.game.controller.entities.PlayerBody;
 import com.bulletborne.game.controller.entities.Player2Body;
+import com.bulletborne.game.controller.entities.PlayerBody;
+import com.bulletborne.game.controller.entities.Player1Body;
 import com.bulletborne.game.controller.entities.BarrierBody;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,6 +21,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
 
 /**
  * Created by Zé on 05/05/2017.
@@ -36,7 +39,9 @@ public class GameController implements ContactListener{
      * The singleton instance of this controller
      */
     private static GameController instance;
-
+    protected static final int SHIP_NUMBER_1=1;
+    protected static final int SHIP_NUMBER_2=2;
+    private static int shipNumber;
     /**
      * The amount of time that passed after the begining of the game
      */
@@ -111,8 +116,7 @@ public class GameController implements ContactListener{
     /**
      * The spaceship body.
      */
-    private final Player2Body playerBody;
-    //private final PlayerBody playerBody;
+    private PlayerBody playerBody;
 
     private final BarrierBody upperBarrierBody;
 
@@ -140,8 +144,12 @@ public class GameController implements ContactListener{
      */
     public GameController() {
         world = new World(new Vector2(0, 0), true);
-        playerBody = new Player2Body(world, GameModel.getInstance().getPlayer());
-        //playerBody = new PlayerBody(world, GameModel.getInstance().getPlayer());
+
+        if(shipNumber==SHIP_NUMBER_1)
+            playerBody = new Player1Body(world, GameModel.getInstance().getPlayer());
+        else if(shipNumber==SHIP_NUMBER_2)
+            playerBody = new Player2Body(world, GameModel.getInstance().getPlayer());
+
         upperBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[0]);
         lowerBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[1]);
 
@@ -242,9 +250,11 @@ public class GameController implements ContactListener{
      */
     private void shoot() {
         if (timeToNextShoot < 0) {
-            BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
-            BulletBody body = new BulletBody(world, bullet, true);
-            body.setLinearVelocity(BULLET_SPEED);
+            ArrayList<BulletModel> bulletsToShoot=playerBody.shoot();
+            for(BulletModel bullet: bulletsToShoot) {
+                BulletBody body = new BulletBody(world, bullet, true);
+                body.setLinearVelocity(BULLET_SPEED);
+            }
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
     }
@@ -259,11 +269,11 @@ public class GameController implements ContactListener{
 
     private float getEnemyBulletSpeed(EnemyShipModel model){
         switch(model.getType()){
-            case ENEMY_1:
+            case ENEMY_SHIP1:
                 return ENEMY_1_BULLET_SPEED;
-            case ENEMY_2:
+            case ENEMY_SHIP2:
                 return ENEMY_2_BULLET_SPEED;
-            case ENEMY_3:
+            case ENEMY_SHIP3:
                 return ENEMY_3_BULLET_SPEED;
             default:
                 return BULLET_SPEED;
@@ -274,15 +284,15 @@ public class GameController implements ContactListener{
         if (timeToNextEnemy < 0){
             EnemyShipModel enemy = GameModel.getInstance().createEnemy();
             switch (enemy.getType()){
-                case ENEMY_1:
+                case ENEMY_SHIP1:
                     EnemyShip1Body body = new EnemyShip1Body(world, enemy);
                     body.setLinearVelocity(NORMAL_ENEMY_SPEED);
                     break;
-                case ENEMY_2:
+                case ENEMY_SHIP2:
                     EnemyShip2Body body2 = new EnemyShip2Body(world, enemy);
                     body2.setLinearVelocity(TANK_ENEMY_SPEED);
                     break;
-                case ENEMY_3:
+                case ENEMY_SHIP3:
                     EnemyShip3Body body3 = new EnemyShip3Body(world, enemy);
                     body3.setLinearVelocity(GLASSCANNON_ENEMY_SPEED);
                     break;
@@ -298,11 +308,11 @@ public class GameController implements ContactListener{
     private void enemyKilled(EnemyShipModel model){
         model.DamageTaken(BULLET_DAMAGE);
         switch(model.getType()){
-            case ENEMY_1:
+            case ENEMY_SHIP1:
                 pointsGained += 7.5f;
-            case ENEMY_2:
+            case ENEMY_SHIP2:
                 pointsGained += 5f;
-            case ENEMY_3:
+            case ENEMY_SHIP3:
                 pointsGained += 10f;
         }
     }
@@ -384,4 +394,8 @@ public class GameController implements ContactListener{
         GameModel.getInstance().delete();
     }
 
+    public static void setShipNumber(int shipNumber) {
+        GameController.shipNumber = shipNumber;
+        GameModel.setShipNumber(shipNumber);
+    }
 }

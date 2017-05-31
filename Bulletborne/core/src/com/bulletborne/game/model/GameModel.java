@@ -21,7 +21,10 @@ public class GameModel {
     public static final float Y_MIN = 3.5f;
     public static final float Y_MAX = 46.5f;
     public static final float X_START = 110f;
+    protected static final int SHIP_NUMBER_1=1;
+    protected static final int SHIP_NUMBER_2=2;
 
+    private static int shipNumber;
     private int lastEnemyCreated;
     private int lastLastEnemyCreated;
 
@@ -114,8 +117,11 @@ public class GameModel {
         bullets = new ArrayList<BulletModel>();
         enemyBullets = new ArrayList<BulletModel>();
         enemies = new ArrayList<EnemyShipModel>();
-        //player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER1);
-        player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER2);
+        if(shipNumber==SHIP_NUMBER_1)
+            player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER_SHIP1);
+        else if(shipNumber==SHIP_NUMBER_2)
+            player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER_SHIP2);
+
 
 
     }
@@ -211,7 +217,9 @@ public class GameModel {
             if (bullet.decreaseTimeToLive(delta))
                 bullet.setFlaggedForRemoval(true);
     }
-
+    public static void setShipNumber(int shipNumber) {
+        GameModel.shipNumber = shipNumber;
+    }
     public void delete() {
         instance = null;
     }

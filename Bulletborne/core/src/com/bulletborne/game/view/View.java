@@ -53,6 +53,11 @@ public abstract class View extends ScreenAdapter {
      */
     protected Matrix4 debugCamera;
 
+    protected static final int SHIP_NUMBER_1=1;
+    protected static final int SHIP_NUMBER_2=2;
+
+    protected static int shipNumber=SHIP_NUMBER_1;
+
     /**
      * Creates this screen.
      */

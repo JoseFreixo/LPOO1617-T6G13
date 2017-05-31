@@ -1,21 +1,22 @@
 package com.bulletborne.game.controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.bulletborne.game.model.GameModel;
+import com.bulletborne.game.model.entities.BulletModel;
 import com.bulletborne.game.model.entities.PlayerModel;
+
+import java.util.ArrayList;
 
 /**
  * Created by r_tor on 30/05/2017.
  */
 
-public class Player2Body extends EntityBody {
+public class Player2Body extends PlayerBody {
     public Player2Body(World world, PlayerModel model){
         super(world, model, BodyTypeDef.DYNAMIC);
-
-        float density = 0.5f, friction = 0.4f, restitution = 0.5f;
-        int width = 255, height = 187;
-
-        // Fixtures
-
+        width = 257;
+        height = 187;
         //Upper Turbine
         createFixture(body, new float[]{
                 17,5, 104,6, 106,43, 20,44
@@ -40,5 +41,19 @@ public class Player2Body extends EntityBody {
         createFixture(body, new float[]{
                 112,145, 16,140, 20,183, 100, 180
         }, width, height, density, friction, restitution, PLAYER_BODY, (short) (ENEMY_BODY | BULLET_BODY | BORDER_BODY));
+    }
+
+    @Override
+    public ArrayList<BulletModel> shoot() {
+        ArrayList<BulletModel> bullets= new ArrayList<BulletModel>();
+        BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
+        bullets.add(bullet);
+        bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
+        bullet.setPosition(bullet.getX(),bullet.getY()+Y_BULLET_DISTANCE);
+        bullets.add(bullet);
+        bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
+        bullet.setPosition(bullet.getX(),bullet.getY()-Y_BULLET_DISTANCE);
+        bullets.add(bullet);
+        return bullets;
     }
 }

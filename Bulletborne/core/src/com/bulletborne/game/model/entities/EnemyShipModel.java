@@ -67,11 +67,11 @@ public class EnemyShipModel extends EntityModel {
     @Override
     public ModelType getType() {
         if(this.type==EnemyShipType.NORMAL)
-            return ModelType.ENEMY_1;
+            return ModelType.ENEMY_SHIP1;
         if(this.type==EnemyShipType.TANK)
-            return ModelType.ENEMY_2;
+            return ModelType.ENEMY_SHIP2;
         if(this.type==EnemyShipType.GLASSCANNON)
-            return ModelType.ENEMY_3;
+            return ModelType.ENEMY_SHIP3;
         return null;
     }
 
