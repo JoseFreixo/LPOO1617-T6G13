@@ -41,8 +41,8 @@ public class GameView extends View {
         loadAssets();
         fontInitialAnimation=new BitmapFont(Gdx.files.internal("myFont.fnt"));
         fontInitialAnimation.getData().scale(0.5f);
-        fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFont.fnt"));
-        fontCurrentPoints.getData().scale(0.001f);
+        fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
+        fontCurrentPoints.getData().scale(0.5f);
     }
 
 
@@ -109,7 +109,7 @@ public class GameView extends View {
         else if(number<3.5f){
             fontInitialAnimation.draw(game.getBatch(),"GO",ARENA_WIDTH/PIXEL_TO_METER/2-xStart,(ARENA_HEIGHT/PIXEL_TO_METER/2)+yStart);
         }
-        fontCurrentPoints.draw(game.getBatch(),Integer.toString((int)(GameController.getInstance().getPointsGained()+number*10)),1/PIXEL_TO_METER,6/PIXEL_TO_METER);
+        fontCurrentPoints.draw(game.getBatch(),Integer.toString((int)(GameController.getInstance().getPointsGained()+number*10)),1/PIXEL_TO_METER,49/PIXEL_TO_METER);
     }
 
     /**
