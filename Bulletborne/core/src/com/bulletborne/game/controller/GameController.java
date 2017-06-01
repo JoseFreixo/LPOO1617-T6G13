@@ -255,6 +255,8 @@ public class GameController implements ContactListener{
      * Shoots a bullet from the spaceship
      */
     private void shoot() {
+        if(lost)
+            return;
         if (timeToNextShoot < 0) {
             ArrayList<BulletModel> bulletsToShoot=playerBody.shoot();
             for(BulletModel bullet: bulletsToShoot) {
@@ -267,11 +269,13 @@ public class GameController implements ContactListener{
     }
 
     private void enemyShoot(EnemyShipModel model, float delta){
+
         if (model.setTimeToNextShot(delta)){
             BulletModel bullet = GameModel.getInstance().createEnemyBullet(model);
             BulletBody body = new BulletBody(world, bullet, false);
             body.setLinearVelocity(getEnemyBulletSpeed(model));
-            shot.play(0.1f);
+            if(!lost)
+                shot.play(0.1f);
         }
     }
 

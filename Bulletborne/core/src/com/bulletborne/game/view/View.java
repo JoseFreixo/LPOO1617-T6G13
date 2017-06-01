@@ -74,6 +74,11 @@ public abstract class View extends ScreenAdapter {
         camera = createCamera();
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
     /**
      * Creates the camera used to show the viewport.
      *

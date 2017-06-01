@@ -35,11 +35,15 @@ public class GameView extends View {
     public static final int POINTS_THAT_DONT_COUNT = 30;
     public static final int TIMETOPOINTS = 10;
     public static final String STARTING_MESSAGE = "GO";
+    private boolean lostFlag=false;
     private BitmapFont fontInitialAnimation;
     private BitmapFont fontCurrentPoints;
+    private BitmapFont fontEndScore;
+    private BitmapFont fontEndPoints;
     private Sound pianoA4;
     private Sound pianoA5;
     private float counter;
+    private int totalPoints;
 
     /**
      * Creates this screen.
@@ -54,6 +58,10 @@ public class GameView extends View {
         fontInitialAnimation.getData().scale(SCALE_AMOUNT);
         fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
         fontCurrentPoints.getData().scale(SCALE_AMOUNT);
+        fontEndScore=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
+        fontEndScore.getData().scale(5);
+        fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
+        fontCurrentPoints.getData().scale(2);
         pianoA4 = Gdx.audio.newSound(Gdx.files.internal("pianoA4.wav"));
         pianoA5 = Gdx.audio.newSound(Gdx.files.internal("pianoA5.wav"));
         setCounter(0f);
@@ -97,7 +105,9 @@ public class GameView extends View {
         game.getBatch().begin();
         drawBackground();
         drawEntities();
-        drawFonts();
+        if(!lostFlag)
+            drawFonts();
+        lost();
         game.getBatch().end();
 
         setCounter(counter - delta);
@@ -108,15 +118,28 @@ public class GameView extends View {
             debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
 
-        if (GameController.getInstance().getLost()){
-            pianoA4.dispose();
-            pianoA5.dispose();
-            fontCurrentPoints.dispose();
-            fontInitialAnimation.dispose();
-            GameController.getInstance().delete();
-            game.setScreen(new MainMenuView(game));
+
+
+    }
+
+    private void lost() {
+        if (GameController.getInstance().getLost()&&!lostFlag){
+            lostFlag=true;
+            totalPoints=(int) ((GameController.getInstance().getPointsGained() + (GameController.getInstance().getTimePast() * TIMETOPOINTS)) - POINTS_THAT_DONT_COUNT);
+        }
+        if(lostFlag){
+            drawLostScreen();
         }
     }
+
+    private void drawLostScreen() {
+        float xStart = (fontEndScore.getRegion().getRegionWidth() / 4)*SCALE_AMOUNT;
+        float yStart = (fontEndScore.getRegion().getRegionHeight());
+        fontEndScore.draw(game.getBatch(),"SCORE", (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart*5, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+        fontCurrentPoints.draw(game.getBatch(),"Current:    " +Integer.toString(totalPoints), (ARENA_WIDTH / PIXEL_TO_METER / 12) , (ARENA_HEIGHT / PIXEL_TO_METER / 1.7f) );
+        fontCurrentPoints.draw(game.getBatch(),"Best One:   " +Integer.toString(totalPoints), (ARENA_WIDTH / PIXEL_TO_METER / 12) , (ARENA_HEIGHT / PIXEL_TO_METER / 2.3f) );
+    }
+
 
     private void drawFonts() {
 
@@ -148,7 +171,7 @@ public class GameView extends View {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        if (GameController.getInstance().getTimePast() < 3)
+        if (GameController.getInstance().getTimePast() < 3||lostFlag)
             return;
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().goUp(delta);
@@ -200,5 +223,14 @@ public class GameView extends View {
 
     public void setCounter(float value){
         counter = value;
+    }
+
+    @Override
+    public void dispose() {
+        pianoA4.dispose();
+        pianoA5.dispose();
+        fontCurrentPoints.dispose();
+        fontInitialAnimation.dispose();
+        GameController.getInstance().delete();
     }
 }
