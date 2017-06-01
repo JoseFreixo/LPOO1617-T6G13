@@ -326,9 +326,9 @@ public class GameController implements ContactListener{
     private void enemyKilled(EnemyShipModel model){
         model.DamageTaken(BULLET_DAMAGE);
         if (model.getHP() > 0)
-            damage.play(0.5f);
+            damage.play(0.1f);
         else
-            explosion.play(0.5f);
+            explosion.play(0.1f);
         switch(model.getType()){
             case ENEMY_SHIP1:
             case ENEMY_SHIP2:

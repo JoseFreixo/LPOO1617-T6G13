@@ -167,7 +167,7 @@ public class GameView extends View {
         if ((3 - number) >= 0.0f) {
             fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
             if (counter <= 0.0f) {
-                pianoA4.play();
+                pianoA4.play(0.3f);
                 setCounter(1f);
             }
             return;
@@ -175,7 +175,7 @@ public class GameView extends View {
         if (number < 3.5f) {
             fontInitialAnimation.draw(game.getBatch(), STARTING_MESSAGE, ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart * 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
             if (counter <= 0.0f) {
-                pianoA5.play();
+                pianoA5.play(0.5f);
                 setCounter(0.5f);
             }
         }
