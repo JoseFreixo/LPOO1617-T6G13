@@ -25,7 +25,7 @@ public abstract class View extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    protected static final boolean DEBUG_PHYSICS = true;
+    protected static final boolean DEBUG_PHYSICS = false;
 
     /**
      * How much meters does a pixel represent.

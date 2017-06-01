@@ -1,5 +1,7 @@
 package com.bulletborne.game.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.bulletborne.game.controller.entities.EnemyShip1Body;
 import com.bulletborne.game.controller.entities.EnemyShip2Body;
 import com.bulletborne.game.controller.entities.EnemyShip3Body;
@@ -139,11 +141,15 @@ public class GameController implements ContactListener{
 
     private float timeToNextQuantityChange;
 
+    private Sound shot;
+
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
     public GameController() {
         world = new World(new Vector2(0, 0), true);
+
+        shot = Gdx.audio.newSound(Gdx.files.internal("shot.wav"));
 
         if(shipNumber==SHIP_NUMBER_1)
             playerBody = new Player1Body(world, GameModel.getInstance().getPlayer());
@@ -255,6 +261,7 @@ public class GameController implements ContactListener{
                 BulletBody body = new BulletBody(world, bullet, true);
                 body.setLinearVelocity(BULLET_SPEED);
             }
+            shot.play(0.1f);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
     }
@@ -264,6 +271,7 @@ public class GameController implements ContactListener{
             BulletModel bullet = GameModel.getInstance().createEnemyBullet(model);
             BulletBody body = new BulletBody(world, bullet, false);
             body.setLinearVelocity(getEnemyBulletSpeed(model));
+            shot.play(0.1f);
         }
     }
 
@@ -390,6 +398,7 @@ public class GameController implements ContactListener{
     }
 
     public void delete(){
+        shot.dispose();
         instance = null;
         GameModel.getInstance().delete();
     }
