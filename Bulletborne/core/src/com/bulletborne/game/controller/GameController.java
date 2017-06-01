@@ -317,7 +317,6 @@ public class GameController implements ContactListener{
         model.DamageTaken(BULLET_DAMAGE);
         switch(model.getType()){
             case ENEMY_SHIP1:
-                pointsGained += 7.5f;
             case ENEMY_SHIP2:
                 pointsGained += 5f;
             case ENEMY_SHIP3:

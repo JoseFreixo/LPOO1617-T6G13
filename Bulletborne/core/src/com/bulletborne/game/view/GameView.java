@@ -39,7 +39,7 @@ public class GameView extends View {
     private BitmapFont fontCurrentPoints;
     private Sound pianoA4;
     private Sound pianoA5;
-    private static float counter = 0f;
+    private float counter;
 
     /**
      * Creates this screen.
@@ -56,7 +56,7 @@ public class GameView extends View {
         fontCurrentPoints.getData().scale(SCALE_AMOUNT);
         pianoA4 = Gdx.audio.newSound(Gdx.files.internal("pianoA4.wav"));
         pianoA5 = Gdx.audio.newSound(Gdx.files.internal("pianoA5.wav"));
-        setCounter(0);
+        setCounter(0f);
     }
 
 
@@ -125,7 +125,6 @@ public class GameView extends View {
         float yStart = (fontInitialAnimation.getRegion().getRegionHeight() / 2)*SCALE_AMOUNT;
         if ((3 - number) >= 0.0f) {
             fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
-            System.out.println(counter);
             if (counter <= 0.0f) {
                 pianoA4.play();
                 setCounter(1f);
@@ -134,7 +133,6 @@ public class GameView extends View {
         }
         if (number < 3.5f) {
             fontInitialAnimation.draw(game.getBatch(), STARTING_MESSAGE, ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart * 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
-            System.out.println(counter);
             if (counter <= 0.0f) {
                 pianoA5.play();
                 setCounter(0.5f);
@@ -200,7 +198,7 @@ public class GameView extends View {
         game.getBatch().draw(background, 0, 0, ARENA_WIDTH / PIXEL_TO_METER, ARENA_HEIGHT / PIXEL_TO_METER);
     }
 
-    public static void setCounter(float value){
+    public void setCounter(float value){
         counter = value;
     }
 }
