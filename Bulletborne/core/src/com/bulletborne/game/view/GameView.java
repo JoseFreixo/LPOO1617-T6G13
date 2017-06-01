@@ -1,5 +1,6 @@
 package com.bulletborne.game.view;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
@@ -27,6 +28,8 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 public class GameView extends View {
 
+    private BitmapFont fontInitialAnimation;
+    private BitmapFont fontCurrentPoints;
     /**
      * Creates this screen.
      *
@@ -36,6 +39,10 @@ public class GameView extends View {
         super(game);
         GameController.setShipNumber(shipNumber);
         loadAssets();
+        fontInitialAnimation=new BitmapFont(Gdx.files.internal("myFont.fnt"));
+        fontInitialAnimation.getData().scale(0.5f);
+        fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFont.fnt"));
+        fontCurrentPoints.getData().scale(0.001f);
     }
 
 
@@ -76,6 +83,7 @@ public class GameView extends View {
         game.getBatch().begin();
         drawBackground();
         drawEntities();
+        drawFonts();
         game.getBatch().end();
 
         if (DEBUG_PHYSICS) {
@@ -88,6 +96,20 @@ public class GameView extends View {
             GameController.getInstance().delete();
             game.setScreen(new MainMenuView(game));
         }
+    }
+
+    private void drawFonts() {
+
+        float number= GameController.getInstance().getTimePast();
+        float xStart=fontInitialAnimation.getRegion().getRegionWidth()/4;
+        float yStart=fontInitialAnimation.getRegion().getRegionHeight()/4;
+        if((3-number)>=0.0f){
+            fontInitialAnimation.draw(game.getBatch(),(Integer.toString((int)(4-number))),(ARENA_WIDTH/PIXEL_TO_METER/2)-xStart/2,(ARENA_HEIGHT/PIXEL_TO_METER/2)+yStart);
+        }
+        else if(number<3.5f){
+            fontInitialAnimation.draw(game.getBatch(),"GO",ARENA_WIDTH/PIXEL_TO_METER/2-xStart,(ARENA_HEIGHT/PIXEL_TO_METER/2)+yStart);
+        }
+        fontCurrentPoints.draw(game.getBatch(),Integer.toString((int)(GameController.getInstance().getPointsGained()+number*10)),1/PIXEL_TO_METER,6/PIXEL_TO_METER);
     }
 
     /**

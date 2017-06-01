@@ -329,6 +329,10 @@ public class GameController implements ContactListener{
         return timePast;
     }
 
+    public float getPointsGained() {
+        return pointsGained;
+    }
+
     /**
      * A contact between two objects was detected
      *
@@ -407,4 +411,6 @@ public class GameController implements ContactListener{
         GameController.shipNumber = shipNumber;
         GameModel.setShipNumber(shipNumber);
     }
+
+
 }
