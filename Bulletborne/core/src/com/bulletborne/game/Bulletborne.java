@@ -63,4 +63,8 @@ public class Bulletborne extends Game {
 	 * @return the sprite batch
 	 */
 	public Music getMusic() { return music; }
+
+    public void setPlaying(String musicName){
+        music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
+    }
 }

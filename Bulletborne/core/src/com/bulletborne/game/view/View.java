@@ -101,6 +101,10 @@ public abstract class View extends ScreenAdapter {
         camera.position.set((ARENA_WIDTH/2) / PIXEL_TO_METER, (ARENA_HEIGHT/2) / PIXEL_TO_METER, 0);
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
+        if (!game.getMusic().isPlaying()){
+            game.setPlaying("Skyrim8bitfinal_repeat.wav");
+            game.getMusic().setLooping(true);
+        }
 
         Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );

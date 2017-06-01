@@ -1,6 +1,5 @@
 package com.bulletborne.game.view;
 
-import com.badlogic.gdx.audio.Music;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
@@ -27,7 +26,6 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  * Created by Zé on 05/05/2017.
  */
 public class GameView extends View {
-    private Music music;
 
     /**
      * Creates this screen.
