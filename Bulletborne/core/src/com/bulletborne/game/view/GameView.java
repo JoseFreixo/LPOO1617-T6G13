@@ -2,6 +2,8 @@ package com.bulletborne.game.view;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.PlayerModel;
@@ -12,12 +14,7 @@ import com.bulletborne.game.view.entities.ViewFactory;
 import com.bulletborne.game.Bulletborne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import java.util.List;
 
@@ -30,11 +27,24 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 public class GameView extends View {
 
     public static final float SCALE_AMOUNT = 0.5f;
-    public static final float X_START = 1 / PIXEL_TO_METER;
-    public static final float Y_START = 49 / PIXEL_TO_METER;
+    public static final float X_START_CURR_SCORE = 1 / PIXEL_TO_METER;
+    public static final float Y_START_CURR_SCORE = 49 / PIXEL_TO_METER;
     public static final int POINTS_THAT_DONT_COUNT = 30;
     public static final int TIMETOPOINTS = 10;
     public static final String STARTING_MESSAGE = "GO";
+    private static final String SCORE_STRING = "SCORE";
+    private static final String CURRENT_STRING = "Current";
+    private static final String BEST_ONE_STRING = "Best One:   ";
+    private static final float SCREEN_CENTER = (ARENA_WIDTH / PIXEL_TO_METER / 2);
+    private static final float FONT_X_POS = (ARENA_WIDTH / PIXEL_TO_METER / 12);
+    private static final float CURRENTFONT_Y_POS = (ARENA_HEIGHT / PIXEL_TO_METER / 1.7f);
+    private static final float BESTFONT_Y_POS = (ARENA_HEIGHT / PIXEL_TO_METER / 2.4f);
+    private static final float BUTTONS_END_Y_POS = ARENA_HEIGHT / PIXEL_TO_METER / 7f;
+    private static final int SCORE_FONT_SCALE = 5;
+    private static final int POINTS_FONT_SCALE = 2;
+    private static final float QUIT_END_X_POS = ARENA_WIDTH / PIXEL_TO_METER / 4;
+    private static final float TRYAGAIN_X_POS = ARENA_WIDTH / PIXEL_TO_METER / 1.35f;
+    private static final String SCORE_STR = "SCORE";
     private boolean lostFlag=false;
     private BitmapFont fontInitialAnimation;
     private BitmapFont fontCurrentPoints;
@@ -59,9 +69,9 @@ public class GameView extends View {
         fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
         fontCurrentPoints.getData().scale(SCALE_AMOUNT);
         fontEndScore=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
-        fontEndScore.getData().scale(5);
+        fontEndScore.getData().scale(SCORE_FONT_SCALE);
         fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
-        fontCurrentPoints.getData().scale(2);
+        fontCurrentPoints.getData().scale(POINTS_FONT_SCALE);
         pianoA4 = Gdx.audio.newSound(Gdx.files.internal("pianoA4.wav"));
         pianoA5 = Gdx.audio.newSound(Gdx.files.internal("pianoA5.wav"));
         setCounter(0f);
@@ -74,16 +84,14 @@ public class GameView extends View {
     private void loadAssets() {
         this.game.getAssetManager().load( "Player_ship.png" , Texture.class);
         this.game.getAssetManager().load( "Player_ship2.png" , Texture.class);
-
         this.game.getAssetManager().load( "bullet.png" , Texture.class);
         this.game.getAssetManager().load( "bullet_ally.png" , Texture.class);
-
         this.game.getAssetManager().load( "Empty_background.png" , Texture.class);
-
         this.game.getAssetManager().load( "Enemy_ship.png" , Texture.class);
         this.game.getAssetManager().load( "Enemy_ship2.png" , Texture.class);
         this.game.getAssetManager().load( "Enemy_ship3.png" , Texture.class);
-
+        this.game.getAssetManager().load( "Try_again.png" , Texture.class);
+        this.game.getAssetManager().load( "Quit_to_menu.png" , Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
@@ -95,9 +103,7 @@ public class GameView extends View {
     @Override
     public void render(float delta) {
         GameController.getInstance().removeFlagged();
-
         handleInputs(delta);
-
         GameController.getInstance().update(delta);
 
         super.render(delta);
@@ -106,7 +112,7 @@ public class GameView extends View {
         drawBackground();
         drawEntities();
         if(!lostFlag)
-            drawFonts();
+            drawStartAnimationAndScore();
         lost();
         game.getBatch().end();
 
@@ -117,9 +123,6 @@ public class GameView extends View {
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
-
-
-
     }
 
     private void lost() {
@@ -135,13 +138,25 @@ public class GameView extends View {
     private void drawLostScreen() {
         float xStart = (fontEndScore.getRegion().getRegionWidth() / 4)*SCALE_AMOUNT;
         float yStart = (fontEndScore.getRegion().getRegionHeight());
-        fontEndScore.draw(game.getBatch(),"SCORE", (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart*5, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
-        fontCurrentPoints.draw(game.getBatch(),"Current:    " +Integer.toString(totalPoints), (ARENA_WIDTH / PIXEL_TO_METER / 12) , (ARENA_HEIGHT / PIXEL_TO_METER / 1.7f) );
-        fontCurrentPoints.draw(game.getBatch(),"Best One:   " +Integer.toString(totalPoints), (ARENA_WIDTH / PIXEL_TO_METER / 12) , (ARENA_HEIGHT / PIXEL_TO_METER / 2.3f) );
+
+        fontEndScore.draw(game.getBatch(), SCORE_STR, (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart*5, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+
+        fontCurrentPoints.draw(game.getBatch(), CURRENT_STRING + ":    " +Integer.toString(totalPoints), FONT_X_POS, CURRENTFONT_Y_POS);
+        fontCurrentPoints.draw(game.getBatch(), BEST_ONE_STRING +Integer.toString(totalPoints), FONT_X_POS, BESTFONT_Y_POS);
+
+        Texture buttonQuit= game.getAssetManager().get("Quit_to_menu.png", Texture.class);
+        Sprite sprite= new Sprite(new TextureRegion(buttonQuit, buttonQuit.getWidth(), buttonQuit.getHeight()));
+        sprite.setCenter(QUIT_END_X_POS, BUTTONS_END_Y_POS);
+        sprite.draw(game.getBatch());
+
+        Texture buttonTryAgain = game.getAssetManager().get("Try_again.png", Texture.class);
+        sprite= new Sprite(new TextureRegion(buttonTryAgain, buttonTryAgain.getWidth(), buttonTryAgain.getHeight()));
+        sprite.setCenter(TRYAGAIN_X_POS, BUTTONS_END_Y_POS);
+        sprite.draw(game.getBatch());
     }
 
 
-    private void drawFonts() {
+    private void drawStartAnimationAndScore() {
 
         float number = GameController.getInstance().getTimePast();
         float xStart = (fontInitialAnimation.getRegion().getRegionWidth() / 4)*SCALE_AMOUNT;
@@ -161,8 +176,7 @@ public class GameView extends View {
                 setCounter(0.5f);
             }
         }
-        fontCurrentPoints.draw(game.getBatch(), Integer.toString((int) (GameController.getInstance().getPointsGained() + number * TIMETOPOINTS) - POINTS_THAT_DONT_COUNT), X_START, Y_START);
-
+        fontCurrentPoints.draw(game.getBatch(), Integer.toString((int) (GameController.getInstance().getPointsGained() + number * TIMETOPOINTS) - POINTS_THAT_DONT_COUNT), X_START_CURR_SCORE, Y_START_CURR_SCORE);
     }
 
     /**
@@ -171,8 +185,45 @@ public class GameView extends View {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        if (GameController.getInstance().getTimePast() < 3||lostFlag)
+        if (GameController.getInstance().getTimePast() < 3l)
             return;
+
+        if(lostFlag){
+            endGameInputs();
+            return;
+        }
+
+        playGameInputs(delta);
+
+    }
+
+    private void endGameInputs() {
+        float xMax= Gdx.graphics.getWidth();
+        float yMax= Gdx.graphics.getHeight();
+        if(Gdx.input.justTouched()) {
+            System.out.println("x ratio= " + xMax / Gdx.input.getX());
+            System.out.println("t ratio= " + yMax / Gdx.input.getY());
+            if (Gdx.input.getY() > yMax / 1.02f && Gdx.input.getX() < xMax / 1.35f){
+
+                if (Gdx.input.getX() > xMax / 6.93f && Gdx.input.getX() < xMax / 2.82f) {
+                    System.out.println("x ratio= " + xMax / Gdx.input.getX());
+                    System.out.println("t ratio= " + yMax / Gdx.input.getY());
+                }
+
+                if (Gdx.input.getX() > xMax / 1.58f && Gdx.input.getX() < xMax / 1.18f) {
+                    System.out.println("x ratio= " + xMax / Gdx.input.getX());
+                    System.out.println("t ratio= " + yMax / Gdx.input.getY());
+                }
+            }
+        }
+    }
+
+        //if (Gdx.input.getX() > xMax/ && Gdx.input.getX()<xMax/)
+            //if (Gdx.input.getY() > yMax/ && Gdx.input.getY() < yMax/)
+               // buttonClick.play(0.5f);
+        //game.setScreen(new MainMenuView(game));
+
+    private void playGameInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().goUp(delta);
         }

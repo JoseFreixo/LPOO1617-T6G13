@@ -380,8 +380,6 @@ public class GameController implements ContactListener{
 
 
     public void borderShipCollision() {
-        System.out.println("Time past: " + Math.floor(timePast * 10));
-        System.out.println("Points gained: " + pointsGained);
         lost = true;
     }
 
