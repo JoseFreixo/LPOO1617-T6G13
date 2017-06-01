@@ -84,29 +84,41 @@ public class MainMenuView extends View {
     private void touchedButtons(int xMax,int yMax){
         if (Gdx.input.getX() > xMax/BUTTONS_X_MIN && Gdx.input.getX()<xMax/BUTTONS_X_MAX) {
 
-            if (Gdx.input.getY() > yMax/PLAY_Y_MIN && Gdx.input.getY() < yMax/PLAY_Y_MAX)
+            if (Gdx.input.getY() > yMax/PLAY_Y_MIN && Gdx.input.getY() < yMax/PLAY_Y_MAX) {
+                buttonClick.play(0.5f);
                 game.setScreen(new GameView(game));
+            }
 
-            if (Gdx.input.getY() > yMax/HANGAR_Y_MIN && Gdx.input.getY() < yMax/HANGAR_Y_MAX)
+            if (Gdx.input.getY() > yMax/HANGAR_Y_MIN && Gdx.input.getY() < yMax/HANGAR_Y_MAX) {
+                buttonClick.play(0.5f);
                 game.setScreen(new HangarView(game));
+            }
 
 
-            if (Gdx.input.getY() > yMax/EXIT_Y_MIN && Gdx.input.getY() < yMax/EXIT_Y_MAX)
+            if (Gdx.input.getY() > yMax/EXIT_Y_MIN && Gdx.input.getY() < yMax/EXIT_Y_MAX) {
+                buttonClick.play(0.5f);
                 System.exit(0);
+            }
         }
     }
 
     private void touchedLowerButtons(int xMax,int yMax){
         if (Gdx.input.getY() > yMax/LOWER_BUTTONS_Y_MIN && Gdx.input.getY() < yMax/LOWER_BUTTONS_Y_MAX){
 
-            if (Gdx.input.getX() > xMax/OPTIONS_X_MIN && Gdx.input.getX()< xMax/OPTIONS_X_MAX)
+            if (Gdx.input.getX() > xMax/OPTIONS_X_MIN && Gdx.input.getX()< xMax/OPTIONS_X_MAX) {
+                buttonClick.play(0.5f);
                 System.out.println("ENTREI NO OPTIONS");
+            }
 
-            if (Gdx.input.getX() > xMax/HIGHSCORES_X_MIN && Gdx.input.getX()< xMax/HIGHSCORES_X_MAX)
+            if (Gdx.input.getX() > xMax/HIGHSCORES_X_MIN && Gdx.input.getX()< xMax/HIGHSCORES_X_MAX) {
+                buttonClick.play(0.5f);
                 System.out.println("ENTREI NO HIGHSCORES");
+            }
 
-            if (Gdx.input.getX() > xMax/CREDITS_X_MIN && Gdx.input.getX()< xMax/CREDITS_X_MAX)
+            if (Gdx.input.getX() > xMax/CREDITS_X_MIN && Gdx.input.getX()< xMax/CREDITS_X_MAX) {
+                buttonClick.play(0.5f);
                 game.setScreen(new CreditsView(game));
+            }
         }
     }
 

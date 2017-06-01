@@ -2,6 +2,7 @@ package com.bulletborne.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
@@ -17,6 +18,7 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public abstract class View extends ScreenAdapter {
+    protected Sound buttonClick;
 
     /**
      * The game this screen belongs to.
@@ -68,6 +70,7 @@ public abstract class View extends ScreenAdapter {
      */
     public View( Bulletborne game) {
         this.game=game;
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("button_click.wav"));
         camera = createCamera();
     }
 

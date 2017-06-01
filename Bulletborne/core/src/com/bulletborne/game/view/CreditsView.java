@@ -67,6 +67,7 @@ public class CreditsView extends View {
     private void touchedBackButton(int xMax, int yMax) {
         if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
             if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX)
+                buttonClick.play(0.5f);
                 game.setScreen(new MainMenuView(game));
     }
 

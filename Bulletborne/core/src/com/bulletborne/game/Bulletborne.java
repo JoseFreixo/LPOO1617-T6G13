@@ -22,7 +22,7 @@ public class Bulletborne extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		music = Gdx.audio.newMusic(Gdx.files.internal("Skyrim8bitfinal_start.wav"));
-		music.setVolume(1f);
+		music.setVolume(0.5f);
         music.play();
 		startGame();
 	}
