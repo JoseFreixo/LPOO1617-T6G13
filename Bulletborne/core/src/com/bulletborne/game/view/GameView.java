@@ -1,5 +1,6 @@
 package com.bulletborne.game.view;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bulletborne.game.controller.GameController;
 import com.bulletborne.game.model.GameModel;
@@ -36,6 +37,10 @@ public class GameView extends View {
     public static final String STARTING_MESSAGE = "GO";
     private BitmapFont fontInitialAnimation;
     private BitmapFont fontCurrentPoints;
+    private Sound pianoA4;
+    private Sound pianoA5;
+    private static float counter = 0f;
+
     /**
      * Creates this screen.
      *
@@ -49,6 +54,9 @@ public class GameView extends View {
         fontInitialAnimation.getData().scale(SCALE_AMOUNT);
         fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
         fontCurrentPoints.getData().scale(SCALE_AMOUNT);
+        pianoA4 = Gdx.audio.newSound(Gdx.files.internal("pianoA4.wav"));
+        pianoA5 = Gdx.audio.newSound(Gdx.files.internal("pianoA5.wav"));
+        setCounter(0);
     }
 
 
@@ -92,6 +100,8 @@ public class GameView extends View {
         drawFonts();
         game.getBatch().end();
 
+        setCounter(counter - delta);
+
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
@@ -99,6 +109,10 @@ public class GameView extends View {
         }
 
         if (GameController.getInstance().getLost()){
+            pianoA4.dispose();
+            pianoA5.dispose();
+            fontCurrentPoints.dispose();
+            fontInitialAnimation.dispose();
             GameController.getInstance().delete();
             game.setScreen(new MainMenuView(game));
         }
@@ -111,10 +125,20 @@ public class GameView extends View {
         float yStart = (fontInitialAnimation.getRegion().getRegionHeight() / 2)*SCALE_AMOUNT;
         if ((3 - number) >= 0.0f) {
             fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+            System.out.println(counter);
+            if (counter <= 0.0f) {
+                pianoA4.play();
+                setCounter(1f);
+            }
             return;
         }
         if (number < 3.5f) {
             fontInitialAnimation.draw(game.getBatch(), STARTING_MESSAGE, ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart * 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+            System.out.println(counter);
+            if (counter <= 0.0f) {
+                pianoA5.play();
+                setCounter(0.5f);
+            }
         }
         fontCurrentPoints.draw(game.getBatch(), Integer.toString((int) (GameController.getInstance().getPointsGained() + number * TIMETOPOINTS) - POINTS_THAT_DONT_COUNT), X_START, Y_START);
 
@@ -174,5 +198,9 @@ public class GameView extends View {
         Texture background = game.getAssetManager().get("Empty_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, ARENA_WIDTH / PIXEL_TO_METER, ARENA_HEIGHT / PIXEL_TO_METER);
+    }
+
+    public static void setCounter(float value){
+        counter = value;
     }
 }
