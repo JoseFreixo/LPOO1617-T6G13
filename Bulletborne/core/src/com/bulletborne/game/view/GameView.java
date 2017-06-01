@@ -100,16 +100,16 @@ public class GameView extends View {
 
     private void drawFonts() {
 
-        float number= GameController.getInstance().getTimePast();
-        float xStart=fontInitialAnimation.getRegion().getRegionWidth()/4;
-        float yStart=fontInitialAnimation.getRegion().getRegionHeight()/4;
-        if((3-number)>=0.0f){
-            fontInitialAnimation.draw(game.getBatch(),(Integer.toString((int)(4-number))),(ARENA_WIDTH/PIXEL_TO_METER/2)-xStart/2,(ARENA_HEIGHT/PIXEL_TO_METER/2)+yStart);
+        float number = GameController.getInstance().getTimePast();
+        float xStart = fontInitialAnimation.getRegion().getRegionWidth() / 4;
+        float yStart = fontInitialAnimation.getRegion().getRegionHeight() / 4;
+        if ((3 - number) >= 0.0f) {
+            fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart / 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+        } else {
+            if (number < 3.5f)
+                fontInitialAnimation.draw(game.getBatch(), "GO", ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+            fontCurrentPoints.draw(game.getBatch(), Integer.toString((int) (GameController.getInstance().getPointsGained() + number * 10) - 30), 1 / PIXEL_TO_METER, 49 / PIXEL_TO_METER);
         }
-        else if(number<3.5f){
-            fontInitialAnimation.draw(game.getBatch(),"GO",ARENA_WIDTH/PIXEL_TO_METER/2-xStart,(ARENA_HEIGHT/PIXEL_TO_METER/2)+yStart);
-        }
-        fontCurrentPoints.draw(game.getBatch(),Integer.toString((int)(GameController.getInstance().getPointsGained()+number*10)),1/PIXEL_TO_METER,49/PIXEL_TO_METER);
     }
 
     /**
