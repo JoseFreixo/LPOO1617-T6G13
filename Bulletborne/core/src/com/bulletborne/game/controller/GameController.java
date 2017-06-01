@@ -142,6 +142,8 @@ public class GameController implements ContactListener{
     private float timeToNextQuantityChange;
 
     private Sound shot;
+    private Sound damage;
+    private Sound explosion;
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
@@ -150,6 +152,8 @@ public class GameController implements ContactListener{
         world = new World(new Vector2(0, 0), true);
 
         shot = Gdx.audio.newSound(Gdx.files.internal("shot.wav"));
+        damage = Gdx.audio.newSound(Gdx.files.internal("damage.wav"));
+        explosion = Gdx.audio.newSound(Gdx.files.internal("explode.wav"));
 
         if(shipNumber==SHIP_NUMBER_1)
             playerBody = new Player1Body(world, GameModel.getInstance().getPlayer());
@@ -321,6 +325,10 @@ public class GameController implements ContactListener{
 
     private void enemyKilled(EnemyShipModel model){
         model.DamageTaken(BULLET_DAMAGE);
+        if (model.getHP() > 0)
+            damage.play(0.5f);
+        else
+            explosion.play(0.5f);
         switch(model.getType()){
             case ENEMY_SHIP1:
             case ENEMY_SHIP2:
@@ -406,6 +414,8 @@ public class GameController implements ContactListener{
 
     public void delete(){
         shot.dispose();
+        damage.dispose();
+        explosion.dispose();
         instance = null;
         GameModel.getInstance().delete();
     }

@@ -96,6 +96,8 @@ public class EnemyShipModel extends EntityModel {
         }
     }
 
+    public int getHP() { return healthPoints; }
+
     private void setTTS() {
         switch (type) {
             case NORMAL:
