@@ -28,6 +28,12 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 public class GameView extends View {
 
+    public static final float SCALE_AMOUNT = 0.5f;
+    public static final float X_START = 1 / PIXEL_TO_METER;
+    public static final float Y_START = 49 / PIXEL_TO_METER;
+    public static final int POINTS_THAT_DONT_COUNT = 30;
+    public static final int TIMETOPOINTS = 10;
+    public static final String STARTING_MESSAGE = "GO";
     private BitmapFont fontInitialAnimation;
     private BitmapFont fontCurrentPoints;
     /**
@@ -40,9 +46,9 @@ public class GameView extends View {
         GameController.setShipNumber(shipNumber);
         loadAssets();
         fontInitialAnimation=new BitmapFont(Gdx.files.internal("myFont.fnt"));
-        fontInitialAnimation.getData().scale(0.5f);
+        fontInitialAnimation.getData().scale(SCALE_AMOUNT);
         fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
-        fontCurrentPoints.getData().scale(0.5f);
+        fontCurrentPoints.getData().scale(SCALE_AMOUNT);
     }
 
 
@@ -101,15 +107,17 @@ public class GameView extends View {
     private void drawFonts() {
 
         float number = GameController.getInstance().getTimePast();
-        float xStart = fontInitialAnimation.getRegion().getRegionWidth() / 4;
-        float yStart = fontInitialAnimation.getRegion().getRegionHeight() / 4;
+        float xStart = (fontInitialAnimation.getRegion().getRegionWidth() / 4)*SCALE_AMOUNT;
+        float yStart = (fontInitialAnimation.getRegion().getRegionHeight() / 2)*SCALE_AMOUNT;
         if ((3 - number) >= 0.0f) {
-            fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart / 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
-        } else {
-            if (number < 3.5f)
-                fontInitialAnimation.draw(game.getBatch(), "GO", ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
-            fontCurrentPoints.draw(game.getBatch(), Integer.toString((int) (GameController.getInstance().getPointsGained() + number * 10) - 30), 1 / PIXEL_TO_METER, 49 / PIXEL_TO_METER);
+            fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+            return;
         }
+        if (number < 3.5f) {
+            fontInitialAnimation.draw(game.getBatch(), STARTING_MESSAGE, ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart * 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
+        }
+        fontCurrentPoints.draw(game.getBatch(), Integer.toString((int) (GameController.getInstance().getPointsGained() + number * TIMETOPOINTS) - POINTS_THAT_DONT_COUNT), X_START, Y_START);
+
     }
 
     /**
