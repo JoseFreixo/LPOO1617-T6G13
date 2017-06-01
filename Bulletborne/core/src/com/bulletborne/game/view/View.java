@@ -20,6 +20,7 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 public abstract class View extends ScreenAdapter {
     protected Sound buttonClick;
 
+    protected static int bestScore=0;//TODO mudar quando ler do sistem ou some shit
     /**
      * The game this screen belongs to.
      */

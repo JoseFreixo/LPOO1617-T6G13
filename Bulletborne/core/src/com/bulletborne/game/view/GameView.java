@@ -129,6 +129,9 @@ public class GameView extends View {
         if (GameController.getInstance().getLost()&&!lostFlag){
             lostFlag=true;
             totalPoints=(int) ((GameController.getInstance().getPointsGained() + (GameController.getInstance().getTimePast() * TIMETOPOINTS)) - POINTS_THAT_DONT_COUNT);
+            if(totalPoints>bestScore){
+                bestScore=totalPoints;
+            }
         }
         if(lostFlag){
             drawLostScreen();
@@ -142,7 +145,7 @@ public class GameView extends View {
         fontEndScore.draw(game.getBatch(), SCORE_STR, (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart*5, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
 
         fontCurrentPoints.draw(game.getBatch(), CURRENT_STRING + ":    " +Integer.toString(totalPoints), FONT_X_POS, CURRENTFONT_Y_POS);
-        fontCurrentPoints.draw(game.getBatch(), BEST_ONE_STRING +Integer.toString(totalPoints), FONT_X_POS, BESTFONT_Y_POS);
+        fontCurrentPoints.draw(game.getBatch(), BEST_ONE_STRING +Integer.toString(bestScore), FONT_X_POS, BESTFONT_Y_POS);
 
         Texture buttonQuit= game.getAssetManager().get("Quit_to_menu.png", Texture.class);
         Sprite sprite= new Sprite(new TextureRegion(buttonQuit, buttonQuit.getWidth(), buttonQuit.getHeight()));
@@ -198,21 +201,22 @@ public class GameView extends View {
     }
 
     private void endGameInputs() {
-        float xMax= Gdx.graphics.getWidth();
-        float yMax= Gdx.graphics.getHeight();
+        int xMax= Gdx.graphics.getWidth();
+        int yMax= Gdx.graphics.getHeight();
         if(Gdx.input.justTouched()) {
-            System.out.println("x ratio= " + xMax / Gdx.input.getX());
-            System.out.println("t ratio= " + yMax / Gdx.input.getY());
-            if (Gdx.input.getY() > yMax / 1.02f && Gdx.input.getX() < xMax / 1.35f){
+
+            if (Gdx.input.getY() > yMax / 1.35f && Gdx.input.getX() < xMax / 1.02f){
 
                 if (Gdx.input.getX() > xMax / 6.93f && Gdx.input.getX() < xMax / 2.82f) {
-                    System.out.println("x ratio= " + xMax / Gdx.input.getX());
-                    System.out.println("t ratio= " + yMax / Gdx.input.getY());
+                   GameController.getInstance().delete();
+                   this.dispose();
+                   game.setScreen(new MainMenuView(game));
                 }
 
                 if (Gdx.input.getX() > xMax / 1.58f && Gdx.input.getX() < xMax / 1.18f) {
-                    System.out.println("x ratio= " + xMax / Gdx.input.getX());
-                    System.out.println("t ratio= " + yMax / Gdx.input.getY());
+                    GameController.getInstance().delete();
+                    this.dispose();
+                    game.setScreen(new GameView(game));
                 }
             }
         }

@@ -108,6 +108,8 @@ public class MainMenuView extends View {
             if (Gdx.input.getX() > xMax/OPTIONS_X_MIN && Gdx.input.getX()< xMax/OPTIONS_X_MAX) {
                 buttonClick.play(0.5f);
                 System.out.println("ENTREI NO OPTIONS");
+                System.out.println("x ratio= " + xMax / Gdx.input.getX());
+                System.out.println("t ratio= " + yMax / Gdx.input.getY());
             }
 
             if (Gdx.input.getX() > xMax/HIGHSCORES_X_MIN && Gdx.input.getX()< xMax/HIGHSCORES_X_MAX) {
