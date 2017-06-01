@@ -22,6 +22,7 @@ public class Bulletborne extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		music = Gdx.audio.newMusic(Gdx.files.internal("Skyrim8bitfinal_start.wav"));
+		music.setVolume(1f);
         music.play();
 		startGame();
 	}
@@ -37,6 +38,7 @@ public class Bulletborne extends Game {
 	public void dispose () {
 		batch.dispose();
 		assetManager.dispose();
+		music.dispose();
 	}
 
 	/**
@@ -66,5 +68,6 @@ public class Bulletborne extends Game {
 
     public void setPlaying(String musicName){
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
+		music.play();
     }
 }
