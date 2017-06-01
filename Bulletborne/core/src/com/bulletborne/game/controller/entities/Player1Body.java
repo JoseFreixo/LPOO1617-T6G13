@@ -40,10 +40,10 @@ public class Player1Body extends PlayerBody{
     public ArrayList<BulletModel> shoot(){
         ArrayList<BulletModel> bullets= new ArrayList<BulletModel>();
         BulletModel bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
-        bullet.setPosition(bullet.getX(),bullet.getY()+Y_BULLET_DISTANCE);
+        bullet.setPosition(bullet.getX() - Y_BULLET_DISTANCE * (float)(Math.sin(GameModel.getInstance().getPlayer().getRotation())),bullet.getY() + Y_BULLET_DISTANCE * (float)(Math.cos(GameModel.getInstance().getPlayer().getRotation())));
         bullets.add(bullet);
         bullet = GameModel.getInstance().createBullet(GameModel.getInstance().getPlayer());
-        bullet.setPosition(bullet.getX(),bullet.getY()-Y_BULLET_DISTANCE);
+        bullet.setPosition(bullet.getX() + Y_BULLET_DISTANCE * (float)(Math.sin(GameModel.getInstance().getPlayer().getRotation())),bullet.getY() - Y_BULLET_DISTANCE * (float)(Math.cos(GameModel.getInstance().getPlayer().getRotation())));
         bullets.add(bullet);
         return bullets;
     }
