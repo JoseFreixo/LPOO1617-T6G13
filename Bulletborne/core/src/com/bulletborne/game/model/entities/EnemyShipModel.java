@@ -6,7 +6,7 @@ package com.bulletborne.game.model.entities;
 
 public class EnemyShipModel extends EntityModel {
 
-    private static final int NORMAL_SHIP_HP = 2;
+    private static final int NORMAL_SHIP_HP = 3;
     private static final int TANK_SHIP_HP = 5;
     private static final int GLASSCANNON_SHIP_HP = 1;
 
