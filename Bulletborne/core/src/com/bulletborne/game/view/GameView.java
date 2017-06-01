@@ -222,11 +222,6 @@ public class GameView extends View {
         }
     }
 
-        //if (Gdx.input.getX() > xMax/ && Gdx.input.getX()<xMax/)
-            //if (Gdx.input.getY() > yMax/ && Gdx.input.getY() < yMax/)
-               // buttonClick.play(0.5f);
-        //game.setScreen(new MainMenuView(game));
-
     private void playGameInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().goUp(delta);
