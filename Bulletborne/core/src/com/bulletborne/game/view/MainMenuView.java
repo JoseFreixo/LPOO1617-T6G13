@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.bulletborne.game.Bulletborne;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
@@ -57,13 +59,7 @@ public class MainMenuView extends View {
      */
     @Override
     public void render(float delta) {
-        camera.position.set((ARENA_WIDTH/2) / PIXEL_TO_METER, (ARENA_HEIGHT/2) / PIXEL_TO_METER, 0);
-        camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
-
-        Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
+        super.render(delta);
         game.getBatch().begin();
         drawBackground();
         game.getBatch().end();
@@ -77,7 +73,7 @@ public class MainMenuView extends View {
      */
     private void handleInputs(float delta) {
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.justTouched()) {
             int xMax= Gdx.graphics.getWidth();
             int yMax= Gdx.graphics.getHeight();
             touchedButtons(xMax,yMax);
@@ -91,9 +87,9 @@ public class MainMenuView extends View {
             if (Gdx.input.getY() > yMax/PLAY_Y_MIN && Gdx.input.getY() < yMax/PLAY_Y_MAX)
                 game.setScreen(new GameView(game));
 
-
             if (Gdx.input.getY() > yMax/HANGAR_Y_MIN && Gdx.input.getY() < yMax/HANGAR_Y_MAX)
-                System.out.println("ENTREI NO HANGAR");
+                game.setScreen(new HangarView(game));
+
 
             if (Gdx.input.getY() > yMax/EXIT_Y_MIN && Gdx.input.getY() < yMax/EXIT_Y_MAX)
                 System.exit(0);
