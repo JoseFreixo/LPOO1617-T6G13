@@ -103,7 +103,6 @@ public class GameView extends View {
     @Override
     public void render(float delta) {
         GameController.getInstance().removeFlagged();
-        handleInputs(delta);
         GameController.getInstance().update(delta);
 
         super.render(delta);
@@ -123,6 +122,7 @@ public class GameView extends View {
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
+        handleInputs(delta);
     }
 
     private void lost() {
