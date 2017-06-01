@@ -106,7 +106,7 @@ public class MainMenuView extends View {
                 System.out.println("ENTREI NO HIGHSCORES");
 
             if (Gdx.input.getX() > xMax/CREDITS_X_MIN && Gdx.input.getX()< xMax/CREDITS_X_MAX)
-                System.out.println("ENTREI NO CREDITS");
+                game.setScreen(new CreditsView(game));
         }
     }
 
