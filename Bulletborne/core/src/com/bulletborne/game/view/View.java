@@ -19,11 +19,13 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
 public abstract class View extends ScreenAdapter {
     protected Sound buttonClick;
+    protected static float audioChanger=0.5f;
 
     protected static int bestScore=0;//TODO mudar quando ler do sistem ou some shit
     /**
      * The game this screen belongs to.
      */
+    protected static float AUDIO_VOLUME =0.5f;
     protected final Bulletborne game;
     /**
      * Used to debug the position of the physics fixtures
@@ -86,7 +88,7 @@ public abstract class View extends ScreenAdapter {
      * @return the camera
      */
     private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_HEIGHT / PIXEL_TO_METER/* * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth())*/);
+        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_HEIGHT / PIXEL_TO_METER);
 
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
@@ -111,7 +113,8 @@ public abstract class View extends ScreenAdapter {
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
         if (!game.getMusic().isPlaying()){
-            game.setPlaying("Skyrim8bitfinal_repeat.wav");
+            game.setPlaying("Skyrim8bitfinal_repeat.wav", AUDIO_VOLUME);
+            game.setVolume(AUDIO_VOLUME,audioChanger);
             game.getMusic().setLooping(true);
         }
 

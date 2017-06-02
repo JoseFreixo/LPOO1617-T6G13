@@ -37,6 +37,7 @@ public class GameController implements ContactListener{
     public static final float ENEMY_3_BULLET_SPEED = 120f;
     public static final double ENEMY_SPAWN_LIMIT = 1.2;
     private static final int INITIAL_PLAYER_SPEED = 10;
+    public static final float SHOT_VOLUME = 0.1f;
     /**
      * The singleton instance of this controller
      */
@@ -44,6 +45,7 @@ public class GameController implements ContactListener{
     protected static final int SHIP_NUMBER_1=1;
     protected static final int SHIP_NUMBER_2=2;
     private static int shipNumber;
+    private static float audioChanger;
     /**
      * The amount of time that passed after the begining of the game
      */
@@ -269,7 +271,7 @@ public class GameController implements ContactListener{
                 BulletBody body = new BulletBody(world, bullet, true);
                 body.setLinearVelocity(BULLET_SPEED);
             }
-            shot.play(0.1f);
+            shot.play(SHOT_VOLUME *audioChanger);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
     }
@@ -281,7 +283,7 @@ public class GameController implements ContactListener{
             BulletBody body = new BulletBody(world, bullet, false);
             body.setLinearVelocity(getEnemyBulletSpeed(model));
             if(!lost)
-                shot.play(0.1f);
+                shot.play(SHOT_VOLUME*audioChanger);
         }
     }
 
@@ -326,9 +328,9 @@ public class GameController implements ContactListener{
     private void enemyKilled(EnemyShipModel model){
         model.DamageTaken(BULLET_DAMAGE);
         if (model.getHP() > 0)
-            damage.play(0.1f);
+            damage.play(SHOT_VOLUME*audioChanger);
         else
-            explosion.play(0.1f);
+            explosion.play(SHOT_VOLUME*audioChanger);
         switch(model.getType()){
             case ENEMY_SHIP1:
             case ENEMY_SHIP2:
@@ -425,5 +427,7 @@ public class GameController implements ContactListener{
         GameModel.setShipNumber(shipNumber);
     }
 
-
+    public static void setAudioChanger(float audioChanger) {
+        GameController.audioChanger = audioChanger;
+    }
 }

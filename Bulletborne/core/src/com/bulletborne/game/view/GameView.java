@@ -32,6 +32,7 @@ public class GameView extends View {
     public static final int POINTS_THAT_DONT_COUNT = 30;
     public static final int TIMETOPOINTS = 10;
     public static final String STARTING_MESSAGE = "GO";
+    public static final float PIANO_VOLUME = 0.3f;
     private static final String SCORE_STRING = "SCORE";
     private static final String CURRENT_STRING = "Current";
     private static final String BEST_ONE_STRING = "Best One:   ";
@@ -63,6 +64,7 @@ public class GameView extends View {
     public GameView(Bulletborne game) {
         super(game);
         GameController.setShipNumber(shipNumber);
+        GameController.setAudioChanger(audioChanger);
         loadAssets();
         fontInitialAnimation=new BitmapFont(Gdx.files.internal("myFont.fnt"));
         fontInitialAnimation.getData().scale(SCALE_AMOUNT);
@@ -70,8 +72,8 @@ public class GameView extends View {
         fontCurrentPoints.getData().scale(SCALE_AMOUNT);
         fontEndScore=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
         fontEndScore.getData().scale(SCORE_FONT_SCALE);
-        fontCurrentPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
-        fontCurrentPoints.getData().scale(POINTS_FONT_SCALE);
+        fontEndPoints=new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
+        fontEndPoints.getData().scale(POINTS_FONT_SCALE);
         pianoA4 = Gdx.audio.newSound(Gdx.files.internal("pianoA4.wav"));
         pianoA5 = Gdx.audio.newSound(Gdx.files.internal("pianoA5.wav"));
         setCounter(0f);
@@ -144,8 +146,8 @@ public class GameView extends View {
 
         fontEndScore.draw(game.getBatch(), SCORE_STR, (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart*5, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
 
-        fontCurrentPoints.draw(game.getBatch(), CURRENT_STRING + ":    " +Integer.toString(totalPoints), FONT_X_POS, CURRENTFONT_Y_POS);
-        fontCurrentPoints.draw(game.getBatch(), BEST_ONE_STRING +Integer.toString(bestScore), FONT_X_POS, BESTFONT_Y_POS);
+        fontEndPoints.draw(game.getBatch(), CURRENT_STRING + ":    " +Integer.toString(totalPoints), FONT_X_POS, CURRENTFONT_Y_POS);
+        fontEndPoints.draw(game.getBatch(), BEST_ONE_STRING +Integer.toString(bestScore), FONT_X_POS, BESTFONT_Y_POS);
 
         Texture buttonQuit= game.getAssetManager().get("Quit_to_menu.png", Texture.class);
         Sprite sprite= new Sprite(new TextureRegion(buttonQuit, buttonQuit.getWidth(), buttonQuit.getHeight()));
@@ -167,7 +169,7 @@ public class GameView extends View {
         if ((3 - number) >= 0.0f) {
             fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
             if (counter <= 0.0f) {
-                pianoA4.play(0.3f);
+                pianoA4.play(PIANO_VOLUME*audioChanger);
                 setCounter(1f);
             }
             return;
@@ -175,7 +177,7 @@ public class GameView extends View {
         if (number < 3.5f) {
             fontInitialAnimation.draw(game.getBatch(), STARTING_MESSAGE, ARENA_WIDTH / PIXEL_TO_METER / 2 - xStart * 2, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
             if (counter <= 0.0f) {
-                pianoA5.play(0.5f);
+                pianoA5.play(AUDIO_VOLUME*audioChanger);
                 setCounter(0.5f);
             }
         }
@@ -208,12 +210,14 @@ public class GameView extends View {
             if (Gdx.input.getY() > yMax / 1.35f && Gdx.input.getX() < xMax / 1.02f){
 
                 if (Gdx.input.getX() > xMax / 6.93f && Gdx.input.getX() < xMax / 2.82f) {
-                   GameController.getInstance().delete();
-                   this.dispose();
-                   game.setScreen(new MainMenuView(game));
+                    buttonClick.play(AUDIO_VOLUME*audioChanger);
+                    GameController.getInstance().delete();
+                    this.dispose();
+                    game.setScreen(new MainMenuView(game));
                 }
 
                 if (Gdx.input.getX() > xMax / 1.58f && Gdx.input.getX() < xMax / 1.18f) {
+                    buttonClick.play(AUDIO_VOLUME*audioChanger);
                     GameController.getInstance().delete();
                     this.dispose();
                     game.setScreen(new GameView(game));

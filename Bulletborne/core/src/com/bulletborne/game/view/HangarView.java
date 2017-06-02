@@ -81,7 +81,7 @@ public class HangarView extends View {
     private void touchedBackButton(int xMax, int yMax) {
         if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
             if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 game.setScreen(new MainMenuView(game));
             }
     }
@@ -91,13 +91,13 @@ public class HangarView extends View {
 
             if (Gdx.input.getX() > xMax/LEFTARROW_X_MIN && Gdx.input.getX()< xMax/LEFTARROW_X_MAX)
                 if(shipNumber!=SHIP_NUMBER_1) {
-                    buttonClick.play(0.5f);
+                    buttonClick.play(AUDIO_VOLUME*audioChanger);
                     shipNumber--;
                 }
 
             if (Gdx.input.getX() > xMax/RIGHTARROW_X_MIN && Gdx.input.getX()< xMax/RIGHTARROW_X_MAX)
                 if(shipNumber!=SHIP_NUMBER_2) {
-                    buttonClick.play(0.5f);
+                    buttonClick.play(AUDIO_VOLUME*audioChanger);
                     shipNumber++;
                 }
         }

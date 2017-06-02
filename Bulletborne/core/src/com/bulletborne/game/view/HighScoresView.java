@@ -2,28 +2,26 @@ package com.bulletborne.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bulletborne.game.Bulletborne;
 
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
 /**
- * Created by Ruben Torres on 01/06/2017.
+ * Created by Ruben Torres on 02/06/2017.
  */
 
-public class CreditsView extends View {
+public class HighScoresView extends View {
     private static final float BACK_X_MIN=64.0f;
     private static final float BACK_X_MAX=9.14f;
     private static final float BACK_Y_MIN=1.24f;
     private static final float BACK_Y_MAX=1.02f;
-    private BitmapFont fontBestScore;
     /**
      * Creates this screen.
      *
      * @param game The game this screen belongs to
      */
-    public CreditsView(Bulletborne game) {
+    public HighScoresView(Bulletborne game) {
         super(game);
         loadAssets();
     }
@@ -33,7 +31,7 @@ public class CreditsView extends View {
      * Loads the assets needed by this screen.
      */
     private void loadAssets() {
-        this.game.getAssetManager().load( "Credits_background.png" , Texture.class);
+        this.game.getAssetManager().load( "highscore_background.png" , Texture.class);
         this.game.getAssetManager().finishLoading();
     }
 
@@ -70,7 +68,7 @@ public class CreditsView extends View {
         if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
             if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX)
                 buttonClick.play(AUDIO_VOLUME*audioChanger);
-                game.setScreen(new MainMenuView(game));
+        game.setScreen(new MainMenuView(game));
     }
 
     /**

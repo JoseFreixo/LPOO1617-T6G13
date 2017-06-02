@@ -66,9 +66,13 @@ public class Bulletborne extends Game {
 	 */
 	public Music getMusic() { return music; }
 
-    public void setPlaying(String musicName){
+    public void setPlaying(String musicName, float volume){
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
-		music.setVolume(0.5f);
+		music.setVolume(volume);
 		music.play();
     }
+    public void setVolume(float audio, float changer){
+        music.setVolume(audio*changer);
+    }
+
 }

@@ -1,11 +1,8 @@
 package com.bulletborne.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.bulletborne.game.Bulletborne;
-
-import java.util.concurrent.TimeUnit;
 
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
@@ -85,18 +82,18 @@ public class MainMenuView extends View {
         if (Gdx.input.getX() > xMax/BUTTONS_X_MIN && Gdx.input.getX()<xMax/BUTTONS_X_MAX) {
 
             if (Gdx.input.getY() > yMax/PLAY_Y_MIN && Gdx.input.getY() < yMax/PLAY_Y_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 game.setScreen(new GameView(game));
             }
 
             if (Gdx.input.getY() > yMax/HANGAR_Y_MIN && Gdx.input.getY() < yMax/HANGAR_Y_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 game.setScreen(new HangarView(game));
             }
 
 
             if (Gdx.input.getY() > yMax/EXIT_Y_MIN && Gdx.input.getY() < yMax/EXIT_Y_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 System.exit(0);
             }
         }
@@ -106,19 +103,19 @@ public class MainMenuView extends View {
         if (Gdx.input.getY() > yMax/LOWER_BUTTONS_Y_MIN && Gdx.input.getY() < yMax/LOWER_BUTTONS_Y_MAX){
 
             if (Gdx.input.getX() > xMax/OPTIONS_X_MIN && Gdx.input.getX()< xMax/OPTIONS_X_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 System.out.println("ENTREI NO OPTIONS");
                 System.out.println("x ratio= " + xMax / Gdx.input.getX());
                 System.out.println("t ratio= " + yMax / Gdx.input.getY());
             }
 
             if (Gdx.input.getX() > xMax/HIGHSCORES_X_MIN && Gdx.input.getX()< xMax/HIGHSCORES_X_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 System.out.println("ENTREI NO HIGHSCORES");
             }
 
             if (Gdx.input.getX() > xMax/CREDITS_X_MIN && Gdx.input.getX()< xMax/CREDITS_X_MAX) {
-                buttonClick.play(0.5f);
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
                 game.setScreen(new CreditsView(game));
             }
         }
