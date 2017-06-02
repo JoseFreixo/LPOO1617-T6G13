@@ -233,7 +233,9 @@ public class GameView extends View {
         if (Gdx.input.isTouched()) {
             GameController.getInstance().goUp(delta);
         }
-        if (Gdx.input.getGyroscopeX() >= 0) {
+        System.out.println(Gdx.input.getGyroscopeX());
+
+        if (Gdx.input.getGyroscopeX() > 0) {//TODO NEEDS TESTING
             GameController.getInstance().goUp(delta);
         }
     }

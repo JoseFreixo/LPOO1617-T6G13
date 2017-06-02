@@ -29,7 +29,7 @@ public class HighScoresView extends View {
         loadAssets();
         fontBestScore= new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
         fontBestScore.getData().scale(5f);
-        fontBestScore.setColor(Color.CHARTREUSE);
+        fontBestScore.setColor(Color.GOLD);
     }
 
 
