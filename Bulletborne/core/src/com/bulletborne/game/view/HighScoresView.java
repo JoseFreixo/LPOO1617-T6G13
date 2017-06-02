@@ -14,10 +14,6 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public class HighScoresView extends View {
-    private static final float BACK_X_MIN=64.0f;
-    private static final float BACK_X_MAX=9.14f;
-    private static final float BACK_Y_MIN=1.24f;
-    private static final float BACK_Y_MAX=1.02f;
     private static final float SCORE_X_POS = 13f;
     private static final float SCORE_Y_POS = 1.55f;
     private BitmapFont fontBestScore;
@@ -60,29 +56,6 @@ public class HighScoresView extends View {
 
     private void drawBestScore() {
             fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / SCORE_X_POS), (ARENA_HEIGHT / PIXEL_TO_METER / SCORE_Y_POS) );
-    }
-
-    /**
-     * Handles any inputs and passes them to the controller.
-     *
-     * @param delta time since last time inputs where handled in seconds
-     */
-    private void handleInputs(float delta) {
-
-        if (Gdx.input.justTouched()) {
-            int xMax= Gdx.graphics.getWidth();
-            int yMax= Gdx.graphics.getHeight();
-            touchedBackButton(xMax,yMax);
-
-        }
-    }
-
-    private void touchedBackButton(int xMax, int yMax) {
-        if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
-            if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
-                buttonClick.play(AUDIO_VOLUME*audioChanger);
-                game.setScreen(new MainMenuView(game));
-            }
     }
 
     /**

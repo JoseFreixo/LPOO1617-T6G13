@@ -23,10 +23,6 @@ public class HangarView extends View {
     private static final float LEFTARROW_X_MAX=5.61f;
     private static final float RIGHTARROW_X_MIN=1.22f;
     private static final float RIGHTARROW_X_MAX=1.08f;
-    private static final float BACK_X_MIN=64.0f;
-    private static final float BACK_X_MAX=9.14f;
-    private static final float BACK_Y_MIN=1.24f;
-    private static final float BACK_Y_MAX=1.02f;
     /**
      * Creates this screen.
      *
@@ -68,7 +64,7 @@ public class HangarView extends View {
      *
      * @param delta time since last time inputs where handled in seconds
      */
-    private void handleInputs(float delta) {
+    protected void handleInputs(float delta) {
 
         if (Gdx.input.justTouched()) {
             int xMax= Gdx.graphics.getWidth();
@@ -76,14 +72,6 @@ public class HangarView extends View {
             touchedArrowButtons(xMax,yMax);
             touchedBackButton(xMax,yMax);
         }
-    }
-
-    private void touchedBackButton(int xMax, int yMax) {
-        if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
-            if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
-                buttonClick.play(AUDIO_VOLUME*audioChanger);
-                game.setScreen(new MainMenuView(game));
-            }
     }
 
     private void touchedArrowButtons(int xMax, int yMax) {

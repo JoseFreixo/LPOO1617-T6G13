@@ -12,10 +12,6 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public class OptionsView extends View {
-    private static final float BACK_X_MIN=64.0f;
-    private static final float BACK_X_MAX=9.14f;
-    private static final float BACK_Y_MIN=1.24f;
-    private static final float BACK_Y_MAX=1.02f;
     /**
      * Creates this screen.
      *
@@ -47,29 +43,6 @@ public class OptionsView extends View {
         drawBackground();
         game.getBatch().end();
         handleInputs(delta);
-    }
-
-    /**
-     * Handles any inputs and passes them to the controller.
-     *
-     * @param delta time since last time inputs where handled in seconds
-     */
-    private void handleInputs(float delta) {
-
-        if (Gdx.input.justTouched()) {
-            int xMax= Gdx.graphics.getWidth();
-            int yMax= Gdx.graphics.getHeight();
-            touchedBackButton(xMax,yMax);
-
-        }
-    }
-
-    private void touchedBackButton(int xMax, int yMax) {
-        if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
-            if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
-                buttonClick.play(AUDIO_VOLUME*audioChanger);
-                game.setScreen(new MainMenuView(game));
-            }
     }
 
     /**

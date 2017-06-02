@@ -187,7 +187,7 @@ public class GameView extends View {
      *
      * @param delta time since last time inputs where handled in seconds
      */
-    private void handleInputs(float delta) {
+    protected void handleInputs(float delta) {
         if (GameController.getInstance().getTimePast() < 3l)
             return;
 

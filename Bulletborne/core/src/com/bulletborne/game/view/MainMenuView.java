@@ -68,7 +68,7 @@ public class MainMenuView extends View {
      *
      * @param delta time since last time inputs where handled in seconds
      */
-    private void handleInputs(float delta) {
+    protected void handleInputs(float delta) {
 
         if (Gdx.input.justTouched()) {
             int xMax= Gdx.graphics.getWidth();

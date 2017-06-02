@@ -18,6 +18,11 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public abstract class View extends ScreenAdapter {
+    private static final float BACK_X_MIN=64.0f;
+    private static final float BACK_X_MAX=9.14f;
+    private static final float BACK_Y_MIN=1.24f;
+    private static final float BACK_Y_MAX=1.02f;
+
     protected Sound buttonClick;
     protected static float audioChanger=1f;
 
@@ -124,6 +129,24 @@ public abstract class View extends ScreenAdapter {
 
         Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+    }
+
+    protected void handleInputs(float delta) {
+
+        if (Gdx.input.justTouched()) {
+            int xMax= Gdx.graphics.getWidth();
+            int yMax= Gdx.graphics.getHeight();
+            touchedBackButton(xMax,yMax);
+
+        }
+    }
+
+    protected void touchedBackButton(int xMax, int yMax) {
+        if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
+            if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
+                buttonClick.play(AUDIO_VOLUME*audioChanger);
+                game.setScreen(new MainMenuView(game));
+            }
     }
 
     public static void setBestScore(int HighScore) {
