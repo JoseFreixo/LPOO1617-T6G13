@@ -32,7 +32,7 @@ public class GameView extends View {
     public static final int POINTS_THAT_DONT_COUNT = 30;
     public static final int TIMETOPOINTS = 10;
     public static final String STARTING_MESSAGE = "GO";
-    public static final float PIANO_VOLUME = 0.3f;
+    public static final float PIANO_VOLUME = 0.6f;
     private static final String CURRENT_STRING = "Current";
     private static final String BEST_ONE_STRING = "Best One:   ";
     private static final float FONT_X_POS = (ARENA_WIDTH / PIXEL_TO_METER / 12);

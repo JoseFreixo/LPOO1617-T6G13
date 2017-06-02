@@ -37,7 +37,7 @@ public class GameController implements ContactListener{
     public static final float ENEMY_3_BULLET_SPEED = 120f;
     public static final double ENEMY_SPAWN_LIMIT = 1.2;
     private static final int INITIAL_PLAYER_SPEED = 10;
-    public static final float SHOT_VOLUME = 0.1f;
+    public static final float SHOT_VOLUME = 0.2f;
     /**
      * The singleton instance of this controller
      */
@@ -184,7 +184,6 @@ public class GameController implements ContactListener{
         if (timePast <= 3)
             beginingAnimation(delta);
         else{
-            GameModel.getInstance().update(delta);
 
             timeToNextShoot -= delta;
             timeToNextEnemy -= delta;
@@ -289,11 +288,11 @@ public class GameController implements ContactListener{
 
     private float getEnemyBulletSpeed(EnemyShipModel model){
         switch(model.getType()){
-            case ENEMY_SHIP1:
+            case ENEMY_SHIP_NORMAL:
                 return ENEMY_1_BULLET_SPEED;
-            case ENEMY_SHIP2:
+            case ENEMY_SHIP_TANK:
                 return ENEMY_2_BULLET_SPEED;
-            case ENEMY_SHIP3:
+            case ENEMY_SHIP_GLASSCANNON:
                 return ENEMY_3_BULLET_SPEED;
             default:
                 return BULLET_SPEED;
@@ -304,15 +303,15 @@ public class GameController implements ContactListener{
         if (timeToNextEnemy < 0){
             EnemyShipModel enemy = GameModel.getInstance().createEnemy();
             switch (enemy.getType()){
-                case ENEMY_SHIP1:
+                case ENEMY_SHIP_NORMAL:
                     EnemyShip1Body body = new EnemyShip1Body(world, enemy);
                     body.setLinearVelocity(NORMAL_ENEMY_SPEED);
                     break;
-                case ENEMY_SHIP2:
+                case ENEMY_SHIP_TANK:
                     EnemyShip2Body body2 = new EnemyShip2Body(world, enemy);
                     body2.setLinearVelocity(TANK_ENEMY_SPEED);
                     break;
-                case ENEMY_SHIP3:
+                case ENEMY_SHIP_GLASSCANNON:
                     EnemyShip3Body body3 = new EnemyShip3Body(world, enemy);
                     body3.setLinearVelocity(GLASSCANNON_ENEMY_SPEED);
                     break;
@@ -332,10 +331,10 @@ public class GameController implements ContactListener{
         else
             explosion.play(SHOT_VOLUME*audioChanger);
         switch(model.getType()){
-            case ENEMY_SHIP1:
-            case ENEMY_SHIP2:
+            case ENEMY_SHIP_NORMAL:
+            case ENEMY_SHIP_TANK:
                 pointsGained += 5f;
-            case ENEMY_SHIP3:
+            case ENEMY_SHIP_GLASSCANNON:
                 pointsGained += 10f;
         }
     }

@@ -18,18 +18,12 @@ public class EnemyShipModel extends EntityModel {
     private static final float TANK_SHIP_TFS = 2f;
     private static final float GLASSCANNON_SHIP_TFS = 1/3f;
 
-    public enum EnemyShipType {NORMAL, TANK, GLASSCANNON};
-
-    private EnemyShipType type;
+    private ModelType type;
 
     private float timeToNextShot;
 
     private float timeBetweenShots;
 
-    /**
-     * Is this ship accelerating in this update delta
-     */
-    private boolean accelerating = true;
     int healthPoints;
 
     /**
@@ -39,58 +33,33 @@ public class EnemyShipModel extends EntityModel {
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public EnemyShipModel(float x, float y, float rotation, EnemyShipType type) {
+    public EnemyShipModel(float x, float y, float rotation, ModelType type) {
         super(x, y, rotation);
         this.type=type;
         setHP();
         setTTS();
     }
 
-    /**
-     * Set the accelerating flag for this ship
-     *
-     * @param accelerating the accelerating tag
-     */
-    public void setAccelerating(boolean accelerating) {
-        this.accelerating = accelerating;
-    }
-
-    /**
-     * Is the ship accelerating in this update
-     *
-     * @return the accelerating flag
-     */
-    public boolean isAccelerating() {
-        return accelerating;
-    }
-
     @Override
     public ModelType getType() {
-        if(this.type==EnemyShipType.NORMAL)
-            return ModelType.ENEMY_SHIP1;
-        if(this.type==EnemyShipType.TANK)
-            return ModelType.ENEMY_SHIP2;
-        if(this.type==EnemyShipType.GLASSCANNON)
-            return ModelType.ENEMY_SHIP3;
-        return null;
+        return type;
     }
 
     public void DamageTaken(int damage){
         healthPoints-=damage;
         if(healthPoints<=0)
             this.setFlaggedForRemoval(true);
-
     }
 
     public void setHP() {
         switch (type) {
-            case NORMAL:
+            case ENEMY_SHIP_NORMAL:
                 healthPoints = NORMAL_SHIP_HP;
                 break;
-            case TANK:
+            case ENEMY_SHIP_TANK:
                 healthPoints = TANK_SHIP_HP;
                 break;
-            case GLASSCANNON:
+            case ENEMY_SHIP_GLASSCANNON:
                 healthPoints = GLASSCANNON_SHIP_HP;
                 break;
         }
@@ -100,15 +69,15 @@ public class EnemyShipModel extends EntityModel {
 
     private void setTTS() {
         switch (type) {
-            case NORMAL:
+            case ENEMY_SHIP_NORMAL:
                 timeBetweenShots = NORMAL_SHIP_TTS;
                 timeToNextShot = NORMAL_SHIP_TFS;
                 break;
-            case TANK:
+            case ENEMY_SHIP_TANK:
                 timeBetweenShots = TANK_SHIP_TTS;
                 timeToNextShot = TANK_SHIP_TFS;
                 break;
-            case GLASSCANNON:
+            case ENEMY_SHIP_GLASSCANNON:
                 timeBetweenShots = GLASSCANNON_SHIP_TTS;
                 timeToNextShot = GLASSCANNON_SHIP_TFS;
                 break;

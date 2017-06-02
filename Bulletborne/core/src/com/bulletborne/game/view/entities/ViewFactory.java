@@ -26,11 +26,11 @@ public class ViewFactory {
                 cache.put(model.getType(), new BulletPlayerView(game));
             if (model.getType() == ENEMY_BULLET)
                 cache.put(model.getType(), new BulletEnemyView(game));
-            if (model.getType() == ENEMY_SHIP1)
+            if (model.getType() == ENEMY_SHIP_NORMAL)
                 cache.put(model.getType(), new EnemyShip1View(game));
-            if (model.getType() == ENEMY_SHIP2)
+            if (model.getType() == ENEMY_SHIP_TANK)
                 cache.put(model.getType(), new EnemyShip2View(game));
-            if (model.getType() == ENEMY_SHIP3)
+            if (model.getType() == ENEMY_SHIP_GLASSCANNON)
                 cache.put(model.getType(), new EnemyShip3View(game));
         }
         return cache.get(model.getType());

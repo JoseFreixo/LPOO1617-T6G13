@@ -20,7 +20,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class GameModel {
     public static final float Y_MIN = 3.5f;
     public static final float Y_MAX = 46.5f;
-    public static final float X_START = 110f;
+    public static final float X_START = 105f;
     protected static final int SHIP_NUMBER_1=1;
     protected static final int SHIP_NUMBER_2=2;
 
@@ -47,7 +47,7 @@ public class GameModel {
     Pool<BulletModel> bulletPool = new Pool<BulletModel>() {
         @Override
         protected BulletModel newObject() {
-            return new BulletModel(0, 0, 0, BulletModel.BulletType.PLAYER_BULLET);
+            return new BulletModel(0, 0, 0, EntityModel.ModelType.PLAYER_BULLET);
         }
     };
 
@@ -59,7 +59,7 @@ public class GameModel {
     Pool<BulletModel> enemyBulletPool = new Pool<BulletModel>() {
         @Override
         protected BulletModel newObject() {
-            return new BulletModel(0, 0, 0, BulletModel.BulletType.ENEMY_BULLET);
+            return new BulletModel(0, 0, 0, EntityModel.ModelType.ENEMY_BULLET);
         }
     };
 
@@ -75,11 +75,11 @@ public class GameModel {
             switch(i){
                 case 0:
                 case 1:
-                    return new EnemyShipModel(0, 0, (float)Math.PI, EnemyShipModel.EnemyShipType.NORMAL);
+                    return new EnemyShipModel(0, 0, (float)Math.PI, EntityModel.ModelType.ENEMY_SHIP_NORMAL);
                 case 2:
-                    return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.TANK);
+                    return new EnemyShipModel(0, 0, (float) Math.PI, EntityModel.ModelType.ENEMY_SHIP_TANK);
                 case 3:
-                    return new EnemyShipModel(0, 0, (float) Math.PI, EnemyShipModel.EnemyShipType.GLASSCANNON);
+                    return new EnemyShipModel(0, 0, (float) Math.PI, EntityModel.ModelType.ENEMY_SHIP_GLASSCANNON);
             }
             return null;
         }
@@ -117,13 +117,11 @@ public class GameModel {
         bullets = new ArrayList<BulletModel>();
         enemyBullets = new ArrayList<BulletModel>();
         enemies = new ArrayList<EnemyShipModel>();
+
         if(shipNumber==SHIP_NUMBER_1)
             player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER_SHIP1);
         else if(shipNumber==SHIP_NUMBER_2)
             player = new PlayerModel(-10, GameController.ARENA_HEIGHT / 2, 0, EntityModel.ModelType.PLAYER_SHIP2);
-
-
-
     }
 
     /**
@@ -156,8 +154,6 @@ public class GameModel {
         bullet.setFlaggedForRemoval(false);
         bullet.setPosition(ship.getX() + (float)(Math.cos(ship.getRotation()) * 6), ship.getY() + (float)(Math.sin(ship.getRotation()) * 6));
         bullet.setRotation(ship.getRotation() - (float)Math.PI/2);
-        bullet.setTimeToLive(0.9f);
-
         bullets.add(bullet);
 
         return bullet;
@@ -169,8 +165,6 @@ public class GameModel {
         bullet.setFlaggedForRemoval(false);
         bullet.setPosition(ship.getX() + (float)(Math.cos(ship.getRotation()) * 6), ship.getY() + (float)(Math.sin(ship.getRotation()) * 6));
         bullet.setRotation(ship.getRotation() - (float)Math.PI/2);
-        bullet.setTimeToLive(10f);
-
         enemyBullets.add(bullet);
 
         return bullet;
@@ -212,11 +206,6 @@ public class GameModel {
         }
     }
 
-    public void update(float delta) {
-        for (BulletModel bullet : bullets)
-            if (bullet.decreaseTimeToLive(delta))
-                bullet.setFlaggedForRemoval(true);
-    }
     public static void setShipNumber(int shipNumber) {
         GameModel.shipNumber = shipNumber;
     }

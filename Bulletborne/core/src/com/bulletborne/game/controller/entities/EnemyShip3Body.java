@@ -16,19 +16,25 @@ public class EnemyShip3Body extends EntityBody {
         int width = 238, height = 89;
 
         // UPPER WING
-        createFixture(body, new float[]{
-            11,8, 57,3, 156,10, 222,19, 230,41, 30,36
-        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+        createFixture(body,
+                new float[]{11,8, 57,3, 156,10, 222,19, 230,41, 30,36},
+                new int[]{width, height},
+                new float[]{density, friction, restitution},
+                new short[]{ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY)});
 
         // CENTER
-        createFixture(body, new float[]{
-                30,36, 166,40, 166,50, 29,54
-        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+        createFixture(body,
+                new float[]{30,36, 166,40, 166,50, 29,54},
+                new int[]{width, height},
+                new float[]{density, friction, restitution},
+                new short[]{ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY)});
 
         //LEFT WING
-        createFixture(body, new float[]{
-                29,54, 228,49, 221,71, 154,79, 59,86, 11,80
-        }, width, height, density, friction, restitution, ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+        createFixture(body,
+                new float[]{29,54, 228,49, 221,71, 154,79, 59,86, 11,80},
+                new int[]{width, height},
+                new float[]{density, friction, restitution},
+                new short[]{ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY)});
     }
 
     @Override

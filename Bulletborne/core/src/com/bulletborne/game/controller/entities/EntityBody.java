@@ -57,11 +57,11 @@ public abstract class EntityBody {
      * @param friction The friction of the fixture. How slippery it is.
      * @param restitution The restitution of the fixture. How much it bounces.
      */
-    final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution, short category, short mask) {
+    final void createFixture(Body body, float[] vertexes, int []width_height, float []density_friction_restitution , short []category_mask) {
         // Transform pixels into meters, center and invert the y-coordinate
         for (int i = 0; i < vertexes.length; i++) {
-            if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
-            if (i % 2 != 0) vertexes[i] -= height / 2;  // center the vertex y-coordinate
+            if (i % 2 == 0) vertexes[i] -= width_height[0] / 2;   // center the vertex x-coordinate
+            if (i % 2 != 0) vertexes[i] -= width_height[1] / 2;  // center the vertex y-coordinate
 
             if (i % 2 != 0) vertexes[i] *= -1;          // invert the y-coordinate
 
@@ -74,11 +74,11 @@ public abstract class EntityBody {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygon;
 
-        fixtureDef.density = density;
-        fixtureDef.friction = friction;
-        fixtureDef.restitution = restitution;
-        fixtureDef.filter.categoryBits = category;
-        fixtureDef.filter.maskBits = mask;
+        fixtureDef.density = density_friction_restitution[0];
+        fixtureDef.friction = density_friction_restitution[1];
+        fixtureDef.restitution = density_friction_restitution[2];
+        fixtureDef.filter.categoryBits = category_mask[0];
+        fixtureDef.filter.maskBits = category_mask[1];
 
         body.createFixture(fixtureDef);
 

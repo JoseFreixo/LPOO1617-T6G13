@@ -15,8 +15,10 @@ public class BarrierBody extends EntityBody{
         int width = 5000, height = 1;
 
         //Everything
-        createFixture(body, new float[]{
-                0,0, 5000,0, 0,1, 5000,1
-        }, width, height, density, friction, restitution, BORDER_BODY, (short) (PLAYER_BODY | BULLET_BODY));
+        createFixture(body,
+                new float[]{0,0, 5000,0, 0,1, 5000,1},
+                new int[]{width, height},
+                new float[]{density, friction, restitution},
+                new short[]{BORDER_BODY, (short) (PLAYER_BODY | BULLET_BODY)});
     }
 }

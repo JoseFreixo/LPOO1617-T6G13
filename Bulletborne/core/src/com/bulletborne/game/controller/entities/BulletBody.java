@@ -24,8 +24,10 @@ public class BulletBody extends EntityBody{
         else
             mask = (short) (PLAYER_BODY | BORDER_BODY);
 
-        createFixture(body, new float[]{
-                0,12, 6,0, 11,0, 17,12, 17,47, 11,59, 6,59, 0,47
-        }, width, height, density, friction, restitution, BULLET_BODY, mask);
+        createFixture(body,
+                new float[]{0,12, 6,0, 11,0, 17,12, 17,47, 11,59, 6,59, 0,47},
+                new int[]{width, height},
+                new float[]{density, friction, restitution},
+                new short[]{BULLET_BODY, mask});
     }
 }
