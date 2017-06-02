@@ -231,10 +231,6 @@ public class GameView extends View {
         if (Gdx.input.isTouched()) {
             GameController.getInstance().goUp(delta);
         }
-
-        /*if (Gdx.input.getGyroscopeX() > 0) {//TODO NEEDS TESTING, E COM ISTO DESCOBRI QUE O GIROSCOPIO DO MEU TELE TA FODIDO!!!
-            GameController.getInstance().goUp(delta);
-        }*/
     }
 
     /**
