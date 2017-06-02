@@ -18,6 +18,8 @@ public class HighScoresView extends View {
     private static final float BACK_X_MAX=9.14f;
     private static final float BACK_Y_MIN=1.24f;
     private static final float BACK_Y_MAX=1.02f;
+    private static final float SCORE_X_POS = 13f;
+    private static final float SCORE_Y_POS = 1.55f;
     private BitmapFont fontBestScore;
     /**
      * Creates this screen.
@@ -29,7 +31,7 @@ public class HighScoresView extends View {
         loadAssets();
         fontBestScore= new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
         fontBestScore.getData().scale(5f);
-        fontBestScore.setColor(Color.GOLD);
+        fontBestScore.setColor(Color.CHARTREUSE);
     }
 
 
@@ -57,10 +59,7 @@ public class HighScoresView extends View {
     }
 
     private void drawBestScore() {
-        /*if(Integer.toString(bestScore).length()<5)
-            fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / 1.35f), (ARENA_HEIGHT / PIXEL_TO_METER / 1.1f) );
-        else*/
-            fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / 13f), (ARENA_HEIGHT / PIXEL_TO_METER / 1.55f) );
+            fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / SCORE_X_POS), (ARENA_HEIGHT / PIXEL_TO_METER / SCORE_Y_POS) );
     }
 
     /**

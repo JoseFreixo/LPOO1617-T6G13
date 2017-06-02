@@ -31,6 +31,6 @@ public class AndroidPlatform implements AndroidSaving {
     public int loadBestScore(){
         SharedPreferences sp = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         int bestScore= sp.getInt(BEST_SCORE_KEY, 0);
-        return 0;
+        return bestScore;
     }
 }

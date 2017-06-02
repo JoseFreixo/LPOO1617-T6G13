@@ -19,13 +19,13 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
 public abstract class View extends ScreenAdapter {
     protected Sound buttonClick;
-    protected static float audioChanger=0.1f;
+    protected static float audioChanger=1f;
 
     protected static int bestScore;
     /**
      * The game this screen belongs to.
      */
-    protected static float AUDIO_VOLUME =0.5f;
+    protected static float AUDIO_VOLUME =1f;
     protected final Bulletborne game;
     /**
      * Used to debug the position of the physics fixtures

@@ -33,10 +33,8 @@ public class GameView extends View {
     public static final int TIMETOPOINTS = 10;
     public static final String STARTING_MESSAGE = "GO";
     public static final float PIANO_VOLUME = 0.3f;
-    private static final String SCORE_STRING = "SCORE";
     private static final String CURRENT_STRING = "Current";
     private static final String BEST_ONE_STRING = "Best One:   ";
-    private static final float SCREEN_CENTER = (ARENA_WIDTH / PIXEL_TO_METER / 2);
     private static final float FONT_X_POS = (ARENA_WIDTH / PIXEL_TO_METER / 12);
     private static final float CURRENTFONT_Y_POS = (ARENA_HEIGHT / PIXEL_TO_METER / 1.7f);
     private static final float BESTFONT_Y_POS = (ARENA_HEIGHT / PIXEL_TO_METER / 2.4f);
@@ -169,7 +167,7 @@ public class GameView extends View {
         if ((3 - number) >= 0.0f) {
             fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
             if (counter <= 0.0f) {
-                pianoA4.play(PIANO_VOLUME*audioChanger);
+                while(pianoA4.play(PIANO_VOLUME*audioChanger)==-1){}
                 setCounter(1f);
             }
             return;
@@ -233,11 +231,10 @@ public class GameView extends View {
         if (Gdx.input.isTouched()) {
             GameController.getInstance().goUp(delta);
         }
-        System.out.println(Gdx.input.getGyroscopeX());
 
-        if (Gdx.input.getGyroscopeX() > 0) {//TODO NEEDS TESTING
+        /*if (Gdx.input.getGyroscopeX() > 0) {//TODO NEEDS TESTING, E COM ISTO DESCOBRI QUE O GIROSCOPIO DO MEU TELE TA FODIDO!!!
             GameController.getInstance().goUp(delta);
-        }
+        }*/
     }
 
     /**
