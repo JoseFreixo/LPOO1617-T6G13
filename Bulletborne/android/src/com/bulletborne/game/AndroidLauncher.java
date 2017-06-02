@@ -12,6 +12,6 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useGyroscope = true;
-		initialize(new Bulletborne(), config);
+		initialize(new Bulletborne(new AndroidPlatform(this)), config);
 	}
 }

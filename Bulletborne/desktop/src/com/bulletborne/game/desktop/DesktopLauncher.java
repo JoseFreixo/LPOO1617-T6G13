@@ -7,6 +7,6 @@ import com.bulletborne.game.Bulletborne;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Bulletborne(), config);
+		new LwjglApplication(new Bulletborne(new DesktopPlatform()), config);
 	}
 }

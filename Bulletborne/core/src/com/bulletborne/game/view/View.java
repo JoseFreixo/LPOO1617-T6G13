@@ -21,7 +21,7 @@ public abstract class View extends ScreenAdapter {
     protected Sound buttonClick;
     protected static float audioChanger=0.1f;
 
-    protected static int bestScore=0;//TODO mudar quando ler do sistem ou some shit
+    protected static int bestScore;
     /**
      * The game this screen belongs to.
      */
@@ -77,6 +77,10 @@ public abstract class View extends ScreenAdapter {
         camera = createCamera();
     }
 
+    public static int getBestScore() {
+        return bestScore;
+    }
+
     @Override
     public void dispose() {
         super.dispose();
@@ -120,5 +124,9 @@ public abstract class View extends ScreenAdapter {
 
         Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+    }
+
+    public static void setBestScore(int HighScore) {
+        bestScore=HighScore;
     }
 }

@@ -1,23 +1,23 @@
 package com.bulletborne.game;
 
 import com.badlogic.gdx.audio.Music;
-import com.bulletborne.game.view.GameView;
-import com.bulletborne.game.model.GameModel;
-import com.bulletborne.game.controller.GameController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
-import com.bulletborne.game.view.HighScoresView;
 import com.bulletborne.game.view.MainMenuView;
+import com.bulletborne.game.view.View;
 
 public class Bulletborne extends Game {
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 	private Music music;
-	
+	private AndroidSaving preferences;
+
+	public Bulletborne(AndroidSaving preferences) {
+		this.preferences = preferences;
+	}
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -25,6 +25,7 @@ public class Bulletborne extends Game {
 		music = Gdx.audio.newMusic(Gdx.files.internal("Skyrim8bitfinal_start.wav"));
 		music.setVolume(0.5f);
         music.play();
+        View.setBestScore(preferences.loadBestScore());//TODO O RESTO DAS PREFERENCIAS
 		startGame();
 	}
 
@@ -67,9 +68,14 @@ public class Bulletborne extends Game {
 	 */
 	public Music getMusic() { return music; }
 
+    public AndroidSaving getPreferences() {
+        return preferences;
+    }
+
     public void setPlaying(String musicName, float volume){
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
 		music.setVolume(volume);
+
 		music.play();
     }
     public void setVolume(float audio, float changer){

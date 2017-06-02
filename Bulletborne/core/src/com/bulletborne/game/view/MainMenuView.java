@@ -94,6 +94,7 @@ public class MainMenuView extends View {
 
             if (Gdx.input.getY() > yMax/EXIT_Y_MIN && Gdx.input.getY() < yMax/EXIT_Y_MAX) {
                 buttonClick.play(AUDIO_VOLUME*audioChanger);
+                game.getPreferences().saveBestScore(bestScore);
                 System.exit(0);
             }
         }
