@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
+import com.bulletborne.game.view.HighScoresView;
 import com.bulletborne.game.view.MainMenuView;
 
 public class Bulletborne extends Game {

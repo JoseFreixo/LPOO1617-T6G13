@@ -104,14 +104,13 @@ public class MainMenuView extends View {
 
             if (Gdx.input.getX() > xMax/OPTIONS_X_MIN && Gdx.input.getX()< xMax/OPTIONS_X_MAX) {
                 buttonClick.play(AUDIO_VOLUME*audioChanger);
-                System.out.println("ENTREI NO OPTIONS");
-                System.out.println("x ratio= " + xMax / Gdx.input.getX());
-                System.out.println("t ratio= " + yMax / Gdx.input.getY());
+                game.setScreen(new OptionsView(game));
+
             }
 
             if (Gdx.input.getX() > xMax/HIGHSCORES_X_MIN && Gdx.input.getX()< xMax/HIGHSCORES_X_MAX) {
                 buttonClick.play(AUDIO_VOLUME*audioChanger);
-                System.out.println("ENTREI NO HIGHSCORES");
+                game.setScreen(new HighScoresView(game));
             }
 
             if (Gdx.input.getX() > xMax/CREDITS_X_MIN && Gdx.input.getX()< xMax/CREDITS_X_MAX) {

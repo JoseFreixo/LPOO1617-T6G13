@@ -1,7 +1,9 @@
 package com.bulletborne.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bulletborne.game.Bulletborne;
 
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
@@ -16,6 +18,7 @@ public class HighScoresView extends View {
     private static final float BACK_X_MAX=9.14f;
     private static final float BACK_Y_MIN=1.24f;
     private static final float BACK_Y_MAX=1.02f;
+    private BitmapFont fontBestScore;
     /**
      * Creates this screen.
      *
@@ -24,6 +27,9 @@ public class HighScoresView extends View {
     public HighScoresView(Bulletborne game) {
         super(game);
         loadAssets();
+        fontBestScore= new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
+        fontBestScore.getData().scale(5f);
+        fontBestScore.setColor(Color.CHARTREUSE);
     }
 
 
@@ -45,8 +51,16 @@ public class HighScoresView extends View {
         super.render(delta);
         game.getBatch().begin();
         drawBackground();
+        drawBestScore();
         game.getBatch().end();
         handleInputs(delta);
+    }
+
+    private void drawBestScore() {
+        /*if(Integer.toString(bestScore).length()<5)
+            fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / 1.35f), (ARENA_HEIGHT / PIXEL_TO_METER / 1.1f) );
+        else*/
+            fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / 13f), (ARENA_HEIGHT / PIXEL_TO_METER / 1.55f) );
     }
 
     /**
@@ -66,16 +80,17 @@ public class HighScoresView extends View {
 
     private void touchedBackButton(int xMax, int yMax) {
         if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
-            if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX)
+            if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
                 buttonClick.play(AUDIO_VOLUME*audioChanger);
-        game.setScreen(new MainMenuView(game));
+                game.setScreen(new MainMenuView(game));
+            }
     }
 
     /**
      * Draws the background
      */
     private void drawBackground() {
-        Texture background = game.getAssetManager().get("Credits_background.png", Texture.class);
+        Texture background = game.getAssetManager().get("highscore_background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, ARENA_WIDTH / PIXEL_TO_METER, ARENA_HEIGHT / PIXEL_TO_METER);
     }
