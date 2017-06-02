@@ -24,7 +24,7 @@ public abstract class View extends ScreenAdapter {
     private static final float BACK_Y_MAX=1.02f;
 
     protected Sound buttonClick;
-    protected static float audioChanger=1f;
+    protected static float audioChanger;
 
     protected static int bestScore;
     /**
@@ -35,7 +35,7 @@ public abstract class View extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    protected static final boolean DEBUG_PHYSICS = true;
+    protected static final boolean DEBUG_PHYSICS = false;
 
     /**
      * How much meters does a pixel represent.
@@ -71,7 +71,7 @@ public abstract class View extends ScreenAdapter {
     protected static final int SHIP_NUMBER_1=1;
     protected static final int SHIP_NUMBER_2=2;
 
-    protected static int shipNumber=SHIP_NUMBER_1;
+    protected static int shipNumber;
 
     /**
      * Creates this screen.
@@ -80,10 +80,6 @@ public abstract class View extends ScreenAdapter {
         this.game=game;
         buttonClick = Gdx.audio.newSound(Gdx.files.internal("button_click.wav"));
         camera = createCamera();
-    }
-
-    public static int getBestScore() {
-        return bestScore;
     }
 
     @Override
@@ -122,8 +118,8 @@ public abstract class View extends ScreenAdapter {
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
         if (!game.getMusic().isPlaying()){
-            game.setPlaying("Skyrim8bitfinal_repeat.wav", AUDIO_VOLUME);
-            game.setVolume(AUDIO_VOLUME,audioChanger);
+            game.setPlaying("Skyrim8bitfinal_repeat.wav");
+            game.setVolume(audioChanger);
             game.getMusic().setLooping(true);
         }
 
@@ -149,7 +145,19 @@ public abstract class View extends ScreenAdapter {
             }
     }
 
+    public static void setShipNumber(int ShipNumber) {
+        shipNumber = ShipNumber;
+    }
+
     public static void setBestScore(int HighScore) {
         bestScore=HighScore;
+    }
+
+    public static float getAudioChanger() {
+        return audioChanger;
+    }
+
+    public static void setAudioChanger(float audioChanger) {
+        View.audioChanger = audioChanger;
     }
 }

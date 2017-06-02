@@ -13,6 +13,7 @@ public class Bulletborne extends Game {
 	private AssetManager assetManager;
 	private Music music;
 	private AndroidSaving preferences;
+	private float musicVolume;
 
 	public Bulletborne(AndroidSaving preferences) {
 		this.preferences = preferences;
@@ -22,10 +23,17 @@ public class Bulletborne extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
+
+		musicVolume=1;//TODO O RESTO DAS PREFERENCIAS
+		float GlobalmusicChanger=preferences.loadGlobalSoundChanger();
+
+		View.setAudioChanger(GlobalmusicChanger);
+		View.setShipNumber(preferences.loadShipNumber());
+		View.setBestScore(preferences.loadBestScore());
+
 		music = Gdx.audio.newMusic(Gdx.files.internal("Skyrim8bitfinal_start.wav"));
-		music.setVolume(0.5f);
+		setVolume(GlobalmusicChanger);
         music.play();
-        View.setBestScore(preferences.loadBestScore());//TODO O RESTO DAS PREFERENCIAS
 		startGame();
 	}
 
@@ -72,14 +80,21 @@ public class Bulletborne extends Game {
         return preferences;
     }
 
-    public void setPlaying(String musicName, float volume){
+    public void setPlaying(String musicName){
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
-		music.setVolume(volume);
-
+		music.setVolume(musicVolume);
 		music.play();
     }
-    public void setVolume(float audio, float changer){
-        music.setVolume(audio*changer);
+
+    public void setVolume(float changer){
+		music.setVolume(musicVolume * changer);
     }
 
+	public float getMusicVolume() {
+		return musicVolume;
+	}
+
+	public void setMusicVolume(float musicVolume) {
+		this.musicVolume = musicVolume;
+	}
 }
