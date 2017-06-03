@@ -133,7 +133,6 @@ public abstract class View extends ScreenAdapter {
             int xMax= Gdx.graphics.getWidth();
             int yMax= Gdx.graphics.getHeight();
             touchedBackButton(xMax,yMax);
-
         }
     }
 
