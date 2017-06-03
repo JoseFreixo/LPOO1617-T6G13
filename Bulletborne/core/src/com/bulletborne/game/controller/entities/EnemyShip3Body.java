@@ -4,11 +4,17 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.bulletborne.game.model.entities.EnemyShipModel;
 
 /**
- * Created by Ruben Torres on 26/05/2017.
+ * A concrete representation of an EntityBody representing a GLASSCANNON enemy ship
  */
-
 public class EnemyShip3Body extends EntityBody {
 
+    /**
+     * Constructs a Glass Cannon ship body according to
+     * a EnemyShip model.
+     *
+     * @param world the physical world this asteroid belongs to.
+     * @param model the model representing this asteroid.
+     */
     public EnemyShip3Body(World world, EnemyShipModel model){
         super(world, model, BodyTypeDef.KINEMATIC);
 
@@ -37,6 +43,10 @@ public class EnemyShip3Body extends EntityBody {
                 new short[]{ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY)});
     }
 
+    /**
+     * Sets the Linear Velocity.x of this ship to a value given as a parameter
+     * @param velocity the new linear velocity.xfor this body
+     */
     @Override
     public void setLinearVelocity(float velocity) {
         body.setLinearVelocity(velocity, 0);

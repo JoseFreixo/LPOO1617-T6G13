@@ -51,10 +51,13 @@ public class GameModel {
         }
     };
 
+    /**
+     * The enemy bullets currently flying through space.
+     */
     private List<BulletModel> enemyBullets;
 
     /**
-     * A pool of bullets
+     * A pool of enemy bullets
      */
     Pool<BulletModel> enemyBulletPool = new Pool<BulletModel>() {
         @Override
@@ -63,6 +66,9 @@ public class GameModel {
         }
     };
 
+    /**
+     * The enemy Ships currently flying through space.
+     */
     private List<EnemyShipModel> enemies;
 
     /**
@@ -85,6 +91,10 @@ public class GameModel {
         }
     };
 
+    /**
+     * Generates a "random" int, made to have more variety of enemyships, make it less random to look random
+     * @return int generated
+     */
     private int generatePseudoRandom0to4(){
         int i;
         do {
@@ -108,8 +118,7 @@ public class GameModel {
     }
 
     /**
-     * Constructs a game with a.space ship in the middle of the
-     * arena and a certain number of asteroids in different sizes.
+     * Constructs a game with a player ship
      */
     private GameModel() {
         lastLastEnemyCreated = Integer.MAX_VALUE;
@@ -127,27 +136,43 @@ public class GameModel {
     /**
      * Returns the player space ship.
      *
-     * @return the space ship.
+     * @return PlayerModel space ship.
      */
     public PlayerModel getPlayer() {
         return player;
     }
 
+    /**
+     * Returns the top and bottom barriers
+     *
+     * @return BarrierModel[] barriers
+     */
     public BarrierModel [] getBarriers() { return barriers; }
 
     /**
-     * Returns the bullets.
+     * Returns the player bullets.
      *
-     * @return the bullet list
+     * @return List<BulletModel> the bullet list
      */
     public List<BulletModel> getBullets() {
         return bullets;
     }
 
+    /**
+     * Returns the enemy bullets.
+     *
+     * @return List<BulletModel> the enemy bullet list
+     */
     public List<BulletModel> getEnemyBullets() {
         return enemyBullets;
     }
 
+    /**
+     * Gets a bullet from the players bullets pool (if there's none, creates one), sets it to a new position
+     * relitive to the player ship and returns it
+     * @param ship player ship
+     * @return BulletModel bullet to shoot
+     */
     public BulletModel createBullet(PlayerModel ship) {
         BulletModel bullet = bulletPool.obtain();
 
@@ -159,6 +184,12 @@ public class GameModel {
         return bullet;
     }
 
+    /**
+     * Gets a bullet from the enemys bullets pool (if there's none, creates one), sets it to a new position
+     * relitive to the enemy ship and returns it
+     * @param ship enemyShip ship
+     * @return BulletModel bullet to shoot
+     */
     public BulletModel createEnemyBullet(EnemyShipModel ship) {
         BulletModel bullet = enemyBulletPool.obtain();
 
@@ -170,8 +201,17 @@ public class GameModel {
         return bullet;
     }
 
+    /**
+     * Returns the enemy Ships.
+     *
+     * @return List<EnemyShipModel> the enemy list
+     */
     public List<EnemyShipModel> getEnemies() { return enemies; }
 
+    /**
+     * Gets an enemy from the enemys pool (if there's none, creates one), sets it to a new position
+     * @return EnemyShipModel enemy ship created
+     */
     public EnemyShipModel createEnemy(){
         EnemyShipModel enemy = enemyPool.obtain();
 
@@ -206,9 +246,17 @@ public class GameModel {
         }
     }
 
+    /**
+     * Sets the number of the ship the user wants to use
+     * @param shipNumber number corresponding to the ship
+     */
     public static void setShipNumber(int shipNumber) {
         GameModel.shipNumber = shipNumber;
     }
+
+    /**
+     * Deletes the current GameModel instance
+     */
     public void delete() {
         instance = null;
     }

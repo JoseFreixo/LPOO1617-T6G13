@@ -7,7 +7,7 @@ package com.bulletborne.game.model.entities;
 public class PlayerModel extends EntityModel{
     private ModelType type;
     /**
-     * Creates a new ship model in a certain position and having a certain rotation.
+     * Creates a new player ship model in a certain position and having a certain rotation.
      *
      * @param x the x-coordinate in meters
      * @param y the y-coordinate in meters
@@ -18,6 +18,10 @@ public class PlayerModel extends EntityModel{
         this.type=type;
     }
 
+    /**
+     * returns the ModelType of this EntityModel
+     * @return ModelType type of the ship
+     */
     @Override
     public ModelType getType() {
         return type;

@@ -10,16 +10,24 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Zé on 19/05/2017.
+ * A concrete representation of an EntityBody
+ * representing the player space ship type1.
  */
-
 public class Player1Body extends PlayerBody{
 
+    /**
+     * Constructs a space ship body according to
+     * a space ship model.
+     *
+     * @param world the physical world this space ship belongs to.
+     * @param model the model representing this space ship.
+     */
     public Player1Body(World world, PlayerModel model){
         super(world, model, BodyTypeDef.DYNAMIC);
 
         width = 256;
         height = 114;
+
         //Lower Wing
         createFixture(body,
                 new float[]{28,83, 249,72, 230,84, 149,110, 84,106},
@@ -42,6 +50,10 @@ public class Player1Body extends PlayerBody{
                 new short[]{PLAYER_BODY, (short) (ENEMY_BODY | BULLET_BODY | BORDER_BODY)});
     }
 
+    /**
+     * Creates the number of bullets this player ship type shoots at the same time
+     * @return ArrayList<BulletModel> bullets created
+     */
     @Override
     public ArrayList<BulletModel> shoot(){
         ArrayList<BulletModel> bullets= new ArrayList<BulletModel>();

@@ -8,11 +8,20 @@ import com.bulletborne.game.model.entities.PlayerModel;
 
 import java.util.ArrayList;
 
-/**
- * Created by r_tor on 30/05/2017.
- */
 
+/**
+ * A concrete representation of an EntityBody
+ * representing the player space ship type1.
+ */
 public class Player2Body extends PlayerBody {
+
+    /**
+     * Constructs a space ship body according to
+     * a space ship model.
+     *
+     * @param world the physical world this space ship belongs to.
+     * @param model the model representing this space ship.
+     */
     public Player2Body(World world, PlayerModel model){
         super(world, model, BodyTypeDef.DYNAMIC);
         width = 257;
@@ -53,6 +62,10 @@ public class Player2Body extends PlayerBody {
                 new short[]{PLAYER_BODY, (short) (ENEMY_BODY | BULLET_BODY | BORDER_BODY)});
     }
 
+    /**
+     * Creates the number of bullets this player ship type shoots at the same time
+     * @return ArrayList<BulletModel> bullets created
+     */
     @Override
     public ArrayList<BulletModel> shoot() {
         ArrayList<BulletModel> bullets= new ArrayList<BulletModel>();

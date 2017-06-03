@@ -31,26 +31,71 @@ import java.util.ArrayList;
  */
 
 public class GameController implements ContactListener{
+    /**
+     * Damage inflicted by the bullets
+     */
     private static final int BULLET_DAMAGE = 1;
+
+    /**
+     * The Normal Enemy Bullet Speed
+     */
     public static final float ENEMY_1_BULLET_SPEED = 60f;
+    /**
+     * The Tank Enemy Bullet Speed
+     */
     public static final float ENEMY_2_BULLET_SPEED = 40f;
+    /**
+     * The Glass Cannon Enemy Bullet Speed
+     */
     public static final float ENEMY_3_BULLET_SPEED = 120f;
-    public static final double ENEMY_SPAWN_LIMIT = 1.2;
+
+    /**
+     * Limit of enemy ships spawns per second
+     */
+    public static final double ENEMY_SPAWN_LIMIT = 1.2f;
+
+    /**
+     * Player ship initial animation speed
+     */
     private static final int INITIAL_PLAYER_SPEED = 10;
-    public static final float SHOT_VOLUME = 0.2f;
+
+    /**
+     * Volume of the Sound made by shooting
+     */
+    public static final float SOUNDS_VOLUME = 0.2f;
+
     /**
      * The singleton instance of this controller
      */
     private static GameController instance;
+
+    /**
+     * int corresponding to the Player's ship Type 1
+     */
     protected static final int SHIP_NUMBER_1=1;
+    /**
+     * int corresponding to the Player's ship Type 2
+     */
     protected static final int SHIP_NUMBER_2=2;
+
+    /**
+     * Player ship type chosen by the user
+     */
     private static int shipNumber;
+
+    /**
+     * Float multipled by the volume to change the audio of the game
+     */
     private static float audioChanger;
+
     /**
      * The amount of time that passed after the begining of the game
      */
     private float timePast = 0f;
 
+    /**
+     * points gained by destroying enemy ships
+     */
     private float pointsGained = 0f;
 
     private boolean lost = false;
@@ -70,6 +115,9 @@ public class GameController implements ContactListener{
      */
     private static final float ROTATION_SPEED = 3f;
 
+    /**
+     * Force Applied to the player's ship to go up and down
+     */
     private static final float FORCE_UP_DOWN_RATIO = 2.1f;
 
     /**
@@ -78,7 +126,7 @@ public class GameController implements ContactListener{
     private static final float ACCELERATION_FORCE = 350000f;
 
     /**
-     * The speed of bullets
+     * The speed of player bullets
      */
     private static final float BULLET_SPEED = 100f;
 
@@ -88,12 +136,12 @@ public class GameController implements ContactListener{
     private static final float NORMAL_ENEMY_SPEED = -15f;
 
     /**
-     * The speed of normal enemies
+     * The speed of tank enemies
      */
     private static final float TANK_ENEMY_SPEED = -5f;
 
     /**
-     * The speed of normal enemies
+     * The speed of tank enemies
      */
     private static final float GLASSCANNON_ENEMY_SPEED = -30f;
 
@@ -102,11 +150,15 @@ public class GameController implements ContactListener{
      */
     private static final float TIME_BETWEEN_SHOTS = .15f;
     /**
-     * Time between consecutive shots in seconds
+     * Time between consecutive enemy ships changer
      */
     private static final float TIME_BETWEEN_ENEMIES_CHANGER = 1.005f;
 
+    /**
+     * Time needed to change the Time Between enemies
+     */
     private static final float ENEMIES_QUANTITY_TIME_CHANGER = 2f;
+
     /**
      * Time between consecutive enemies in seconds
      */
@@ -122,8 +174,13 @@ public class GameController implements ContactListener{
      */
     private PlayerBody playerBody;
 
+    /**
+     * Top Barrier Body
+     */
     private final BarrierBody upperBarrierBody;
-
+    /**
+     * Bottom Barrier Body
+     */
     private final BarrierBody lowerBarrierBody;
 
     /**
@@ -141,10 +198,22 @@ public class GameController implements ContactListener{
      */
     private float timeToNextEnemy;
 
+    /**
+     * Time Left to apply the Enemy spawn changer
+     */
     private float timeToNextQuantityChange;
 
+    /**
+     * bullets being fired sound
+     */
     private Sound shot;
+    /**
+     * enemy's taking damage sound
+     */
     private Sound damage;
+    /**
+     * enemy's being killed sound
+     */
     private Sound explosion;
 
     /**
@@ -168,6 +237,11 @@ public class GameController implements ContactListener{
         world.setContactListener(this);
     }
 
+    /**
+     * Returns a singleton instance of the game controller
+     *
+     * @return the singleton instance
+     */
     public static GameController getInstance() {
         if (instance == null)
             instance = new GameController();
@@ -182,7 +256,7 @@ public class GameController implements ContactListener{
     public void update(float delta) {
         timePast += delta;
         if (timePast <= 3)
-            beginingAnimation(delta);
+            beginningAnimation(delta);
         else{
 
             timeToNextShoot -= delta;
@@ -228,7 +302,11 @@ public class GameController implements ContactListener{
         }
     }
 
-    private void beginingAnimation(float delta){
+    /**
+     * Used To make the beginning Animation
+     * @param delta
+     */
+    private void beginningAnimation(float delta){
         if (timePast > 2)
             playerBody.setTransform(ARENA_WIDTH / 10, ARENA_HEIGHT / 2, 0);
         else if (timePast < 2)
@@ -251,7 +329,6 @@ public class GameController implements ContactListener{
      *
      * @param delta Duration of the rotation in seconds.
      */
-    
     public void goUp(float delta) {
         playerBody.applyForceToCenter(0, ACCELERATION_FORCE * delta, true);
         playerBody.setTransform(playerBody.getX(), playerBody.getY(), playerBody.getAngle() + ROTATION_SPEED * delta);
@@ -259,7 +336,7 @@ public class GameController implements ContactListener{
     }
 
     /**
-     * Shoots a bullet from the spaceship
+     * Shoots bullets from the player ship position perspective
      */
     private void shoot() {
         if(lost)
@@ -270,11 +347,14 @@ public class GameController implements ContactListener{
                 BulletBody body = new BulletBody(world, bullet, true);
                 body.setLinearVelocity(BULLET_SPEED);
             }
-            shot.play(SHOT_VOLUME *audioChanger);
+            shot.play(SOUNDS_VOLUME *audioChanger);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
     }
 
+    /**
+     * Shoots a bullet from the enemy ship position perspective
+     */
     private void enemyShoot(EnemyShipModel model, float delta){
 
         if (model.setTimeToNextShot(delta)){
@@ -282,10 +362,14 @@ public class GameController implements ContactListener{
             BulletBody body = new BulletBody(world, bullet, false);
             body.setLinearVelocity(getEnemyBulletSpeed(model));
             if(!lost)
-                shot.play(SHOT_VOLUME*audioChanger);
+                shot.play(SOUNDS_VOLUME *audioChanger);
         }
     }
 
+    /**
+     * returns the enemy bullet speed depending on the type of enemy ship
+     * @return float bullet speed
+     */
     private float getEnemyBulletSpeed(EnemyShipModel model){
         switch(model.getType()){
             case ENEMY_SHIP_NORMAL:
@@ -299,6 +383,9 @@ public class GameController implements ContactListener{
         }
     }
 
+    /**
+     * Creates a new enemy
+     */
     private void generateEnemy() {
         if (timeToNextEnemy < 0){
             EnemyShipModel enemy = GameModel.getInstance().createEnemy();
@@ -324,12 +411,16 @@ public class GameController implements ContactListener{
         }
     }
 
+    /**
+     * Inflicts damage to a enemy ship and seed if it's dead, also updates the points gained
+     * @param model of the enemy ship
+     */
     private void enemyKilled(EnemyShipModel model){
         model.DamageTaken(BULLET_DAMAGE);
         if (model.getHP() > 0)
-            damage.play(SHOT_VOLUME*audioChanger);
+            damage.play(SOUNDS_VOLUME *audioChanger);
         else
-            explosion.play(SHOT_VOLUME*audioChanger);
+            explosion.play(SOUNDS_VOLUME *audioChanger);
         switch(model.getType()){
             case ENEMY_SHIP_NORMAL:
             case ENEMY_SHIP_TANK:
@@ -339,10 +430,18 @@ public class GameController implements ContactListener{
         }
     }
 
+    /**
+     * Returns the Time past since the beginning of the game
+     * @return float time Past
+     */
     public float getTimePast(){
         return timePast;
     }
 
+    /**
+     * returns the points gained by inflicting damage to the enemys
+     * @return float points gained
+     */
     public float getPointsGained() {
         return pointsGained;
     }
@@ -389,11 +488,17 @@ public class GameController implements ContactListener{
 
     }
 
-
+    /**
+     * sets the flag lost to true if the player's ship got hit
+     */
     public void borderShipCollision() {
         lost = true;
     }
 
+    /**
+     * Returns the flag, true if the player lost the game false otherwise
+     * @return boolean lost
+     */
     public boolean getLost(){
         return lost;
     }
@@ -413,6 +518,9 @@ public class GameController implements ContactListener{
         }
     }
 
+    /**
+     * Disposes of the sounds created and deletes the GameController and GameModel singleton instances
+     */
     public void delete(){
         shot.dispose();
         damage.dispose();
@@ -421,11 +529,19 @@ public class GameController implements ContactListener{
         GameModel.getInstance().delete();
     }
 
+    /**
+     * Sets the player Ship type chosen by the user
+     * @param shipNumber
+     */
     public static void setShipNumber(int shipNumber) {
         GameController.shipNumber = shipNumber;
         GameModel.setShipNumber(shipNumber);
     }
 
+    /**
+     * Sets the audio changer applied to the all sounds volume
+     * @param audioChanger
+     */
     public static void setAudioChanger(float audioChanger) {
         GameController.audioChanger = audioChanger;
     }

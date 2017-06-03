@@ -20,6 +20,10 @@ public class BulletModel extends EntityModel{
         this.type = type;
     }
 
+    /**
+     * returns the ModelType of this EntityModel
+     * @return ModelType type of the Bullet
+     */
     @Override
     public ModelType getType() {
         return type;

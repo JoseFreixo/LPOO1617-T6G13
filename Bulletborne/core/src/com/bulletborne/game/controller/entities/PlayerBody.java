@@ -6,16 +6,18 @@ import com.bulletborne.game.model.entities.EntityModel;
 
 import java.util.ArrayList;
 
-
 /**
- * Created by Ruben Torres on 31/05/2017.
+ * An abstract PlayerBody representing one of the ships to choose from
  */
-
 public abstract class PlayerBody extends EntityBody {
-
+    /**
+     * Y Distance between all of the bullets shot at the sime time by this ship
+     */
     protected static final float Y_BULLET_DISTANCE=1f;
+
     protected float density, friction, restitution;
     protected int width, height;
+
     public PlayerBody(World world, EntityModel model, BodyTypeDef dynamic) {
         super(world, model, dynamic);
         density = 0.5f;

@@ -3,11 +3,19 @@ package com.bulletborne.game.controller.entities;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bulletborne.game.model.entities.EnemyShipModel;
 
+
 /**
- * Created by Ruben Torres on 26/05/2017.
+ * A concrete representation of an EntityBody representing a TANK enemy ship
  */
 
 public class EnemyShip2Body extends EntityBody {
+    /**
+     * Constructs a Tank ship body according to
+     * a EnemyShip model.
+     *
+     * @param world the physical world this asteroid belongs to.
+     * @param model the model representing this asteroid.
+     */
     public EnemyShip2Body(World world, EnemyShipModel model){
         super(world, model, BodyTypeDef.KINEMATIC);
 
@@ -50,6 +58,10 @@ public class EnemyShip2Body extends EntityBody {
                 new short[]{ENEMY_BODY, (short) (PLAYER_BODY | BULLET_BODY)});
     }
 
+    /**
+     * Sets the Linear Velocity.x of this ship to a value given as a parameter
+     * @param velocity the new linear velocity.xfor this body
+     */
     @Override
     public void setLinearVelocity(float velocity) {
         body.setLinearVelocity(velocity, 0);

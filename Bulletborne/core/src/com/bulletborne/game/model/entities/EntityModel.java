@@ -88,7 +88,7 @@ public abstract class EntityModel {
     /**
      * Returns if this entity has been flagged for removal
      *
-     * @return
+     * @return true if is flagged, false otherwise
      */
     public boolean isFlaggedToBeRemoved() {
         return flaggedForRemoval;
@@ -101,5 +101,9 @@ public abstract class EntityModel {
         this.flaggedForRemoval = flaggedForRemoval;
     }
 
+    /**
+     * returns the ModelType of this EntityModel
+     * @return ModelType type
+     */
     public abstract ModelType getType();
 }
