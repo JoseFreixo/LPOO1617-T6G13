@@ -1,7 +1,8 @@
-Design Patterns
+﻿Design Patterns
 
-Flyweight Pattern
+Model-View-Controller
 State
+Flyweight Pattern
 Strategy
 Factory
 Game Loop
