@@ -36,6 +36,6 @@ public class DesktopPlatform implements AndroidSaving {
 
     @Override
     public float loadMusicVolume() {
-        return 1;
+        return 0.5f;
     }
 }

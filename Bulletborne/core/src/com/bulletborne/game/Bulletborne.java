@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
 import com.bulletborne.game.view.MainMenuView;
+import com.bulletborne.game.view.OptionsView;
 import com.bulletborne.game.view.View;
 
 public class Bulletborne extends Game {
@@ -25,14 +26,12 @@ public class Bulletborne extends Game {
 		assetManager = new AssetManager();
 
 		musicVolume=preferences.loadMusicVolume();
-		float GlobalmusicChanger=preferences.loadGlobalSoundChanger();
-
-		View.setAudioChanger(GlobalmusicChanger);
+		View.setAudioChanger(preferences.loadGlobalSoundChanger());
 		View.setShipNumber(preferences.loadShipNumber());
 		View.setBestScore(preferences.loadBestScore());
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("Skyrim8bitfinal_start.wav"));
-		setVolume(GlobalmusicChanger);
+
         music.play();
 		startGame();
 	}
@@ -41,7 +40,7 @@ public class Bulletborne extends Game {
 	 * Starts the game
 	 */
 	private void startGame() {
-		setScreen(new MainMenuView(this));
+		setScreen(new OptionsView(this));
 	}
 	
 	@Override
@@ -86,8 +85,8 @@ public class Bulletborne extends Game {
 		music.play();
     }
 
-    public void setVolume(float changer){
-		music.setVolume(musicVolume * changer);
+    public void setVolume(){
+		music.setVolume(musicVolume);
     }
 
 	public float getMusicVolume() {

@@ -119,7 +119,7 @@ public abstract class View extends ScreenAdapter {
         game.getBatch().setProjectionMatrix(camera.combined);
         if (!game.getMusic().isPlaying()){
             game.setPlaying("Skyrim8bitfinal_repeat.wav");
-            game.setVolume(audioChanger);
+            game.setVolume();
             game.getMusic().setLooping(true);
         }
 

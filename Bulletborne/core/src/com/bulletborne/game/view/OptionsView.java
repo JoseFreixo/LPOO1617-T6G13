@@ -1,7 +1,9 @@
 package com.bulletborne.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bulletborne.game.Bulletborne;
 
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
@@ -12,6 +14,8 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public class OptionsView extends View {
+
+    private BitmapFont fontSoundChanger;
     /**
      * Creates this screen.
      *
@@ -20,6 +24,10 @@ public class OptionsView extends View {
     public OptionsView(Bulletborne game) {
         super(game);
         loadAssets();
+
+        fontSoundChanger = new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
+        fontSoundChanger.getData().scale(1.8f);
+        fontSoundChanger.setColor(Color.GOLD);
     }
 
 
@@ -41,8 +49,14 @@ public class OptionsView extends View {
         super.render(delta);
         game.getBatch().begin();
         drawBackground();
+        drawCurrentOptions();
         game.getBatch().end();
         handleInputs(delta);
+    }
+
+    private void drawCurrentOptions() {
+        fontSoundChanger.draw(game.getBatch(), Float.toString(audioChanger), (ARENA_WIDTH / PIXEL_TO_METER / 1.36f), (ARENA_HEIGHT / PIXEL_TO_METER / 1.75f) );
+        fontSoundChanger.draw(game.getBatch(), Float.toString(game.getMusicVolume()), (ARENA_WIDTH / PIXEL_TO_METER / 1.36f), (ARENA_HEIGHT / PIXEL_TO_METER / 3.1f) );
     }
 
     /**
