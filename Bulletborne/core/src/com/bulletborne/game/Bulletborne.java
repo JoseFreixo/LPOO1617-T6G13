@@ -24,7 +24,7 @@ public class Bulletborne extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 
-		musicVolume=1;//TODO O RESTO DAS PREFERENCIAS
+		musicVolume=preferences.loadMusicVolume();
 		float GlobalmusicChanger=preferences.loadGlobalSoundChanger();
 
 		View.setAudioChanger(GlobalmusicChanger);

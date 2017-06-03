@@ -7,10 +7,13 @@ package com.bulletborne.game;
 public interface AndroidSaving {
     void saveBestScore(int bestScore);
     int loadBestScore();
+
     void saveShipNumber(int shipNumber);
     int loadShipNumber();
+
     void saveGlobalSoundChanger(float soundChanger);
     float loadGlobalSoundChanger();
-   /* void saveMusicVolumeChanger(float volume);
-    void loadMusicVolumeChanger();*/
+
+    void saveMusicVolume(float volume);
+    float loadMusicVolume();
 }

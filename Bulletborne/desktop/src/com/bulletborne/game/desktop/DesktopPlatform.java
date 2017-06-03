@@ -30,4 +30,12 @@ public class DesktopPlatform implements AndroidSaving {
     public float loadGlobalSoundChanger() {
         return 0.5f;
     }
+
+    @Override
+    public void saveMusicVolume(float volume) {}
+
+    @Override
+    public float loadMusicVolume() {
+        return 1;
+    }
 }

@@ -13,6 +13,7 @@ public class AndroidPlatform implements AndroidSaving {
     private static final  String PREF_NAME = "prefs";
     private static final String SHIP_NUMBER_KEY = "ShipNumber";
     private static final String SOUND_CHANGER_KEY = "soundChanger";
+    private static final String MUSIC_VOLUME_KEY = "MUSIC_VOLUME_KEY";
     private Context context;
 
     public AndroidPlatform(Context context){
@@ -58,5 +59,19 @@ public class AndroidPlatform implements AndroidSaving {
         SharedPreferences sp = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         float soundChanger= sp.getFloat(SOUND_CHANGER_KEY, 0.5f);
         return soundChanger;
+    }
+
+    @Override
+    public void saveMusicVolume(float volume) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
+        editor.putFloat(MUSIC_VOLUME_KEY, volume);
+        editor.commit();
+    }
+
+    @Override
+    public float loadMusicVolume() {
+        SharedPreferences sp = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        float musicVolume= sp.getFloat(MUSIC_VOLUME_KEY, 0.5f);
+        return musicVolume;
     }
 }

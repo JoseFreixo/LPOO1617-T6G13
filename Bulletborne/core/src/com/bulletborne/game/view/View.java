@@ -153,9 +153,6 @@ public abstract class View extends ScreenAdapter {
         bestScore=HighScore;
     }
 
-    public static float getAudioChanger() {
-        return audioChanger;
-    }
 
     public static void setAudioChanger(float audioChanger) {
         View.audioChanger = audioChanger;
