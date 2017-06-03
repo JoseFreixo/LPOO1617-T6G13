@@ -82,38 +82,53 @@ public class OptionsView extends View {
         if (Gdx.input.getX() > xMax/1.58f && Gdx.input.getX()< xMax/1.45f) {
             buttonClick.play(AUDIO_VOLUME*audioChanger);
             if (changeSound) {
-                if(audioChanger>0.1f)
-                    audioChanger-=0.1f;
-                else
-                    audioChanger=0.0f;
+                decreaseAudioChanger();
             }
             else{
-                if(game.getMusicVolume()>0.1f)
-                    game.setMusicVolume(game.getMusicVolume()-0.1f);
-                else
-                    game.setMusicVolume(0.0f);
-            game.setVolume();
+               decreaseMusicVolume();
             }
         }
         if (Gdx.input.getX() > xMax/1.17f && Gdx.input.getX()< xMax/1.1)
         {
             buttonClick.play(AUDIO_VOLUME*audioChanger);
             if (changeSound) {
-                if(audioChanger<0.9f)
-                    audioChanger+=0.1f;
-                else
-                    audioChanger=1.0f;
+                increaseAudioChanger();
             }
             else{
-                if(game.getMusicVolume()<0.9f)
-                    game.setMusicVolume(game.getMusicVolume()+0.1f);
-                else
-                    game.setMusicVolume(1.0f);
-                game.setVolume();
+                increaseMusicVolume();
             }
         }
     }
 
+    private void decreaseAudioChanger(){
+        if(audioChanger>0.1f)
+            audioChanger-=0.1f;
+        else
+            audioChanger=0.0f;
+    }
+
+    private void decreaseMusicVolume(){
+        if(game.getMusicVolume()>0.1f)
+            game.setMusicVolume(game.getMusicVolume()-0.1f);
+        else
+            game.setMusicVolume(0.0f);
+        game.setVolume();
+    }
+
+    private void increaseAudioChanger(){
+            if(audioChanger<0.9f)
+                audioChanger+=0.1f;
+            else
+                audioChanger=1.0f;
+    }
+
+    private void increaseMusicVolume() {
+        if(game.getMusicVolume()<0.9f)
+            game.setMusicVolume(game.getMusicVolume()+0.1f);
+        else
+            game.setMusicVolume(1.0f);
+        game.setVolume();
+    }
 
 
     /**
