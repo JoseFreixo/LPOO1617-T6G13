@@ -13,9 +13,7 @@ import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
 
-/**
- * Created by Ruben Torres on 29/05/2017.
- */
+
 
 public abstract class View extends ScreenAdapter {
     /**
@@ -90,9 +88,18 @@ public abstract class View extends ScreenAdapter {
      */
     protected Matrix4 debugCamera;
 
+    /**
+     * int corresponding to the player ship type 1
+     */
     protected static final int SHIP_NUMBER_1=1;
+    /**
+     * int corresponding to the player ship type 2
+     */
     protected static final int SHIP_NUMBER_2=2;
 
+    /**
+     * Current select player ship
+     */
     protected static int shipNumber;
 
     /**

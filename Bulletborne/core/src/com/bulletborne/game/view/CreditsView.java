@@ -8,9 +8,6 @@ import com.bulletborne.game.Bulletborne;
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
-/**
- * Created by Ruben Torres on 01/06/2017.
- */
 
 public class CreditsView extends View {
     /**

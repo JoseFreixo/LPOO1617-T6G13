@@ -9,13 +9,21 @@ import com.bulletborne.game.Bulletborne;
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
-/**
- * Created by Ruben Torres on 02/06/2017.
- */
+
 
 public class HighScoresView extends View {
+    /**
+     * Ratio used to know the x position of the high score
+     */
     private static final float SCORE_X_POS = 1.66f;
+    /**
+     * Ratio used to know the y position of the high score
+     */
     private static final float SCORE_Y_POS = 1.7f;
+
+    /**
+     * Font used to print the current high score
+     */
     private BitmapFont fontBestScore;
     /**
      * Creates this screen.
@@ -54,6 +62,9 @@ public class HighScoresView extends View {
         handleInputs(delta);
     }
 
+    /**
+     * Draws the High Score
+     */
     private void drawBestScore() {
             fontBestScore.draw(game.getBatch(), Integer.toString(bestScore), (ARENA_WIDTH / PIXEL_TO_METER / SCORE_X_POS), (ARENA_HEIGHT / PIXEL_TO_METER / SCORE_Y_POS) );
     }

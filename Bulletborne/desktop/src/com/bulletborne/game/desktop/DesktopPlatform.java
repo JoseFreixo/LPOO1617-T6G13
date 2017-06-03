@@ -24,10 +24,10 @@ public class DesktopPlatform implements AndroidSaving {
     }
 
     @Override
-    public void saveGlobalSoundChanger(float soundChanger) {}
+    public void saveSoundChanger(float soundChanger) {}
 
     @Override
-    public float loadGlobalSoundChanger() {
+    public float loadSoundChanger() {
         return 0.5f;
     }
 

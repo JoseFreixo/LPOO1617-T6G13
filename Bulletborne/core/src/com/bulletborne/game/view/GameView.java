@@ -21,38 +21,118 @@ import java.util.List;
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
-/**
- * Created by Zé on 05/05/2017.
- */
-public class GameView extends View {
 
+public class GameView extends View {
+    /**
+     * Scale amount for myFont
+     */
     public static final float SCALE_AMOUNT = 0.5f;
+    /**
+     * Current score x position
+     */
     public static final float X_START_CURR_SCORE = 1 / PIXEL_TO_METER;
+    /**
+     * Current score y position
+     */
     public static final float Y_START_CURR_SCORE = 49 / PIXEL_TO_METER;
+    /**
+     * Amount of time converted to points that don't count (3 second animation)
+     */
     public static final int POINTS_THAT_DONT_COUNT = 30;
+    /**
+     * Ratio to convert time to points
+     */
     public static final int TIMETOPOINTS = 10;
+    /**
+     * Starting message
+     */
     public static final String STARTING_MESSAGE = "GO";
+    /**
+     * Volume of the piano sound
+     */
     public static final float PIANO_VOLUME = 0.6f;
+    /**
+     * End game Current string
+     */
     private static final String CURRENT_STRING = "Current";
+    /**
+     * End game Best one string
+     */
     private static final String BEST_ONE_STRING = "Best One:   ";
+    /**
+     * Scores x position
+     */
     private static final float FONT_X_POS = (ARENA_WIDTH / PIXEL_TO_METER / 12);
+    /**
+     * Current score y position
+     */
     private static final float CURRENTFONT_Y_POS = (ARENA_HEIGHT / PIXEL_TO_METER / 1.7f);
+    /**
+     * Best score score y position
+     */
     private static final float BESTFONT_Y_POS = (ARENA_HEIGHT / PIXEL_TO_METER / 2.4f);
+    /**
+     * Y position of the End buttons
+     */
     private static final float BUTTONS_END_Y_POS = ARENA_HEIGHT / PIXEL_TO_METER / 7f;
+    /**
+     * Scale amount for the scores font
+     */
     private static final int SCORE_FONT_SCALE = 5;
+    /**
+     * Scale amount for the current points font
+     */
     private static final int POINTS_FONT_SCALE = 2;
+    /**
+     * X position of the Quit button
+     */
     private static final float QUIT_END_X_POS = ARENA_WIDTH / PIXEL_TO_METER / 4;
+    /**
+     * X position of the Try again button
+     */
     private static final float TRYAGAIN_X_POS = ARENA_WIDTH / PIXEL_TO_METER / 1.35f;
+    /**
+     * Score string
+     */
     private static final String SCORE_STR = "SCORE";
+
+    /**
+     * Flag activated when the used loses the game
+     */
     private boolean lostFlag=false;
+    /**
+     * Font for the initial animation
+     */
     private BitmapFont fontInitialAnimation;
+    /**
+     * Font for the current score
+     */
     private BitmapFont fontCurrentPoints;
+    /**
+     * Font for the end screen score
+     */
     private BitmapFont fontEndScore;
+    /**
+     * Font for the end screen points
+     */
     private BitmapFont fontEndPoints;
+    /**
+     * Piano note A4 sound
+     */
     private Sound pianoA4;
+    /**
+     * Piano note A5 sound
+     */
     private Sound pianoA5;
+    /**
+     * counter for the initial animation
+     */
     private float counter;
+    /**
+     * Current game score
+     */
     private int totalPoints;
+
 
     /**
      * Creates this screen.
@@ -125,6 +205,9 @@ public class GameView extends View {
         handleInputs(delta);
     }
 
+    /**
+     * Checks if the user lost, if yes updates the best score and draws and starts to draw the lost screen
+     */
     private void lost() {
         if (GameController.getInstance().getLost()&&!lostFlag){
             lostFlag=true;
@@ -138,6 +221,9 @@ public class GameView extends View {
         }
     }
 
+    /**
+     * Draws the lost screen
+     */
     private void drawLostScreen() {
         float xStart = (fontEndScore.getRegion().getRegionWidth() / 4)*SCALE_AMOUNT;
         float yStart = (fontEndScore.getRegion().getRegionHeight());
@@ -158,12 +244,15 @@ public class GameView extends View {
         sprite.draw(game.getBatch());
     }
 
-
+    /**
+     * Draws the starting 3 2 1 animation, after that draws the current score
+     */
     private void drawStartAnimationAndScore() {
 
         float number = GameController.getInstance().getTimePast();
         float xStart = (fontInitialAnimation.getRegion().getRegionWidth() / 4)*SCALE_AMOUNT;
         float yStart = (fontInitialAnimation.getRegion().getRegionHeight() / 2)*SCALE_AMOUNT;
+
         if ((3 - number) >= 0.0f) {
             fontInitialAnimation.draw(game.getBatch(), (Integer.toString((int) (4 - number))), (ARENA_WIDTH / PIXEL_TO_METER / 2) - xStart, (ARENA_HEIGHT / PIXEL_TO_METER / 2) + yStart);
             if (counter <= 0.0f) {
@@ -200,6 +289,9 @@ public class GameView extends View {
 
     }
 
+    /**
+     * If the user lost checks the end game buttons inputs and reacts accordingly
+     */
     private void endGameInputs() {
         int xMax= Gdx.graphics.getWidth();
         int yMax= Gdx.graphics.getHeight();
@@ -224,6 +316,11 @@ public class GameView extends View {
         }
     }
 
+    /**
+     * Handles any game related inputs and passes them to the controller.
+     *
+     * @param delta time since last time inputs where handled in seconds
+     */
     private void playGameInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             GameController.getInstance().goUp(delta);
@@ -273,10 +370,17 @@ public class GameView extends View {
         game.getBatch().draw(background, 0, 0, ARENA_WIDTH / PIXEL_TO_METER, ARENA_HEIGHT / PIXEL_TO_METER);
     }
 
+    /**
+     * Sets the static variable counter
+     * @param value
+     */
     public void setCounter(float value){
         counter = value;
     }
 
+    /**
+     * Disposed the sound and font's also deletes the game controller and game model instances
+     */
     @Override
     public void dispose() {
         pianoA4.dispose();

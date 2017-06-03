@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
 import com.bulletborne.game.view.MainMenuView;
-import com.bulletborne.game.view.OptionsView;
 import com.bulletborne.game.view.View;
 
 public class Bulletborne extends Game {
@@ -16,17 +15,25 @@ public class Bulletborne extends Game {
 	private AndroidSaving preferences;
 	private float musicVolume;
 
+	/**
+	 * Sets the preferences (save and load functions)
+	 * @param preferences
+	 */
 	public Bulletborne(AndroidSaving preferences) {
 		this.preferences = preferences;
 	}
 
+	/**
+	 * Creates the game. Initializes the sprite batch and asset manager.
+	 * Also starts the game until we have a main menu.
+	 */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 
 		musicVolume=preferences.loadMusicVolume();
-		View.setAudioChanger(preferences.loadGlobalSoundChanger());
+		View.setAudioChanger(preferences.loadSoundChanger());
 		View.setShipNumber(preferences.loadShipNumber());
 		View.setBestScore(preferences.loadBestScore());
 
@@ -42,7 +49,10 @@ public class Bulletborne extends Game {
 	private void startGame() {
 		setScreen(new MainMenuView(this));
 	}
-	
+
+	/**
+	 * Disposes of all assets.
+	 */
 	@Override
 	public void dispose () {
 		batch.dispose();
@@ -75,25 +85,49 @@ public class Bulletborne extends Game {
 	 */
 	public Music getMusic() { return music; }
 
-    public AndroidSaving getPreferences() {
-        return preferences;
-    }
-
+	/**
+	 * sets playing a music
+	 * @param musicName
+	 */
     public void setPlaying(String musicName){
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
 		music.setVolume(musicVolume);
 		music.play();
     }
 
-    public void setVolume(){
+	/**
+	 * Sets the volume of the music currently playing
+	 */
+	public void setVolume(){
 		music.setVolume(musicVolume);
     }
 
+	/**
+	 * gets the MusicVolume
+	 * @return musicVolume
+	 */
 	public float getMusicVolume() {
 		return musicVolume;
 	}
 
+	/**
+	 * Sets the music Volume to a given value
+	 * @param musicVolume
+	 */
 	public void setMusicVolume(float musicVolume) {
 		this.musicVolume = musicVolume;
+	}
+
+	/**
+	 * Sabes the highscore and user preferences
+	 * @param bestScore
+	 * @param shipNumber
+	 * @param audioChanger
+	 */
+	public void save(int bestScore, int shipNumber, float audioChanger) {
+		preferences.saveBestScore(bestScore);
+		preferences.saveShipNumber(shipNumber);
+		preferences.saveSoundChanger(audioChanger);
+		preferences.saveMusicVolume(musicVolume);
 	}
 }

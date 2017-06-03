@@ -11,18 +11,35 @@ import com.bulletborne.game.Bulletborne;
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
-/**
- * Created by r_tor on 01/06/2017.
- */
+
 
 public class HangarView extends View {
-
+    /**
+     * Ratio used to know the y_min position of the arrow buttons
+     */
     private static final float ARROWS_Y_MIN=2.74f;
+    /**
+     * Ratio used to know the y_max position of the arrow buttons
+     */
     private static final float ARROWS_Y_MAX= 1.57f;
+    /**
+     * Ratio used to know the x_min position of the left arrow button
+     */
     private static final float LEFTARROW_X_MIN=13.06f;
+    /**
+     * Ratio used to know the x_max position of the left arrow button
+     */
     private static final float LEFTARROW_X_MAX=5.61f;
+    /**
+     * Ratio used to know the x_min position of the right arrow button
+     */
     private static final float RIGHTARROW_X_MIN=1.22f;
+    /**
+     * Ratio used to know the x_max position of the right arrow button
+     */
     private static final float RIGHTARROW_X_MAX=1.08f;
+
+
     /**
      * Creates this screen.
      *
@@ -74,6 +91,11 @@ public class HangarView extends View {
         }
     }
 
+    /**
+     * Checks if the arrow buttons were pressed and reacts accordingly
+     * @param xMax game width
+     * @param yMax game height
+     */
     private void touchedArrowButtons(int xMax, int yMax) {
         if (Gdx.input.getY() > yMax/ARROWS_Y_MIN && Gdx.input.getY() < yMax/ARROWS_Y_MAX){
 
@@ -91,6 +113,9 @@ public class HangarView extends View {
         }
     }
 
+    /**
+     * Draw the current selected ship
+     */
     private void drawShip(){
         Texture shipToDraw=null;
         if(shipNumber==SHIP_NUMBER_1)
@@ -103,6 +128,7 @@ public class HangarView extends View {
 
         sprite.draw(game.getBatch());
     }
+
     /**
      * Draws the background
      */

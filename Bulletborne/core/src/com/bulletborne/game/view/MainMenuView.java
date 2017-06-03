@@ -7,29 +7,75 @@ import com.bulletborne.game.Bulletborne;
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;
 import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
 
-/**
- * Created by Ruben Torres on 29/05/2017.
- */
+
 
 public class MainMenuView extends View {
 
-
+    /**
+     * Ratio used to know the x_min position of the play/hangar/exit buttons
+     */
     private static final float BUTTONS_X_MIN=1.61f;
+    /**
+     * Ratio used to know the x_max position of the play/hangar/exit buttons
+     */
     private static final float BUTTONS_X_MAX= 1.12f;
+    /**
+     * Ratio used to know the y_min position of the play button
+     */
     private static final float PLAY_Y_MIN=2.69f;
+    /**
+     * Ratio used to know the y_max position of the play button
+     */
     private static final float PLAY_Y_MAX=1.93f;
+    /**
+     * Ratio used to know the y_min position of the hangar button
+     */
     private static final float HANGAR_Y_MIN=1.85f;
+    /**
+     * Ratio used to know the y_max position of the hangar button
+     */
     private static final float HANGAR_Y_MAX=1.46f;
+    /**
+     * Ratio used to know the y_min position of the exit button
+     */
     private static final float EXIT_Y_MIN=1.42f;
+    /**
+     * Ratio used to know the y_max position of the exit button
+     */
     private static final float EXIT_Y_MAX=1.19f;
+    /**
+     * Ratio used to know the y_min position of the options/credits/highscore buttons
+     */
     private static final float LOWER_BUTTONS_Y_MIN=1.15f;
+    /**
+     * Ratio used to know the y_max position of the options/credits/highscore buttons
+     */
     private static final float LOWER_BUTTONS_Y_MAX=1.00f;
+    /**
+     * Ratio used to know the x_min position of the options button
+     */
     private static final float OPTIONS_X_MIN=80.00f;
+    /**
+     * Ratio used to know the x_max position of the options button
+     */
     private static final float OPTIONS_X_MAX=14.00f;
+    /**
+     * Ratio used to know the x_min position of the credits button
+     */
     private static final float CREDITS_X_MIN=12.08f;
+    /**
+     * Ratio used to know the x_max position of the credits button
+     */
     private static final float CREDITS_X_MAX=7.03f;
+    /**
+     * Ratio used to know the x_min position of the highscore button
+     */
     private static final float HIGHSCORES_X_MIN=6.42f;
+    /**
+     * Ratio used to know the x_max position of the highscore button
+     */
     private static final float HIGHSCORES_X_MAX=4.63f;
+
     /**
      * Creates this screen.
      *
@@ -73,12 +119,17 @@ public class MainMenuView extends View {
         if (Gdx.input.justTouched()) {
             int xMax= Gdx.graphics.getWidth();
             int yMax= Gdx.graphics.getHeight();
-            touchedButtons(xMax,yMax);
+            touchedMainButtons(xMax,yMax);
             touchedLowerButtons(xMax,yMax);
         }
     }
 
-    private void touchedButtons(int xMax,int yMax){
+    /**
+     * Checks if the play/hangar/exit buttons were pressed and reacts accordingly
+     * @param xMax game width
+     * @param yMax game height
+     */
+    private void touchedMainButtons(int xMax, int yMax){
         if (Gdx.input.getX() > xMax/BUTTONS_X_MIN && Gdx.input.getX()<xMax/BUTTONS_X_MAX) {
 
             if (Gdx.input.getY() > yMax/PLAY_Y_MIN && Gdx.input.getY() < yMax/PLAY_Y_MAX) {
@@ -94,20 +145,18 @@ public class MainMenuView extends View {
 
             if (Gdx.input.getY() > yMax/EXIT_Y_MIN && Gdx.input.getY() < yMax/EXIT_Y_MAX) {
                 buttonClick.play(AUDIO_VOLUME*audioChanger);
-                save();
+                game.save(bestScore,shipNumber,audioChanger);
                 dispose();
                 Gdx.app.exit();
             }
         }
     }
 
-    private void save() {
-        game.getPreferences().saveBestScore(bestScore);
-        game.getPreferences().saveShipNumber(shipNumber);
-        game.getPreferences().saveGlobalSoundChanger(audioChanger);
-        game.getPreferences().saveMusicVolume(game.getMusicVolume());
-    }
-
+    /**
+     * Checks if the Options/Credits/HighScore buttons were pressed and reacts accordingly
+     * @param xMax game width
+     * @param yMax game height
+     */
     private void touchedLowerButtons(int xMax,int yMax){
         if (Gdx.input.getY() > yMax/LOWER_BUTTONS_Y_MIN && Gdx.input.getY() < yMax/LOWER_BUTTONS_Y_MAX){
 

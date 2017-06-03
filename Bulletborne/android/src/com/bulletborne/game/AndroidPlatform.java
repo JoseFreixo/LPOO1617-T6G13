@@ -48,14 +48,14 @@ public class AndroidPlatform implements AndroidSaving {
     }
 
     @Override
-    public void saveGlobalSoundChanger(float soundChanger) {
+    public void saveSoundChanger(float soundChanger) {
         SharedPreferences.Editor editor = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.putFloat(SOUND_CHANGER_KEY, soundChanger);
         editor.commit();
     }
 
     @Override
-    public float loadGlobalSoundChanger() {
+    public float loadSoundChanger() {
         SharedPreferences sp = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         float soundChanger= sp.getFloat(SOUND_CHANGER_KEY, 0.5f);
         return soundChanger;
