@@ -40,7 +40,7 @@ public class Bulletborne extends Game {
 	 * Starts the game
 	 */
 	private void startGame() {
-		setScreen(new OptionsView(this));
+		setScreen(new MainMenuView(this));
 	}
 	
 	@Override

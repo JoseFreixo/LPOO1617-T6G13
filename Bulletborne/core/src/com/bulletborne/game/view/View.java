@@ -18,14 +18,36 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public abstract class View extends ScreenAdapter {
+    /**
+     * Ratio used to know the x_min position of the back button
+     */
     private static final float BACK_X_MIN=64.0f;
+    /**
+     * Ratio used to know the x_max position of the back button
+     */
     private static final float BACK_X_MAX=9.14f;
+    /**
+     * Ratio used to know the y_min position of the back button
+     */
     private static final float BACK_Y_MIN=1.24f;
+    /**
+     * Ratio used to know the y_max position of the back button
+     */
     private static final float BACK_Y_MAX=1.02f;
 
+    /**
+     * Sound of clicking a button
+     */
     protected Sound buttonClick;
+
+    /**
+     * Sound Changer
+     */
     protected static float audioChanger;
 
+    /**
+     * HighScore
+     */
     protected static int bestScore;
     /**
      * The game this screen belongs to.
@@ -82,10 +104,6 @@ public abstract class View extends ScreenAdapter {
         camera = createCamera();
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 
     /**
      * Creates the camera used to show the viewport.
@@ -108,8 +126,7 @@ public abstract class View extends ScreenAdapter {
     }
 
     /**
-     * Renders this screen.
-     *
+     * Common Render for all extended view classes
      * @param delta time since last renders in seconds.
      */
     @Override
@@ -127,6 +144,10 @@ public abstract class View extends ScreenAdapter {
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
     }
 
+    /**
+     * Handles any inputs
+     * @param delta time since last input in seconds.
+     */
     protected void handleInputs(float delta) {
 
         if (Gdx.input.justTouched()) {
@@ -136,6 +157,11 @@ public abstract class View extends ScreenAdapter {
         }
     }
 
+    /**
+     * Checks if the back button was pressed
+     * @param xMax game width
+     * @param yMax game height
+     */
     protected void touchedBackButton(int xMax, int yMax) {
         if (Gdx.input.getX() > xMax/BACK_X_MIN && Gdx.input.getX()<xMax/BACK_X_MAX)
             if (Gdx.input.getY() > yMax/BACK_Y_MIN && Gdx.input.getY() < yMax/BACK_Y_MAX) {
@@ -144,15 +170,26 @@ public abstract class View extends ScreenAdapter {
             }
     }
 
+    /**
+     * Sets the ship the user chose to play with
+     * @param ShipNumber int corresponding to the ship
+     */
     public static void setShipNumber(int ShipNumber) {
         shipNumber = ShipNumber;
     }
 
+    /**
+     * Sets the best Score the user got till this moment
+     * @param HighScore Best Score so far
+     */
     public static void setBestScore(int HighScore) {
         bestScore=HighScore;
     }
 
-
+    /**
+     * Sets the Sound volume changer
+     * @param audioChanger Sound Volume changer
+     */
     public static void setAudioChanger(float audioChanger) {
         View.audioChanger = audioChanger;
     }
