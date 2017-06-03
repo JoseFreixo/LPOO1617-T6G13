@@ -14,8 +14,8 @@ import static com.bulletborne.game.controller.GameController.ARENA_WIDTH;
  */
 
 public class HighScoresView extends View {
-    private static final float SCORE_X_POS = 13f;
-    private static final float SCORE_Y_POS = 1.55f;
+    private static final float SCORE_X_POS = 1.66f;
+    private static final float SCORE_Y_POS = 1.7f;
     private BitmapFont fontBestScore;
     /**
      * Creates this screen.
@@ -26,7 +26,7 @@ public class HighScoresView extends View {
         super(game);
         loadAssets();
         fontBestScore= new BitmapFont(Gdx.files.internal("myFontScore.fnt"));
-        fontBestScore.getData().scale(5f);
+        fontBestScore.getData().scale(3f);
         fontBestScore.setColor(Color.GOLD);
     }
 
