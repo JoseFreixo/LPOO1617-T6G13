@@ -3,11 +3,19 @@ package com.bulletborne.game.controller.entities;
 import com.bulletborne.game.model.entities.BarrierModel;
 import com.badlogic.gdx.physics.box2d.World;
 
-/**
- * Created by Zé on 24/05/2017.
- */
 
+/**
+ * A concrete representation of an EntityBody representing a Barrier.
+ */
 public class BarrierBody extends EntityBody{
+
+    /**
+     * Constructs a barrier body according to
+     * a barrier model.
+     *
+     * @param world the physical world this asteroid belongs to.
+     * @param model the model representing this bullet.
+     */
     public BarrierBody(World world, BarrierModel model){
         super(world, model, BodyTypeDef.STATIC);
 

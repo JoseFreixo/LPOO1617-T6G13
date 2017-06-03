@@ -3,6 +3,9 @@ package com.bulletborne.game.controller.entities;
 import com.bulletborne.game.model.entities.BulletModel;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ * A concrete representation of an EntityBody representing a bullet.
+ */
 public class BulletBody extends EntityBody{
     /**
      * Constructs a bullet body according to
