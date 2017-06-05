@@ -1,7 +1,10 @@
 # LPOO1617-T6G13
 
 Como instalar a APP: Correr o android-release.apk num sistema android.
+
 Como ver o projeto: Abrir como projeto atavés do Android Studio (Pasta: "Bulletborne")
+
+
 
 
 UML
@@ -38,6 +41,8 @@ Overall time spent developing ???
 
 Work distribution amongst team members
 Ambos os membros dedicaram-se de igual forma á realização deste projeto
+
+
 
 
 
