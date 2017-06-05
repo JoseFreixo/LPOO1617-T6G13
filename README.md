@@ -46,10 +46,12 @@ possa ser usada no mundo real.
 10 horas por dia durante 2 semanas, sem contar o trabalhado desenvolvido nas aulas.
 
 ->Work distribution amongst team members
+
 Ambos os membros dedicaram-se de igual forma á realização deste projeto
 
 
 ->USER MANUAL
+
 Quando se inicia a aplicação somos apresentados com o seguinte menu principal:
 
 ![4](https://cloud.githubusercontent.com/assets/25772341/26805891/1820c0ce-4a46-11e7-93c3-5d456129c027.png)
