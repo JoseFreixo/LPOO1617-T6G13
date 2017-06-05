@@ -240,6 +240,7 @@ public class GameController implements ContactListener{
         world.setContactListener(this);
     }
 
+
     public void loadSounds(){
         allowSounds = true;
         shot = Gdx.audio.newSound(Gdx.files.internal("shot.wav"));
@@ -586,5 +587,13 @@ public class GameController implements ContactListener{
      */
     public static void setAudioChanger(float audioChanger) {
         GameController.audioChanger = audioChanger;
+    }
+
+    /**
+     * Returns the playerBody
+     * @return PlayerBody
+     */
+    public PlayerBody getPlayerBody() {
+        return playerBody;
     }
 }

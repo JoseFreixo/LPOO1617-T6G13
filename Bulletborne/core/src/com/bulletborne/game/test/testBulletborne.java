@@ -96,4 +96,73 @@ public class testBulletborne {
         assertTrue(enemy2spawned);
         assertTrue(enemy3spawned);
     }
+
+    @Test
+    public void testPlayerShoot(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+
+        assertEquals(GameController.getInstance().getPlayerBody().shoot().size(),3);
+
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+
+        assertEquals(GameController.getInstance().getPlayerBody().shoot().size(),2);
+    }
+
+    @Test
+    public void testPlayerGoUp(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+        GameController.getInstance().update(3f);
+        float X_before = GameController.getInstance().getPlayerBody().getX();
+        float Y_before = GameController.getInstance().getPlayerBody().getY();
+        float Ang_before = GameController.getInstance().getPlayerBody().getAngle();
+
+        GameController.getInstance().update(0.25f);
+        GameController.getInstance().goUp(0.5f);
+        GameController.getInstance().update(0.25f);
+        assertTrue(X_before==GameController.getInstance().getPlayerBody().getX());
+        assertTrue(Y_before<GameController.getInstance().getPlayerBody().getY());
+        assertTrue(Ang_before<GameController.getInstance().getPlayerBody().getAngle());
+    }
+
+    @Test
+    public void testPlayerGoingDown(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+        GameController.getInstance().update(3f);
+        float X_before = GameController.getInstance().getPlayerBody().getX();
+        float Y_before = GameController.getInstance().getPlayerBody().getY();
+        float Ang_before = GameController.getInstance().getPlayerBody().getAngle();
+
+        GameController.getInstance().update(0.25f);
+        assertTrue(X_before==GameController.getInstance().getPlayerBody().getX());
+        assertTrue(Y_before>GameController.getInstance().getPlayerBody().getY());
+        assertTrue(Ang_before>GameController.getInstance().getPlayerBody().getAngle());
+    }
+
+    @Test
+    public void setAndGetTimetoNextEnemy(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+        GameController.getInstance().setTimeToNextEnemy(-1);
+        assertEquals(-1,(int)GameController.getInstance().getTimeToNextEnemy());
+    }
+
+    @Test
+    public void testEnemyKilled(){
+        EnemyShipModel ship= GameModel.getInstance().createEnemy();
+        int hp_before=ship.getHP();
+        GameController.getInstance().enemyKilled(ship);
+        assertEquals(hp_before-1,ship.getHP());
+        ship.DamageTaken(100);
+        hp_before=hp_before-1-100;
+        GameController.getInstance().enemyKilled(ship);
+        assertEquals(hp_before-1,ship.getHP());
+        assertTrue(ship.isFlaggedToBeRemoved());
+    }
+
+
+
 }
