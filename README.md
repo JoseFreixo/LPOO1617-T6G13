@@ -1,17 +1,15 @@
 # LPOO1617-T6G13
 
-Como instalar a APP: Correr o android-release.apk num sistema android.
+->Como instalar a APP: Correr o android-release.apk num sistema android.
 
-Como ver o projeto: Abrir como projeto atavés do Android Studio (Pasta: "Bulletborne")
-
-
+->Como ver o projeto: Abrir como projeto atavés do Android Studio (Pasta: "Bulletborne")
 
 
-UML
+->UML
 
 ![uml](https://cloud.githubusercontent.com/assets/25772341/26806193/850c0864-4a47-11e7-9a1f-775d27506f4e.png)
 
-Design Patterns
+->Design Patterns
 
 -Model-View-Controller
 
@@ -30,31 +28,28 @@ Design Patterns
 -Object Pool
 
 
-Major difficulties along the way
+->Major difficulties along the way
 
 A maior dificuldade encontrada a desenvolver este projeto com a framework do libgdx 
 foi conseguir desenhar objetos em sítios especificos do ecrã do jogo.
 Também o tempo foi uma variável que dificultou o desenvolvimento do mesmo.
 
-Lessons learned 
+->Lessons learned 
 
 Para além de uma evolução significativa a saber gerir o tempo no sentido de desenvolver 
 software, depois deste projeto podemos dizer que somos no global melhores software develepors.
 Isto porque até agora não foi dada a oportunidade de desenvolver uma aplicação por completo que
 possa ser usada no mundo real.
 
-Overall time spent developing 
+->Overall time spent developing 
 
 10 horas por dia durante 2 semanas, sem contar o trabalhado desenvolvido nas aulas.
 
-Work distribution amongst team members
+->Work distribution amongst team members
 Ambos os membros dedicaram-se de igual forma á realização deste projeto
 
 
-
-
-
-USER MANUAL
+->USER MANUAL
 Quando se inicia a aplicação somos apresentados com o seguinte menu principal:
 
 ![4](https://cloud.githubusercontent.com/assets/25772341/26805891/1820c0ce-4a46-11e7-93c3-5d456129c027.png)
