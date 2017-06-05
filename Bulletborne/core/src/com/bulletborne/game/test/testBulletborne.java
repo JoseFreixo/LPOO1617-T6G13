@@ -163,6 +163,38 @@ public class testBulletborne {
         assertTrue(ship.isFlaggedToBeRemoved());
     }
 
+    @Test
+    public void testLost(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+        GameController.getInstance().update(3f);
+        assertTrue(!GameController.getInstance().getLost());
+        GameController.getInstance().update(4f);
+        assertTrue(GameController.getInstance().getLost());
+    }
 
+    @Test
+    public void testIncreasingDifficulty(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+        GameController.getInstance().update(3f);
+        float time1=GameController.getTimeBetweenEnemies();
+        GameController.getInstance().update(10f);
+        float time2=GameController.getTimeBetweenEnemies();
+        assertTrue(time1>time2);
+        GameController.getInstance().update(100f);
+        time1=GameController.getTimeBetweenEnemies();
+        assertTrue(time2>time1);
+    }
+
+    @Test
+    public void testTimePassed(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(2);
+        GameController.getInstance().update(3f);
+        assertEquals(3,(int)GameController.getInstance().getTimePast());
+        GameController.getInstance().update(100f);
+        assertEquals(103,(int)GameController.getInstance().getTimePast());
+    }
 
 }

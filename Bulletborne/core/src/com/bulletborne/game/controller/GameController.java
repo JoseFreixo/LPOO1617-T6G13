@@ -596,4 +596,12 @@ public class GameController implements ContactListener{
     public PlayerBody getPlayerBody() {
         return playerBody;
     }
+
+    /**
+     * Returns the timeBetweenEnemies
+     * @return float timeBetweenEnemies
+     */
+    public static float getTimeBetweenEnemies() {
+        return timeBetweenEnemies;
+    }
 }
