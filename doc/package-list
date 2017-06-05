@@ -1,0 +1,6 @@
+com.bulletborne.game.controller
+com.bulletborne.game.controller.entities
+com.bulletborne.game.model
+com.bulletborne.game.model.entities
+com.bulletborne.game.view
+com.bulletborne.game.view.entities
