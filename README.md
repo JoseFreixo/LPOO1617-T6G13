@@ -14,13 +14,21 @@ UML
 Design Patterns
 
 -Model-View-Controller
+
 -State
+
 -Flyweight Pattern
+
 -Strategy
+
 -Factory
+
 -Game Loop
+
 -Singleton
+
 -Object Pool
+
 
 Major difficulties along the way
 
