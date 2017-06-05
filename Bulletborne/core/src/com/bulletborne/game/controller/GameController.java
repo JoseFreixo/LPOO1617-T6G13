@@ -217,14 +217,17 @@ public class GameController implements ContactListener{
     private Sound explosion;
 
     /**
+     * True if sounds will be used, false if not
+     */
+    private boolean allowSounds;
+
+    /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      */
     public GameController() {
         world = new World(new Vector2(0, 0), true);
 
-        shot = Gdx.audio.newSound(Gdx.files.internal("shot.wav"));
-        damage = Gdx.audio.newSound(Gdx.files.internal("damage.wav"));
-        explosion = Gdx.audio.newSound(Gdx.files.internal("explode.wav"));
+        allowSounds = false;
 
         if(shipNumber==SHIP_NUMBER_1)
             playerBody = new Player1Body(world, GameModel.getInstance().getPlayer());
@@ -235,6 +238,13 @@ public class GameController implements ContactListener{
         lowerBarrierBody = new BarrierBody(world, GameModel.getInstance().getBarriers()[1]);
 
         world.setContactListener(this);
+    }
+
+    public void loadSounds(){
+        allowSounds = true;
+        shot = Gdx.audio.newSound(Gdx.files.internal("shot.wav"));
+        damage = Gdx.audio.newSound(Gdx.files.internal("damage.wav"));
+        explosion = Gdx.audio.newSound(Gdx.files.internal("explode.wav"));
     }
 
     /**
@@ -347,7 +357,8 @@ public class GameController implements ContactListener{
                 BulletBody body = new BulletBody(world, bullet, true);
                 body.setLinearVelocity(BULLET_SPEED);
             }
-            shot.play(SOUNDS_VOLUME *audioChanger);
+            if (allowSounds)
+                shot.play(SOUNDS_VOLUME *audioChanger);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
     }
@@ -361,7 +372,7 @@ public class GameController implements ContactListener{
             BulletModel bullet = GameModel.getInstance().createEnemyBullet(model);
             BulletBody body = new BulletBody(world, bullet, false);
             body.setLinearVelocity(getEnemyBulletSpeed(model));
-            if(!lost)
+            if(!lost && allowSounds)
                 shot.play(SOUNDS_VOLUME *audioChanger);
         }
     }
@@ -384,23 +395,43 @@ public class GameController implements ContactListener{
     }
 
     /**
+     * Returns the time until next enemy spawns
+     * @return the time until next enemy spawns
+     */
+    public float getTimeToNextEnemy() {
+        return timeToNextEnemy;
+    }
+
+    /**
+     * Sets the time until next enemy spawns
+     * @param timeToNextEnemy
+     */
+    public void setTimeToNextEnemy(float timeToNextEnemy) {
+        this.timeToNextEnemy = timeToNextEnemy;
+    }
+
+    /**
      * Creates a new enemy
      */
-    private void generateEnemy() {
+    public int generateEnemy() {
+        int i = 0;
         if (timeToNextEnemy < 0){
             EnemyShipModel enemy = GameModel.getInstance().createEnemy();
             switch (enemy.getType()){
                 case ENEMY_SHIP_NORMAL:
                     EnemyShip1Body body = new EnemyShip1Body(world, enemy);
                     body.setLinearVelocity(NORMAL_ENEMY_SPEED);
+                    i = 1;
                     break;
                 case ENEMY_SHIP_TANK:
                     EnemyShip2Body body2 = new EnemyShip2Body(world, enemy);
                     body2.setLinearVelocity(TANK_ENEMY_SPEED);
+                    i = 2;
                     break;
                 case ENEMY_SHIP_GLASSCANNON:
                     EnemyShip3Body body3 = new EnemyShip3Body(world, enemy);
                     body3.setLinearVelocity(GLASSCANNON_ENEMY_SPEED);
+                    i = 3;
                     break;
             }
             timeToNextEnemy = timeBetweenEnemies;
@@ -409,17 +440,18 @@ public class GameController implements ContactListener{
             timeToNextQuantityChange=ENEMIES_QUANTITY_TIME_CHANGER;
             timeBetweenEnemies=timeBetweenEnemies/TIME_BETWEEN_ENEMIES_CHANGER;
         }
+        return i;
     }
 
     /**
      * Inflicts damage to a enemy ship and seed if it's dead, also updates the points gained
      * @param model of the enemy ship
      */
-    private void enemyKilled(EnemyShipModel model){
+    public void enemyKilled(EnemyShipModel model){
         model.DamageTaken(BULLET_DAMAGE);
-        if (model.getHP() > 0)
+        if (model.getHP() > 0 && allowSounds)
             damage.play(SOUNDS_VOLUME *audioChanger);
-        else
+        else if (allowSounds)
             explosion.play(SOUNDS_VOLUME *audioChanger);
         switch(model.getType()){
             case ENEMY_SHIP_NORMAL:
@@ -522,9 +554,11 @@ public class GameController implements ContactListener{
      * Disposes of the sounds created and deletes the GameController and GameModel singleton instances
      */
     public void delete(){
-        shot.dispose();
-        damage.dispose();
-        explosion.dispose();
+        if (allowSounds) {
+            shot.dispose();
+            damage.dispose();
+            explosion.dispose();
+        }
         instance = null;
         GameModel.getInstance().delete();
     }
@@ -536,6 +570,14 @@ public class GameController implements ContactListener{
     public static void setShipNumber(int shipNumber) {
         GameController.shipNumber = shipNumber;
         GameModel.setShipNumber(shipNumber);
+    }
+
+    /**
+     * Returns the ship number
+     * @return the ship number
+     */
+    public static int getShipNumber() {
+        return shipNumber;
     }
 
     /**

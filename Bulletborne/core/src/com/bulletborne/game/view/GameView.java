@@ -155,6 +155,7 @@ public class GameView extends View {
         pianoA4 = Gdx.audio.newSound(Gdx.files.internal("pianoA4.wav"));
         pianoA5 = Gdx.audio.newSound(Gdx.files.internal("pianoA5.wav"));
         setCounter(0f);
+        GameController.getInstance().loadSounds();
     }
 
 
@@ -301,14 +302,12 @@ public class GameView extends View {
 
                 if (Gdx.input.getX() > xMax / 6.93f && Gdx.input.getX() < xMax / 2.82f) {
                     buttonClick.play(AUDIO_VOLUME*audioChanger);
-                    GameController.getInstance().delete();
                     this.dispose();
                     game.setScreen(new MainMenuView(game));
                 }
 
                 if (Gdx.input.getX() > xMax / 1.58f && Gdx.input.getX() < xMax / 1.18f) {
                     buttonClick.play(AUDIO_VOLUME*audioChanger);
-                    GameController.getInstance().delete();
                     this.dispose();
                     game.setScreen(new GameView(game));
                 }
