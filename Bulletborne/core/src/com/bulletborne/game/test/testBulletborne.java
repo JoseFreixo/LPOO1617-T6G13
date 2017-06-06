@@ -26,7 +26,6 @@ public class testBulletborne {
     public void testLose(){
         GameController.getInstance().delete();
         GameController.setShipNumber(1);
-        GameModel model = GameModel.getInstance();
         GameController controller = GameController.getInstance();
         boolean lose = false;
         while (!lose){
@@ -42,7 +41,6 @@ public class testBulletborne {
     public void useShip2(){
         GameController.getInstance().delete();
         GameController.setShipNumber(2);
-        GameModel model = GameModel.getInstance();
         GameController controller = GameController.getInstance();
         assertEquals(2,controller.getShipNumber());
     }
@@ -51,7 +49,6 @@ public class testBulletborne {
     public void enemyTakingDamage(){
         GameController.getInstance().delete();
         GameController.setShipNumber(2);
-        GameModel model = GameModel.getInstance();
         GameController controller = GameController.getInstance();
 
         EnemyShipModel enem1Model = new EnemyShipModel(50f, 12f, 0, EntityModel.ModelType.ENEMY_SHIP_NORMAL);
