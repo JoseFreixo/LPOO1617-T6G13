@@ -1,8 +1,7 @@
 package com.bulletborne.game.view;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bulletborne.game.Bulletborne;
 
 import static com.bulletborne.game.controller.GameController.ARENA_HEIGHT;

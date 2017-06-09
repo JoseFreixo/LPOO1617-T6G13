@@ -1,6 +1,6 @@
 package com.bulletborne.game.controller.entities;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+
 import com.bulletborne.game.model.GameModel;
 import com.bulletborne.game.model.entities.BulletModel;
 import com.bulletborne.game.model.entities.PlayerModel;

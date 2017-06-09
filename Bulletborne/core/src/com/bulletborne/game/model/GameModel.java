@@ -13,9 +13,6 @@ import java.util.List;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
-/**
- * Created by Zé on 05/05/2017.
- */
 
 public class GameModel {
     public static final float Y_MIN = 3.5f;

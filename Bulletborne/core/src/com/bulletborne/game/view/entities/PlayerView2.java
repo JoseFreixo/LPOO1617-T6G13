@@ -5,9 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bulletborne.game.Bulletborne;
 
-/**
- * Created by r_tor on 30/05/2017.
- */
 
 public class PlayerView2 extends EntityView {
     /**

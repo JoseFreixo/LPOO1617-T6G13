@@ -1,8 +1,6 @@
 package com.bulletborne.game.model.entities;
 
-/**
- * Created by r_tor on 26/05/2017.
- */
+
 
 public class EnemyShipModel extends EntityModel {
     /**

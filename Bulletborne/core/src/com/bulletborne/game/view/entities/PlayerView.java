@@ -10,9 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
- * Created by Zé on 19/05/2017.
- */
 
 public class PlayerView extends EntityView{
 

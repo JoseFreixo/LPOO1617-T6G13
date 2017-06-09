@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bulletborne.game.Bulletborne;
 
-/**
- * Created by r_tor on 25/05/2017.
- */
+
 
 public class EnemyShip1View extends EntityView {
     /**

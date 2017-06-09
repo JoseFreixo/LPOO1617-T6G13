@@ -1,8 +1,5 @@
 package com.bulletborne.game.model.entities;
 
-/**
- * Created by Zé on 19/05/2017.
- */
 
 public class PlayerModel extends EntityModel{
     private ModelType type;

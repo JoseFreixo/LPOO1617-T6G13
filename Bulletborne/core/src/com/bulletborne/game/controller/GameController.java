@@ -26,9 +26,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 
-/**
- * Created by Zé on 05/05/2017.
- */
+
 
 public class GameController implements ContactListener{
     /**
