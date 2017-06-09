@@ -1,5 +1,7 @@
 package com.bulletborne.game.test;
 
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.bulletborne.game.Bulletborne;
 
 import org.junit.Test;
@@ -10,15 +12,14 @@ import static org.junit.Assert.fail;
 import com.bulletborne.game.controller.*;
 import com.bulletborne.game.controller.entities.EnemyShip1Body;
 import com.bulletborne.game.controller.entities.Player2Body;
+import com.bulletborne.game.controller.entities.PlayerBody;
 import com.bulletborne.game.model.*;
 import com.bulletborne.game.Bulletborne;
+import com.bulletborne.game.model.entities.BarrierModel;
 import com.bulletborne.game.model.entities.EnemyShipModel;
 import com.bulletborne.game.model.entities.EntityModel;
+import com.bulletborne.game.model.entities.PlayerModel;
 
-
-/**
- * Created by Zé on 05/06/2017.
- */
 
 public class testBulletborne {
 
@@ -26,6 +27,7 @@ public class testBulletborne {
     public void testLose(){
         GameController.getInstance().delete();
         GameController.setShipNumber(1);
+        GameController.setAudioChanger(1);
         GameController controller = GameController.getInstance();
         boolean lose = false;
         while (!lose){
@@ -74,7 +76,6 @@ public class testBulletborne {
     public void generateAllKindsOfEnemies(){
         GameController.getInstance().delete();
         GameController.setShipNumber(2);
-        GameModel model = GameModel.getInstance();
         GameController controller = GameController.getInstance();
         int tries = 0;
         boolean enemy1spawned = false, enemy2spawned = false, enemy3spawned = false;
@@ -219,8 +220,53 @@ public class testBulletborne {
         controller.update(3f);
         int nEnemies = model.getEnemyBullets().size();
         controller.update(3f);
-        controller.update(1f);
+        controller.update(1000f);
         int nEnemies2 = model.getEnemyBullets().size();
         assertTrue(nEnemies < nEnemies2);
+    }
+
+    @Test
+    public void isRemovingFlagged(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+        GameController.getInstance().update(30);
+        Array<Body> bodies = new Array<Body>();
+        GameController.getInstance().getWorld().getBodies(bodies);
+
+        for (Body body : bodies)
+            ((EntityModel) body.getUserData()).setFlaggedForRemoval(true);
+
+
+        GameController.getInstance().removeFlagged();
+        Array<Body> bodies2 = new Array<Body>();
+        GameController.getInstance().getWorld().getBodies(bodies2);
+        assertTrue(bodies.size>bodies2.size);
+    }
+
+    @Test
+    public void testPointsGained(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+        GameController.getInstance().update(3);
+        float points=GameController.getInstance().getTimePast()*10+GameController.getInstance().getPointsGained();
+        GameController.getInstance().update(30);
+        float points2=GameController.getInstance().getTimePast()*10+GameController.getInstance().getPointsGained();
+        assertTrue(points<points2);
+    }
+
+    @Test
+    public void testPlayerAndBarrierModel(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+
+        Array<Body> bodies = new Array<Body>();
+        GameController.getInstance().getWorld().getBodies(bodies);
+
+        for (Body body : bodies){
+            if(body.getUserData() instanceof PlayerModel)
+                assertTrue(((PlayerModel) body.getUserData()).getType()== EntityModel.ModelType.PLAYER_SHIP1);
+            if(body.getUserData() instanceof BarrierModel)
+                assertTrue(((BarrierModel) body.getUserData()).getType()== EntityModel.ModelType.BORDER);
+        }
     }
 }

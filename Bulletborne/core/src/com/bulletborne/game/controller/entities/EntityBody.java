@@ -151,13 +151,4 @@ public abstract class EntityBody {
     public void applyForceToCenter(float forceX, float forceY, boolean awake) {
         body.applyForceToCenter(forceX, forceY, awake);
     }
-
-    /**
-     * Wraps the getUserData method from the Box2D body class.
-     *
-     * @return the user data
-     */
-    public Object getUserData() {
-        return body.getUserData();
-    }
 }
