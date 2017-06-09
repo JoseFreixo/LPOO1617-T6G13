@@ -38,7 +38,7 @@ public class Bulletborne extends Game {
 		View.setBestScore(preferences.loadBestScore());
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("Skyrim8bitfinal_start.wav"));
-
+		music.setVolume(musicVolume);
         music.play();
 		startGame();
 	}
