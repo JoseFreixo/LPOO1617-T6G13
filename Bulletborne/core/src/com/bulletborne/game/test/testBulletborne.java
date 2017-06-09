@@ -161,16 +161,6 @@ public class testBulletborne {
     }
 
     @Test
-    public void testLost(){
-        GameController.getInstance().delete();
-        GameController.setShipNumber(2);
-        GameController.getInstance().update(3f);
-        assertTrue(!GameController.getInstance().getLost());
-        GameController.getInstance().update(4f);
-        assertTrue(GameController.getInstance().getLost());
-    }
-
-    @Test
     public void testIncreasingDifficulty(){
         GameController.getInstance().delete();
         GameController.setShipNumber(2);
@@ -194,4 +184,43 @@ public class testBulletborne {
         assertEquals(103,(int)GameController.getInstance().getTimePast());
     }
 
+    @Test
+    public void testPlayerIsShooting(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+        GameModel model = GameModel.getInstance();
+        GameController controller = GameController.getInstance();
+        controller.update(3f);
+        int nBullets = model.getBullets().size();
+        controller.update(0.25f);
+        int nBullets2 = model.getBullets().size();
+        assertTrue(nBullets < nBullets2);
+    }
+
+    @Test
+    public void testEnemiesAreSpawning(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+        GameModel model = GameModel.getInstance();
+        GameController controller = GameController.getInstance();
+        controller.update(3f);
+        int nEnemies = model.getEnemies().size();
+        controller.update(3f);
+        int nEnemies2 = model.getEnemies().size();
+        assertTrue(nEnemies < nEnemies2);
+    }
+
+    @Test
+    public void testEnemiesAreShooting(){
+        GameController.getInstance().delete();
+        GameController.setShipNumber(1);
+        GameModel model = GameModel.getInstance();
+        GameController controller = GameController.getInstance();
+        controller.update(3f);
+        int nEnemies = model.getEnemyBullets().size();
+        controller.update(3f);
+        controller.update(1f);
+        int nEnemies2 = model.getEnemyBullets().size();
+        assertTrue(nEnemies < nEnemies2);
+    }
 }

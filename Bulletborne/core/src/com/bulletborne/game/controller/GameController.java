@@ -367,7 +367,7 @@ public class GameController implements ContactListener{
     /**
      * Shoots a bullet from the enemy ship position perspective
      */
-    private void enemyShoot(EnemyShipModel model, float delta){
+    public void enemyShoot(EnemyShipModel model, float delta){
 
         if (model.setTimeToNextShot(delta)){
             BulletModel bullet = GameModel.getInstance().createEnemyBullet(model);
