@@ -78,7 +78,7 @@ Não fazer nada faz com que a força da “gravidade” atue sobre a nave e cons
 
 ![22](https://cloud.githubusercontent.com/assets/25772341/26805841/db5f2efa-4a45-11e7-9eda-2cdbdfb4cc29.png)
 
-Tocar no ecrã faz com que a se aplica á nave uma acelaração no eixo do y contrário ao da gravidade, o que faz com que a nave suba:
+Tocar no ecrã faz com que a se aplique à nave uma força no eixo do y contrária à da gravidade, o que faz com que a nave suba:
 
 ![sem titulo](https://cloud.githubusercontent.com/assets/25772341/26805944/54159078-4a46-11e7-8920-78e478ee5be4.png)
 
