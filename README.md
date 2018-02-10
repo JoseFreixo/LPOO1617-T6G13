@@ -37,7 +37,7 @@ Também o tempo foi uma variável que dificultou o desenvolvimento do mesmo.
 ->Lessons learned 
 
 Para além de uma evolução significativa a saber gerir o tempo no sentido de desenvolver 
-software, depois deste projeto podemos dizer que somos no global melhores software develepors.
+software, depois deste projeto podemos dizer que somos no global melhores software developers.
 Isto porque até agora não foi dada a oportunidade de desenvolver uma aplicação por completo que
 possa ser usada no mundo real.
 
